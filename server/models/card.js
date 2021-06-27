@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const CardSchema = new Schema({
@@ -9,4 +9,6 @@ const CardSchema = new Schema({
   list_id: { type: Schema.Types.ObjectId, ref: 'List' },
 });
 
-module.exports = mongoose.model('Card', CardSchema);
+const Card = mongoose.model('Card', CardSchema);
+
+export default Card;

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const ListSchema = new Schema({
@@ -8,4 +8,6 @@ const ListSchema = new Schema({
   position: Number,
 });
 
-module.exports = mongoose.model('List', ListSchema);
+const List = mongoose.model('List', ListSchema);
+
+export default List;

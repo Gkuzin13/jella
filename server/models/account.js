@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const AccountSchema = new Schema({
@@ -7,4 +7,6 @@ const AccountSchema = new Schema({
   boards: [{ type: Schema.Types.ObjectId, ref: 'Board' }],
 });
 
-module.exports = mongoose.model('Account', AccountSchema);
+const Account = mongoose.model('Account', AccountSchema);
+
+export default Account;

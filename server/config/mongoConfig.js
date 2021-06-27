@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
 process.env.NODE_ENV = 'development';
 
 if (process.env.NODE_ENV === 'development') {
-  const dotenv = require('dotenv');
   dotenv.config();
 }
 

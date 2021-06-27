@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const BoardSchema = new Schema({
@@ -7,4 +7,6 @@ const BoardSchema = new Schema({
   lists: [{ type: Schema.Types.ObjectId, ref: 'List' }],
 });
 
-module.exports = mongoose.model('Board', BoardSchema);
+const Board = mongoose.model('Board', BoardSchema);
+
+export default Board;
