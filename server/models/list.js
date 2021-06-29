@@ -1,12 +1,17 @@
 import mongoose from 'mongoose';
+import { CardSchema } from './card.js';
 const Schema = mongoose.Schema;
 
-const ListSchema = new Schema({
-  title: String,
-  board_id: { type: Schema.Types.ObjectId, ref: 'Board' },
-  cards: [{ type: Schema.Types.ObjectId, ref: 'Card' }],
-  position: Number,
-});
+export const ListSchema = new Schema(
+  {
+    listTitle: { type: String, required: true },
+    position: { type: Number },
+    cards: [CardSchema],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const List = mongoose.model('List', ListSchema);
 

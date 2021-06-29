@@ -1,13 +1,16 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const CardSchema = new Schema({
-  title: String,
-  date_created: Date,
-  description: String,
-  cover_colour: String,
-  list_id: { type: Schema.Types.ObjectId, ref: 'List' },
-});
+export const CardSchema = new Schema(
+  {
+    cardTitle: { type: String, required: true },
+    description: String,
+    cover_colour: String,
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const Card = mongoose.model('Card', CardSchema);
 
