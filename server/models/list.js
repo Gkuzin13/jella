@@ -6,7 +6,7 @@ export const ListSchema = new Schema(
   {
     listTitle: { type: String, required: true },
     position: { type: Number },
-    cards: [CardSchema],
+    boardId: { type: Schema.Types.ObjectId, ref: 'Board' },
   },
   {
     timestamps: true,

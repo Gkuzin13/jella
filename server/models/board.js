@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 export const BoardSchema = new Schema(
   {
-    boardCreator: { type: Schema.Types.ObjectId, ref: 'Account' },
+    creatorId: { type: Schema.Types.ObjectId, ref: 'Account' },
     boardTitle: { type: String, required: true },
-    lists: [ListSchema],
+    members: [{ type: Schema.Types.ObjectId, ref: 'Account' }],
   },
   {
     timestamps: true,
