@@ -29,6 +29,7 @@ export const create_list_post = [
       // Create new list object
       const newList = await new List({
         listTitle: req.body.listTitle,
+        boardId: '60de34087e36ce66a9c02031',
       }).save();
 
       res.send(newList);

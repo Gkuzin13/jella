@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { ListSchema } from './list.js';
 const Schema = mongoose.Schema;
 
 export const BoardSchema = new Schema(

@@ -17,6 +17,7 @@ import './config/mongoConfig.js';
 import homeRouter from './routes/api/homeRouter.js';
 import boardRouter from './routes/api/boardRouter.js';
 import listRouter from './routes/api/listRouter.js';
+import cardRouter from './routes/api/cardRouter.js';
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use(function (req, res, next) {
 app.use(homeRouter);
 app.use(boardRouter);
 app.use(listRouter);
+app.use(cardRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);

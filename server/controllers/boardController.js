@@ -1,5 +1,7 @@
 import Board from '../models/board.js';
 import { body, validationResult } from 'express-validator';
+import List from '../models/list.js';
+import Card from '../models/card.js';
 
 // Get current board
 export const board_get = async (req, res) => {
@@ -8,6 +10,21 @@ export const board_get = async (req, res) => {
     const board = await Board.findById(req.params.id);
 
     return res.send({ board_data: board });
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+// Get all board's lists and cards  on GET
+export const board_all_get = async (req, res) => {
+  try {
+    const board = await Board.findById(req.params.id);
+
+    const lists = await List.find({ boardId: req.params.id })
+      .populate('cards')
+      .exec();
+
+    res.send({ board, lists });
   } catch (error) {
     res.send(error);
   }
