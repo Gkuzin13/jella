@@ -1,39 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
-import { useEffect } from 'react';
+import api from './config/axiosConfig';
+import { useEffect, useState } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import LandingPage from './pages/LandingPage/LandingPage';
+import Home from './pages/Home/Home';
 
 function App() {
-  const getRes = async () => {
+  const [user, setUser] = useState();
+
+  const checkAuth = async () => {
     try {
-      const res = await fetch('http://localhost:5000/');
+      const { data } = await api.get('/user');
 
-      const msg = await res.json();
+      if (data) {
+        setUser(() => data);
+        return;
+      }
 
-      console.log(msg);
-    } catch (err) {
-      return err;
+      setUser();
+    } catch (error) {
+      console.log(error);
     }
   };
 
   useEffect(() => {
-    getRes();
+    checkAuth();
   }, []);
-
+  console.log(user);
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'>
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Switch>
+        <Route path='/home'>{user ? <Home /> : null}</Route>
+        <Route path='/'>{!user ? <LandingPage /> : null}</Route>
+      </Switch>
     </div>
   );
 }
