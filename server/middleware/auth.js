@@ -1,4 +1,4 @@
-export const checkAuthenticated = (req, res, next) => {
+exports.checkAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
@@ -6,7 +6,7 @@ export const checkAuthenticated = (req, res, next) => {
   res.redirect('/');
 };
 
-export const checkNotAuthenticated = (req, res, next) => {
+exports.checkNotAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return res.redirect('/');
   }
