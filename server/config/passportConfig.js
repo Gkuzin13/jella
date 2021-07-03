@@ -1,19 +1,23 @@
-import Account from '../models/account.js';
-import bcrypt from 'bcrypt';
-import { Strategy as LocalStrategy } from 'passport-local';
+const Account = require('../models/account');
+const bcrypt = require('bcrypt');
+const LocalStrategy = require('passport-local').Strategy;
 
 const initialize = (passport) => {
   const authenticateUser = (email, password, done) => {
-    Account.findOne({ email: email }, async (err, account) => {
+    Account.findOne({ email: email }, async (err, user) => {
       if (err) return done(err);
 
-      if (!account) {
+      if (!user) {
         return done(null, false, { errorMsg: 'Incorrect email.' });
       }
 
       try {
-        if (await bcrypt.compare(password, account.password)) {
-          return done(null, account);
+        if (await bcrypt.compare(password, user.password)) {
+          return done(null, {
+            username: user.username,
+            email: user.email,
+            id: user._id,
+          });
         } else {
           return done(null, false, { errorMsg: 'Incorrect password.' });
         }
@@ -23,20 +27,19 @@ const initialize = (passport) => {
     });
   };
 
-  passport.use(
-    new LocalStrategy(
-      { usernameField: 'email', passwordField: 'password' },
-      authenticateUser
-    )
-  );
+  passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser));
 
   passport.serializeUser((user, done) => done(null, user.id));
   passport.deserializeUser((id, done) => {
     Account.findById(id, (err, user) => {
       if (err) return next(err);
-      done(null, user.id);
+      done(null, {
+        username: user.username,
+        email: user.email,
+        id: user._id,
+      });
     });
   });
 };
 
-export default initialize;
+module.exports = initialize;

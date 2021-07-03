@@ -1,45 +1,47 @@
-import express from 'express';
-import cors from 'cors';
-import flash from 'express-flash';
-import passport from 'passport';
-import session from 'express-session';
-import dotenv from 'dotenv';
-dotenv.config();
+const express = require('express');
+const cors = require('cors');
+const flash = require('express-flash');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+require('dotenv').config();
 
 // Use passport config
-import initialize from './config/passportConfig.js';
+const initialize = require('./config/passportConfig');
 initialize(passport);
 
-// Get db connection
-import './config/mongoConfig.js';
-
 // Use api routes
-import homeRouter from './routes/api/homeRouter.js';
-import boardRouter from './routes/api/boardRouter.js';
-import listRouter from './routes/api/listRouter.js';
-import cardRouter from './routes/api/cardRouter.js';
+const homeRouter = require('./routes/api/homeRouter');
+const boardRouter = require('./routes/api/boardRouter');
+const listRouter = require('./routes/api/listRouter');
+const cardRouter = require('./routes/api/cardRouter');
 
 const app = express();
 
 const port = process.env.PORT || 5000;
 
-app.use(cors());
-app.use(express.urlencoded({ extended: false }));
+app.use(
+  cors({
+    // allow to server to accept request from different origin
+    origin: 'http://localhost:3000',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    // allow session cookie from browser to pass through
+    credentials: true,
+  })
+);
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(flash());
-app.use(function (req, res, next) {
-  res.locals.currentUser = req.user;
-  next();
-});
 
 app.use(homeRouter);
 app.use(boardRouter);
@@ -47,7 +49,7 @@ app.use(listRouter);
 app.use(cardRouter);
 
 app.listen(port, () => {
+  // Get db connection
+  require('./config/mongoConfig');
   console.log(`Server is running on port: ${port}`);
 });
-
-export default app;
