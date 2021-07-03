@@ -1,9 +1,8 @@
-import Board from '../models/board.js';
-import List from '../models/list.js';
-import { body, validationResult } from 'express-validator';
+const List = require('../models/list');
+const { body, validationResult } = require('express-validator');
 
 // Handle get list on GET
-export const list_get = async (req, res) => {
+exports.list_get = async (req, res) => {
   // Find list by id
   try {
     const list = await List.findById(req.params.id);
@@ -15,7 +14,7 @@ export const list_get = async (req, res) => {
 };
 
 // Handle create new list on POST
-export const create_list_post = [
+exports.create_list_post = [
   // Validate form field
   body('listTitle', 'Title must not be empty.').isLength({ min: 1 }),
 
@@ -29,7 +28,7 @@ export const create_list_post = [
       // Create new list object
       const newList = await new List({
         listTitle: req.body.listTitle,
-        boardId: '60de34087e36ce66a9c02031',
+        boardId: req.body.boardId,
       }).save();
 
       res.send(newList);
@@ -40,7 +39,7 @@ export const create_list_post = [
 ];
 
 // Handle list update on PATCH
-export const update_list_patch = [
+exports.update_list_patch = [
   // Validate form fields
   body('listTitle', 'Title must not be empty.').isLength({ min: 1 }),
 
@@ -70,7 +69,7 @@ export const update_list_patch = [
 ];
 
 // Handle list delete
-export const list_delete = async (req, res) => {
+exports.list_delete = async (req, res) => {
   try {
     await List.findByIdAndDelete(req.params.id);
 

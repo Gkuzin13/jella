@@ -1,9 +1,8 @@
-import Card from '../models/card.js';
-import List from '../models/list.js';
-import { body, validationResult } from 'express-validator';
+const Card = require('../models/card');
+const { body, validationResult } = require('express-validator');
 
 // Handle current card GET
-export const card_get = async (req, res) => {
+exports.card_get = async (req, res) => {
   try {
     const card = await Card.findById(req.params.id);
 
@@ -14,7 +13,7 @@ export const card_get = async (req, res) => {
 };
 
 // Handle create card on post
-export const create_card_post = [
+exports.create_card_post = [
   body('cardTitle', 'Title must not be empty').isLength({ min: 1 }),
   body('position', 'Card position must be a number').isNumeric(),
 
@@ -46,7 +45,7 @@ export const create_card_post = [
 ];
 
 // Handle card update on PUT
-export const update_card_put = [
+exports.update_card_put = [
   body('cardTitle', 'Title must not be empty').isLength({ min: 1 }),
   body('position', 'Card position must be a number').isNumeric(),
 
@@ -80,7 +79,7 @@ export const update_card_put = [
 ];
 
 // Handle card delete on DELETE
-export const card_delete = async (req, res) => {
+exports.card_delete = async (req, res) => {
   try {
     await Card.findByIdAndRemove(req.params.id);
 

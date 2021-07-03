@@ -1,10 +1,10 @@
-import Account from '../models/account.js';
-import bcrypt from 'bcrypt';
-import { body, validationResult } from 'express-validator';
-import passport from 'passport';
+const Account = require('../models/account');
+const bcrypt = require('bcrypt');
+const { body, validationResult } = require('express-validator');
+const passport = require('passport');
 
 // Create account on POST
-export const create_account_post = [
+exports.create_account_post = [
   // Validate form fields
   body('email', 'Must be a valid email address,').isEmail(),
   body('username', 'Username must not be empty.').isLength({ min: 1, max: 16 }),
@@ -21,41 +21,71 @@ export const create_account_post = [
     }
 
     // Check if account exists
-    await Account.find(
-      { email: req.body.email, username: req.body.username },
-      async (err, account) => {
-        if (err) {
-          return res.send({ errorMsg: err.message });
-        }
-
-        if (account) {
-          return res.send({
-            errorMsg: 'An account with this email or username already exists.',
-          });
-        }
+    await Account.findOne({ email: req.body.email }, async (err, account) => {
+      if (err) {
+        return res.send({ errorMsg: err.message });
       }
-    );
 
-    // Push new accont to DB
-    try {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      if (account) {
+        res
+          .status(401)
+          .send(
+            'An account with this username or email address already exists.'
+          );
 
-      const newAcc = await new Account({
-        email: req.body.email,
-        username: req.body.username,
-        password: hashedPassword,
-      }).save();
-    } catch (err) {
-      return res.send({ errorMsg: err.message });
-    }
+        return;
+      }
+
+      // Save new accont to db
+      try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+        const newAcc = await new Account({
+          email: req.body.email,
+          username: req.body.username,
+          password: hashedPassword,
+        }).save();
+
+        return res.send(200);
+      } catch (err) {
+        return res.send({ errorMsg: err.message });
+      }
+    });
   },
 ];
 
 // Handle login on POST
-export const account_login_post = [
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/log-in',
-    failureFlash: true,
+exports.account_login_post = [
+  // Validate form fields
+  body('email', 'Must be a valid email address,').isEmail(),
+  body('password', 'Password must be at least 8 characters long.').isLength({
+    min: 8,
+    max: 32,
   }),
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.send({ errorMsg: errors.array() });
+    }
+
+    passport.authenticate('local', (err, user, info) => {
+      if (err) {
+        return res.send(err);
+      }
+
+      if (!user) return res.send('No user exists!');
+
+      req.login(user, (err) => {
+        if (err) return res.send(err);
+
+        res.send('Successfully Authenticated!');
+      });
+    })(req, res, next);
+  },
 ];
+
+exports.user_get = (req, res, next) => {
+  res.send(req.user);
+  next();
+};
