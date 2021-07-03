@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-export const BoardSchema = new Schema(
+const BoardSchema = new Schema(
   {
     creatorId: { type: Schema.Types.ObjectId, ref: 'Account' },
     boardTitle: { type: String, required: true },
@@ -16,6 +16,4 @@ BoardSchema.virtual('url').get(() => {
   return `/b/${this._id}`;
 });
 
-const Board = mongoose.model('Board', BoardSchema);
-
-export default Board;
+module.exports = mongoose.model('Board', BoardSchema);

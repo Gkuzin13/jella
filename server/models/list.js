@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-export const ListSchema = new Schema(
+const ListSchema = new Schema(
   {
     listTitle: { type: String, required: true },
     position: { type: Number },
@@ -13,6 +13,4 @@ export const ListSchema = new Schema(
   }
 );
 
-const List = mongoose.model('List', ListSchema);
-
-export default List;
+module.exports = mongoose.model('List', ListSchema);
