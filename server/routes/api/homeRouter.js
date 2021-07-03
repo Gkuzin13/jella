@@ -1,21 +1,21 @@
-import { Router } from 'express';
-import {
-  create_account_post,
-  account_login_post,
-} from '../../controllers/accountController.js';
-import { checkNotAuthenticated } from '../../middleware/auth.js';
-const router = Router();
+const router = require('express').Router();
+const accountController = require('../../controllers/accountController');
+const auth = require('../../middleware/auth');
 
-router.get('/', (req, res) => {
-  res.send({ msg: req.user });
+router.post('/signup', accountController.create_account_post);
+
+router.post(
+  '/login',
+  accountController.account_login_post,
+  accountController.user_get
+);
+
+router.get('/user', accountController.user_get);
+
+router.get('/logout', (req, res) => {
+  req.logout();
+
+  res.send('logged out');
 });
 
-router.get('/log-in', (req, res) => {
-  res.json({ msg: 'Hi' });
-});
-
-router.post('/sign-up', checkNotAuthenticated, create_account_post);
-
-router.post('/log-in', checkNotAuthenticated, account_login_post);
-
-export default router;
+module.exports = router;
