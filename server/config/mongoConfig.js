@@ -1,14 +1,11 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-
-process.env.NODE_ENV = 'development';
+const mongoose = require('mongoose');
 
 if (process.env.NODE_ENV === 'development') {
-  dotenv.config();
+  require('dotenv').config();
 }
 
 // Set up default mongoose connection
-const mongoDB = `mongodb+srv://mern:mongodb@cluster0.pnh31.mongodb.net/mern-app?retryWrites=true&w=majority`;
+const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Get the default connection
