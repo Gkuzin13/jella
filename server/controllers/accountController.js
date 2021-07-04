@@ -46,7 +46,7 @@ exports.create_account_post = [
           password: hashedPassword,
         }).save();
 
-        return res.send(200);
+        return res.sendStatus(200);
       } catch (err) {
         return res.send({ errorMsg: err.message });
       }
