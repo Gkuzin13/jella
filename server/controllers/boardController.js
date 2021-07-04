@@ -2,16 +2,21 @@ const Board = require('../models/board');
 const List = require('../models/list');
 const { body, validationResult } = require('express-validator');
 
-// // Get all user's boards
-// exports.board_all_get = async (req,res) => {
-//   try {
-//     const
-//   } catch (error) {
-//     res.send(error)
-//   }
-// }
+// Get all user's boards
+exports.board_all_get = async (req, res) => {
+  try {
+    await Board.find({ creatorId: req.user.id }, (err, data) => {
+      if (err) {
+        return res.send(err);
+      }
+      res.send(data);
+    });
+  } catch (error) {
+    res.send(error);
+  }
+};
 
-// Get all selected board lists and cards  on GET
+// Get selected board lists and cards on GET
 exports.board_get = async (req, res) => {
   try {
     const board = await Board.findById(req.params.id);
@@ -41,11 +46,11 @@ exports.create_board_post = [
     // Save new board to db
     try {
       const board = await new Board({
-        creatorId: req.user,
+        creatorId: req.user.id,
         boardTitle: req.body.boardTitle,
       }).save();
 
-      res.send({ boardData: board });
+      res.send(board);
     } catch (error) {
       res.send({ errorMsg: error });
     }
