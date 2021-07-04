@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Home from './pages/Home/Home';
+import BoardPage from './pages/BoardPage/BoardPage';
+import LoginPage from './pages/LandingPage/LoginPage';
+import SignupPage from './pages/LandingPage/SignupPage';
 
 function App() {
   const [user, setUser] = useState();
@@ -26,12 +29,27 @@ function App() {
   useEffect(() => {
     checkAuth();
   }, []);
-  console.log(user);
+
   return (
     <div>
+      <nav>NAV</nav>
       <Switch>
-        <Route path='/home'>{user ? <Home /> : null}</Route>
-        <Route path='/'>{!user ? <LandingPage /> : null}</Route>
+        <Route exact path='/'>
+          {!user ? <LandingPage /> : null}
+        </Route>
+
+        <Route path='/login'>
+          <LoginPage />
+        </Route>
+        <Route path='/signup'>
+          <SignupPage />
+        </Route>
+
+        <Route path='/:username/boards'>
+          {user ? <Home user={user} /> : null}
+        </Route>
+
+        <Route path='/b/:id/'>{user ? <BoardPage user={user} /> : null}</Route>
       </Switch>
     </div>
   );

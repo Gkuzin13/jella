@@ -14,7 +14,9 @@ const LoginPage = () => {
         password: password.value,
       });
 
-      history.push('/home');
+      const user = await api.get('/user');
+
+      history.push(`/${user.data.username}/boards`);
     } catch (error) {
       console.log(error);
     }
