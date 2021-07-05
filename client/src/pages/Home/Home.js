@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react';
-import { useHistory, Switch, Route } from 'react-router-dom';
+import { useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../../config/Auth';
 import api from '../../config/axiosConfig';
 
-const Home = ({ user }) => {
+const Home = () => {
   const [userBoards, setUserBoards] = useState();
+
   const history = useHistory();
+
+  const { user } = useContext(AuthContext);
   console.log(userBoards);
 
   useEffect(() => {

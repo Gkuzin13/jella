@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { AuthContext } from '../../config/Auth';
 import api from '../../config/axiosConfig';
 
-const BoardPage = ({ user }) => {
+const BoardPage = () => {
   const [boardData, setBoardData] = useState();
+
+  const { user } = useContext(AuthContext);
 
   const { id } = useParams();
 
