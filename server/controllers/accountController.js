@@ -23,7 +23,7 @@ exports.create_account_post = [
     // Check if account exists
     await Account.findOne({ email: req.body.email }, async (err, account) => {
       if (err) {
-        return res.send({ errorMsg: err.message });
+        return res.send(err);
       }
 
       if (account) {
@@ -46,9 +46,13 @@ exports.create_account_post = [
           password: hashedPassword,
         }).save();
 
-        return res.sendStatus(200);
+        return res.send({
+          email: newAcc.email,
+          username: newAcc.username,
+          id: _id,
+        });
       } catch (err) {
-        return res.send({ errorMsg: err.message });
+        return res.send(err);
       }
     });
   },
@@ -69,7 +73,7 @@ exports.account_login_post = [
       return res.send({ errorMsg: errors.array() });
     }
 
-    passport.authenticate('local', (err, user, info) => {
+    passport.authenticate('local', (err, user) => {
       if (err) {
         return res.send(err);
       }
@@ -79,13 +83,18 @@ exports.account_login_post = [
       req.login(user, (err) => {
         if (err) return res.send(err);
 
-        res.send('Successfully Authenticated!');
+        res.status(200).send({ ...user });
       });
     })(req, res, next);
   },
 ];
 
 exports.user_get = (req, res, next) => {
-  res.send(req.user);
+  if (req.user) {
+    return res.send(req.user);
+  }
+
+  res.send(null);
+
   next();
 };
