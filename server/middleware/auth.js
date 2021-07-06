@@ -3,12 +3,12 @@ exports.checkAuthenticated = (req, res, next) => {
     return next();
   }
 
-  res.redirect('/');
+  res.sendStatus(401);
 };
 
 exports.checkNotAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
-    return res.redirect('/');
+    return res.sendStatus(409);
   }
 
   next();
