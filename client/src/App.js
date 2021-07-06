@@ -1,24 +1,27 @@
 import './App.css';
-import api from './config/axiosConfig';
-import { useContext, useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { AuthContext } from './config/Auth';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Home from './pages/Home/Home';
 import BoardPage from './pages/BoardPage/BoardPage';
 import LoginPage from './pages/LandingPage/LoginPage';
 import SignupPage from './pages/LandingPage/SignupPage';
+import PrivateRoute from './components/PrivateRoute';
+import { useContext } from 'react';
+import { AuthContext } from './config/Auth';
 
 function App() {
-  const { user } = useContext(AuthContext);
+  const { user, isLoading } = useContext(AuthContext);
 
-  console.log(user);
+  if (isLoading) {
+    return <div></div>;
+  }
+
   return (
-    <div>
+    <>
       <nav>NAV</nav>
       <Switch>
         <Route exact path='/'>
-          {!user ? <LandingPage /> : null}
+          <LandingPage />
         </Route>
 
         <Route path='/login'>
@@ -28,11 +31,15 @@ function App() {
           <SignupPage />
         </Route>
 
-        <Route path='/:username/boards'>{user ? <Home /> : null}</Route>
+        <PrivateRoute path={`/${user.username}/boards`}>
+          <Home />
+        </PrivateRoute>
 
-        <Route path='/b/:id/'>{user ? <BoardPage /> : null}</Route>
+        <PrivateRoute path='/b/:id/:boardTitle'>
+          <BoardPage />
+        </PrivateRoute>
       </Switch>
-    </div>
+    </>
   );
 }
 

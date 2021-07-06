@@ -4,17 +4,17 @@ import api from './axiosConfig';
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getUserStatus = async () => {
       try {
         const { data } = await api.get('/user');
 
-        if (data) {
-          setUser(() => data);
-          return;
-        }
+        setUser(() => data);
+
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -24,6 +24,8 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, isLoading, setUser, setIsLoading }}>
+      {children}
+    </AuthContext.Provider>
   );
 };

@@ -1,19 +1,31 @@
+import { useContext } from 'react';
+import { useHistory } from 'react-router';
+import { AuthContext } from '../../config/Auth';
 import api from '../../config/axiosConfig';
 
 const SignupPage = () => {
+  const { user, setIsLoading, setUser } = useContext(AuthContext);
+  const history = useHistory();
+
   const handleSignup = async (e) => {
     e.preventDefault();
 
     const { email, username, password } = e.target.elements;
 
     try {
-      const res = await api.post('/signup', {
+      const { data } = await api.post('/signup', {
         email: email.value,
         username: username.value,
         password: password.value,
       });
 
-      console.log(res);
+      if (data) {
+        setUser(() => data);
+        setIsLoading(() => false);
+        history.push(`/${data.username}/boards`);
+      }
+
+      console.log(data);
     } catch (error) {
       console.log(error);
     }

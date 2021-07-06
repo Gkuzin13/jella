@@ -9,7 +9,7 @@ const Home = () => {
   const history = useHistory();
 
   const { user } = useContext(AuthContext);
-  console.log(userBoards);
+  console.log(userBoards, user);
 
   useEffect(() => {
     const getUserBoards = async () => {
@@ -30,9 +30,9 @@ const Home = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.get('/logout');
+      const { status } = await api.get('/logout');
 
-      if (res.status === 200) {
+      if (status === 200) {
         history.push('/');
       }
     } catch (error) {
@@ -72,7 +72,9 @@ const Home = () => {
       {userBoards.map((board) => {
         return (
           <div key={board._id}>
-            <a href={`/b/${board._id}`}>{board.boardTitle}</a>
+            <a href={`/b/${board._id}/${board.boardTitle}`}>
+              {board.boardTitle}
+            </a>
           </div>
         );
       })}
