@@ -8,10 +8,12 @@ router.post('/login', accountController.account_login_post);
 
 router.get('/user', accountController.user_get);
 
-router.get('/logout', (req, res) => {
+router.get('/logout', (req, res, next) => {
   req.logout();
 
-  res.send('logged out');
+  res.sendStatus(200);
+
+  next();
 });
 
 module.exports = router;
