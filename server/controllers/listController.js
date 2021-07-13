@@ -21,7 +21,7 @@ exports.create_list_post = [
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.send({ errorMsg: errors.array() });
+      return res.status(400).send({ errorMsg: errors.array() });
     }
 
     try {

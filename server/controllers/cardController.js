@@ -1,4 +1,5 @@
 const Card = require('../models/card');
+const List = require('../models/list');
 const { body, validationResult } = require('express-validator');
 
 // Handle current card GET
@@ -27,15 +28,15 @@ exports.create_card_post = [
     try {
       const newCard = await new Card({
         cardTitle: req.body.cardTitle,
-        description: req.body.description,
-        coverColor: req.body.coverColor,
         position: req.body.position,
         listId: req.body.listId,
       }).save();
 
-      await List.findByIdAndUpdate(newCard.listId, {
-        $push: { cards: newCard._id },
-      });
+      await List.findByIdAndUpdate(
+        req.body.listId,
+        { $push: { cards: newCard._id } },
+        { safe: true, upsert: true }
+      );
 
       res.send(newCard);
     } catch (error) {

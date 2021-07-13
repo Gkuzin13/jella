@@ -1,6 +1,4 @@
-import { Link, useHistory } from 'react-router-dom';
-import { AuthContext } from '../../config/Auth';
-import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
   return (

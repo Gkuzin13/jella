@@ -14,9 +14,11 @@ const Home = () => {
   useEffect(() => {
     const getUserBoards = async () => {
       try {
-        const { data } = await api.get(`/${user.username}/boards`);
+        const { data } = await api.get('/user/boards');
 
-        setUserBoards(() => [...data]);
+        if (data) {
+          setUserBoards(() => [...data]);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -44,12 +46,15 @@ const Home = () => {
     e.preventDefault();
     const { boardTitle } = e.target.elements;
     try {
-      const { data } = await api.post('/b', {
+      const { data } = await api.post('/b/', {
         boardTitle: boardTitle.value,
         creatorId: user.id,
       });
 
-      history.push(`/b/${data._id}`);
+      if (data) {
+        history.push(`/b/${data._id}/${data.boardTitle}`);
+        console.log(data);
+      }
     } catch (error) {
       console.log(error);
     }

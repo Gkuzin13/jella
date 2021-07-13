@@ -22,8 +22,8 @@ exports.board_get = async (req, res) => {
     const board = await Board.findById(req.params.id);
 
     const lists = await List.find({ boardId: req.params.id })
-      .populate('cards')
-      .exec();
+      .sort({ timestamp: -1 })
+      .populate('cards');
 
     res.send({ board, lists });
   } catch (error) {

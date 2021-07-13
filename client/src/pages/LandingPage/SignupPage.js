@@ -4,7 +4,7 @@ import { AuthContext } from '../../config/Auth';
 import api from '../../config/axiosConfig';
 
 const SignupPage = () => {
-  const { user, setIsLoading, setUser } = useContext(AuthContext);
+  const { setIsLoading, setUser } = useContext(AuthContext);
   const history = useHistory();
 
   const handleSignup = async (e) => {
@@ -13,6 +13,7 @@ const SignupPage = () => {
     const { email, username, password } = e.target.elements;
 
     try {
+      // Sign up user
       const { data } = await api.post('/signup', {
         email: email.value,
         username: username.value,

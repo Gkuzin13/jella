@@ -36,21 +36,18 @@ exports.create_account_post = [
         return;
       }
 
-      // Save new accont to db
       try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-        const newAcc = await new Account({
+        // Save new accont to db
+        await new Account({
           email: req.body.email,
           username: req.body.username,
           password: hashedPassword,
         }).save();
 
-        return res.send({
-          email: newAcc.email,
-          username: newAcc.username,
-          id: _id,
-        });
+        // Run next function to login the registered account
+        next();
       } catch (err) {
         return res.send(err);
       }
@@ -73,12 +70,13 @@ exports.account_login_post = [
       return res.send({ errorMsg: errors.array() });
     }
 
+    // Login account
     passport.authenticate('local', (err, user) => {
       if (err) {
         return res.send(err);
       }
 
-      if (!user) return res.send('No user exists!');
+      if (!user) return res.sendStatus(401);
 
       req.login(user, (err) => {
         if (err) return res.send(err);
@@ -89,12 +87,22 @@ exports.account_login_post = [
   },
 ];
 
+// Check if user is authenticated
 exports.user_get = (req, res, next) => {
   if (req.user) {
     return res.send(req.user);
   }
 
   res.send(null);
+
+  next();
+};
+
+//Logout account on GET
+exports.account_logout = (req, res, next) => {
+  req.logout();
+
+  res.sendStatus(200);
 
   next();
 };

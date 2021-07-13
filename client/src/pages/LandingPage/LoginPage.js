@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../config/Auth';
 import api from '../../config/axiosConfig';
 

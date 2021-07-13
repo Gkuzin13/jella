@@ -1,13 +1,15 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useContext, useReducer } from 'react';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../config/Auth';
 import api from '../../config/axiosConfig';
+import List from '../../components/List';
+import ListForm from '../../components/ListForm';
+import { reducer, ACTIONS } from '../../reducers/reducers';
+import Loader from '../../components/Loader';
 
 const BoardPage = () => {
-  const [boardData, setBoardData] = useState();
-
+  const [boardData, dispatch] = useReducer(reducer, []);
   const { user } = useContext(AuthContext);
-
   const { id } = useParams();
 
   useEffect(() => {
@@ -15,25 +17,55 @@ const BoardPage = () => {
       try {
         const { data } = await api.get(`/b/${id}`);
 
-        setBoardData(() => data);
+        if (data) {
+          dispatch({
+            type: ACTIONS.SET_BOARD,
+            data: { board: data.board, lists: data.lists },
+          });
+        }
       } catch (error) {
         console.log(error);
       }
     };
 
     getBoard();
-
-    return () => setBoardData();
   }, [id]);
 
+  const handleListDelete = async (id) => {
+    try {
+      const { status } = await api.delete(`/1/lists/${id}`);
+
+      if (status === 200) {
+        dispatch({
+          type: ACTIONS.DELETE_LIST,
+          data: id,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(boardData);
+
+  if (boardData.length === 0) {
+    return <Loader />;
+  }
+
   return (
-    <div>
+    <div className='flex justify-start items-start'>
       <a href={`/${user.username}/boards`}>Home</a>
-      {boardData
-        ? [boardData.board].map((b) => {
-            return <span key={b?._id}>{b?.boardTitle}</span>;
-          })
-        : null}
+      {boardData.lists.map((list) => {
+        return (
+          <List
+            key={list._id}
+            listData={list}
+            handleListDelete={handleListDelete}
+            dispatch={dispatch}
+          />
+        );
+      })}
+      <ListForm boardId={id} dispatch={dispatch} />
     </div>
   );
 };
