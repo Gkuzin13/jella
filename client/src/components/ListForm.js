@@ -30,13 +30,13 @@ const ListForm = ({ boardId, dispatch }) => {
   };
 
   return (
-    <div className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-200 shadow-md w-64 p-2 mx-1.5 rounded-sm hover:bg-gray-300'>
+    <div className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-100 shadow-md w-64 p-2 mx-1.5 rounded-sm hover:bg-gray-200'>
       <button
         onClick={() => setListForm(true)}
         className={`${
           listForm
             ? 'opacity-0 hidden'
-            : 'flex items-center w-full p-1 transition-opacity duration-75 opacity-50'
+            : 'flex items-center w-full p-0.5 transition-opacity duration-75 opacity-50'
         } `}>
         <span className='material-icons mr-1'>add</span>
         <span>Add another list</span>

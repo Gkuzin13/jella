@@ -33,9 +33,9 @@ const BoardPage = () => {
 
   const handleListDelete = async (id) => {
     try {
-      const { status } = await api.delete(`/1/lists/${id}`);
+      const res = await api.delete(`/1/lists/${id}`);
 
-      if (status === 200) {
+      if (res.status === 200) {
         dispatch({
           type: ACTIONS.DELETE_LIST,
           data: id,

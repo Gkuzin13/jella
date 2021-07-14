@@ -1,0 +1,45 @@
+const ListActionsBox = ({ setListActionsBox, handleListDelete, listData }) => {
+  return (
+    <div className='fixed my-1 bg-gray-100 p-2 w-64 '>
+      <div className='flex items-center justify-center'>
+        <span className='text-gray-400'>List actions</span>
+        <button
+          className='flex items-center opacity-50 hover:opacity-100 self-end'
+          type='button'
+          onClick={() => setListActionsBox(false)}>
+          <span className='material-icons cursor-pointer ml-1 hover:text-black'>
+            close
+          </span>
+        </button>
+      </div>
+      <div className=' border-solid border border-gray-300 my-3'></div>
+      <button
+        className={
+          'flex items-center w-full hover:bg-gray-200 p-1.5 transition-opacity duration-75 rounded-sm'
+        }>
+        <span>Add card...</span>
+      </button>
+      <button
+        className={
+          'flex items-center w-full hover:bg-gray-200 p-1.5 transition-opacity duration-75 rounded-sm'
+        }>
+        <span>Move list...</span>
+      </button>
+      <button
+        className={
+          'flex items-center w-full hover:bg-gray-200 p-1.5 transition-opacity duration-75 rounded-sm'
+        }>
+        <span>Sort list...</span>
+      </button>
+      <button
+        onClick={() => handleListDelete(listData._id)}
+        className={
+          'flex items-center w-full hover:bg-red-200  p-1.5 transition-opacity duration-75 rounded-sm'
+        }>
+        <span>Delete list...</span>
+      </button>
+    </div>
+  );
+};
+
+export default ListActionsBox;
