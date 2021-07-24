@@ -1,12 +1,17 @@
-const ListActionsBox = ({ setListActionsBox, handleListDelete, listData }) => {
+const ListActionsBox = ({
+  toggleActionsBox,
+  boxRef,
+  handleListDelete,
+  listData,
+}) => {
   return (
-    <div className='fixed my-1 bg-gray-100 p-2 w-64 '>
+    <div ref={boxRef} className='fixed my-1 bg-gray-50 p-2 w-64 shadow-md '>
       <div className='flex items-center justify-center'>
         <span className='text-gray-400'>List actions</span>
         <button
           className='flex items-center opacity-50 hover:opacity-100 self-end'
           type='button'
-          onClick={() => setListActionsBox(false)}>
+          onClick={() => toggleActionsBox()}>
           <span className='material-icons cursor-pointer ml-1 hover:text-black'>
             close
           </span>

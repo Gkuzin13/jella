@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const BoardSchema = new Schema(
   {
-    creatorId: { type: Schema.Types.ObjectId, ref: 'Account' },
+    creatorId: { type: Schema.Types.ObjectId, ref: 'Account', required: true },
     boardTitle: { type: String, required: true },
     members: [{ type: Schema.Types.ObjectId, ref: 'Account' }],
   },

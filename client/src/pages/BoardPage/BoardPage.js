@@ -1,4 +1,4 @@
-import { useEffect, useContext, useReducer } from 'react';
+import { useEffect, useContext, useReducer, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../config/Auth';
 import api from '../../config/axiosConfig';
@@ -6,9 +6,12 @@ import List from '../../components/List';
 import ListForm from '../../components/ListForm';
 import { reducer, ACTIONS } from '../../reducers/reducers';
 import Loader from '../../components/Loader';
+import CardDetailsBox from '../../components/CardDetailsBox';
 
 const BoardPage = () => {
   const [boardData, dispatch] = useReducer(reducer, []);
+  const [selectedCard, setSelectedCard] = useState({}, { isOpen: false });
+
   const { user } = useContext(AuthContext);
   const { id } = useParams();
 
@@ -17,12 +20,10 @@ const BoardPage = () => {
       try {
         const { data } = await api.get(`/b/${id}`);
 
-        if (data) {
-          dispatch({
-            type: ACTIONS.SET_BOARD,
-            data: { board: data.board, lists: data.lists },
-          });
-        }
+        dispatch({
+          type: ACTIONS.SET_BOARD,
+          data: data,
+        });
       } catch (error) {
         console.log(error);
       }
@@ -31,37 +32,35 @@ const BoardPage = () => {
     getBoard();
   }, [id]);
 
-  const handleListDelete = async (id) => {
-    try {
-      const res = await api.delete(`/1/lists/${id}`);
-
-      if (res.status === 200) {
-        dispatch({
-          type: ACTIONS.DELETE_LIST,
-          data: id,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const toggleCardBox = (card, isOpen) => {
+    setSelectedCard({ ...card, isOpen });
   };
 
-  console.log(boardData);
-
-  if (boardData.length === 0) {
+  if (!boardData.lists) {
     return <Loader />;
   }
 
   return (
     <div className='flex justify-start items-start'>
+      {!selectedCard.isOpen ? null : (
+        <CardDetailsBox
+          selectedCard={selectedCard}
+          toggleCardBox={toggleCardBox}
+          dispatch={dispatch}
+          subtasks={boardData.subtasks}
+        />
+      )}
+
       <a href={`/${user.username}/boards`}>Home</a>
+
       {boardData.lists.map((list) => {
         return (
           <List
             key={list._id}
             listData={list}
-            handleListDelete={handleListDelete}
+            cards={boardData.cards}
             dispatch={dispatch}
+            toggleCardBox={toggleCardBox}
           />
         );
       })}

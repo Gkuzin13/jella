@@ -6,6 +6,9 @@ export const ACTIONS = {
   CREATE_CARD: 'create-card',
   EDIT_CARD: 'edit-card',
   DELETE_CARD: 'delete-card',
+  CREATE_SUBTASK: 'create-subtask',
+  EDIT_SUBTASK: 'edit-subtask',
+  DELETE_SUBTASK: 'delete-subtask',
 };
 
 export const reducer = (boardData, action) => {
@@ -16,6 +19,13 @@ export const reducer = (boardData, action) => {
     case ACTIONS.CREATE_LIST:
       return { ...boardData, lists: boardData.lists.concat(action.data) };
 
+    case ACTIONS.EDIT_LIST:
+      const updatedLists = boardData.lists.map((list) => {
+        return list._id === action.data._id ? action.data : list;
+      });
+
+      return { ...boardData, lists: updatedLists };
+
     case ACTIONS.DELETE_LIST:
       return {
         ...boardData,
@@ -25,21 +35,40 @@ export const reducer = (boardData, action) => {
       };
 
     case ACTIONS.CREATE_CARD:
-      const updatedLists = boardData.lists.map((list) => {
-        if (list._id === action.data.listId) {
-          const updatedList = {
-            ...list,
-            cards: list.cards.concat(action.data),
-          };
+      return { ...boardData, cards: boardData.cards.concat(action.data) };
 
-          return updatedList;
-        }
-
-        return list;
+    case ACTIONS.EDIT_CARD:
+      const updatedCards = boardData.cards.map((card) => {
+        return card._id === action.data._id ? action.data : card;
       });
 
-      return { board: boardData.board, lists: updatedLists };
+      return { ...boardData, cards: updatedCards };
 
+    case ACTIONS.DELETE_CARD:
+      const filteredCards = boardData.cards.filter((card) => {
+        return card._id !== action.data._id ? card : null;
+      });
+
+      return { ...boardData, cards: filteredCards };
+
+    case ACTIONS.CREATE_SUBTASK:
+      return { ...boardData, subtasks: boardData.subtasks.concat(action.data) };
+
+    case ACTIONS.EDIT_SUBTASK:
+      const updatedChecklists = boardData.subtasks.map((task) => {
+        return task._id !== action.data.taskId
+          ? task
+          : { ...task, isDone: action.data.isDone };
+      });
+
+      return { ...boardData, subtasks: updatedChecklists };
+
+    case ACTIONS.DELETE_SUBTASK:
+      const filteredChecklists = boardData.subtasks.filter((task) => {
+        return task._id !== action.data.taskId ? task : null;
+      });
+
+      return { ...boardData, subtasks: filteredChecklists };
     default:
       return boardData;
   }

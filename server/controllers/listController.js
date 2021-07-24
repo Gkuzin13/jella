@@ -1,4 +1,5 @@
 const List = require('../models/list');
+const Card = require('../models/card');
 const { body, validationResult } = require('express-validator');
 
 // Handle get list on GET
@@ -29,6 +30,7 @@ exports.create_list_post = [
       const newList = await new List({
         listTitle: req.body.listTitle,
         boardId: req.body.boardId,
+        position: req.body.position,
       }).save();
 
       res.send(newList);
@@ -71,7 +73,11 @@ exports.update_list_patch = [
 // Handle list delete
 exports.list_delete = async (req, res) => {
   try {
+    // Find and delete list by Id
     await List.findByIdAndDelete(req.params.id);
+
+    // find and delete all cards with list id
+    await Card.deleteMany({ listId: req.params.id });
 
     res.sendStatus(200);
   } catch (error) {

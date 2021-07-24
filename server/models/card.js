@@ -7,7 +7,8 @@ const CardSchema = new Schema(
     description: String,
     coverColor: String,
     position: { type: Schema.Types.Number, required: true },
-    listId: { type: Schema.Types.ObjectId },
+    listId: { type: Schema.Types.ObjectId, ref: 'List', required: true },
+    boardId: { type: Schema.Types.ObjectId, ref: 'Board', required: true },
   },
   {
     timestamps: true,

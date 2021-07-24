@@ -13,14 +13,15 @@ const CardForm = ({ listData, dispatch }) => {
       const newCard = {
         cardTitle: cardTitle,
         listId: listData._id,
+        boardId: listData.boardId,
         position: 1,
       };
-      const { data } = await api.post('/1/cards/', newCard);
+      const res = await api.post('/1/cards/', newCard);
 
-      if (data) {
+      if (res.data) {
         dispatch({
           type: ACTIONS.CREATE_CARD,
-          data: data,
+          data: res.data,
         });
 
         setCardForm(false);
@@ -31,8 +32,6 @@ const CardForm = ({ listData, dispatch }) => {
     }
   };
 
-  console.log(cardTitle);
-
   return (
     <div className='p-1 m-1 text-gray-500 rounded-sm'>
       <button
@@ -40,7 +39,7 @@ const CardForm = ({ listData, dispatch }) => {
         className={`${
           cardForm
             ? 'opacity-0 hidden'
-            : 'flex items-center w-full hover:bg-gray-300 p-1 transition-opacity duration-75'
+            : 'flex items-center w-full hover:bg-gray-200 p-1 transition-opacity duration-75'
         } `}>
         <span className='material-icons mr-1'>add</span>
         <span>Add a card</span>
@@ -62,7 +61,9 @@ const CardForm = ({ listData, dispatch }) => {
             className='bg-blue-700 text-white p-1 rounded-sm'>
             Add card
           </button>
-          <button onClick={() => setCardForm(false)}>
+          <button
+            className='flex items-center ml-2'
+            onClick={() => setCardForm(false)}>
             <span
               type='button'
               className='material-icons cursor-pointer ml-1 hover:text-black'>

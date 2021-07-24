@@ -10,18 +10,21 @@ const ListForm = ({ boardId, dispatch }) => {
     e.preventDefault();
 
     try {
-      const res = await api.post('/1/lists/', {
+      const { data } = await api.post('/1/lists/', {
         listTitle: listTitle,
+        position: 5,
         boardId: boardId,
       });
 
-      if (res.data) {
+      if (data) {
         dispatch({
           type: ACTIONS.CREATE_LIST,
-          data: res.data,
+          data: data,
         });
+        console.log(data);
 
         setListForm(false);
+
         setListTitle('');
       }
     } catch (error) {

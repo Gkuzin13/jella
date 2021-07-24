@@ -4,7 +4,7 @@ import Home from './pages/Home/Home';
 import BoardPage from './pages/BoardPage/BoardPage';
 import LoginPage from './pages/LandingPage/LoginPage';
 import SignupPage from './pages/LandingPage/SignupPage';
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './hooks/PrivateRoute';
 import { useContext } from 'react';
 import { AuthContext } from './config/Auth';
 

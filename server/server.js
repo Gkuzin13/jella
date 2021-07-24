@@ -15,6 +15,7 @@ const homeRouter = require('./routes/api/homeRouter');
 const boardRouter = require('./routes/api/boardRouter');
 const listRouter = require('./routes/api/listRouter');
 const cardRouter = require('./routes/api/cardRouter');
+const checklistRouter = require('./routes/api/checklistRouter');
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use(homeRouter);
 app.use(boardRouter);
 app.use(listRouter);
 app.use(cardRouter);
+app.use(checklistRouter);
 
 app.listen(port, () => {
   // Get db connection

@@ -1,5 +1,5 @@
 const Board = require('../models/board');
-const List = require('../models/list');
+const mongoose = require('mongoose');
 const { body, validationResult } = require('express-validator');
 
 // Get all user's boards
@@ -16,16 +16,41 @@ exports.board_all_get = async (req, res) => {
   }
 };
 
-// Get selected board lists and cards on GET
+// Get selected board lists, cards and subtasks on GET
 exports.board_get = async (req, res) => {
   try {
-    const board = await Board.findById(req.params.id);
+    const boardId = mongoose.Types.ObjectId(req.params.id);
+    const board = await Board.aggregate([
+      {
+        $match: { _id: boardId },
+      },
+      {
+        $lookup: {
+          from: 'lists',
+          localField: '_id',
+          foreignField: 'boardId',
+          as: 'lists',
+        },
+      },
+      {
+        $lookup: {
+          from: 'cards',
+          localField: '_id',
+          foreignField: 'boardId',
+          as: 'cards',
+        },
+      },
+      {
+        $lookup: {
+          from: 'subtasks',
+          localField: '_id',
+          foreignField: 'boardId',
+          as: 'subtasks',
+        },
+      },
+    ]);
 
-    const lists = await List.find({ boardId: req.params.id })
-      .sort({ timestamp: -1 })
-      .populate('cards');
-
-    res.send({ board, lists });
+    res.send(...board);
   } catch (error) {
     res.send(error);
   }

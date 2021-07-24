@@ -1,15 +1,67 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Card from '../components/Card';
+import api from '../config/axiosConfig';
+import ClickOutside from '../hooks/ClickOutside';
+import EditableText from '../hooks/EditableText';
+import { ACTIONS } from '../reducers/reducers';
 import CardForm from './CardForm';
 import ListActionsBox from './ListActionsBox';
 
-const List = ({ listData, handleListDelete, dispatch }) => {
+const List = ({ listData, cards, dispatch, toggleCardBox }) => {
   const [listActionsBox, setListActionsBox] = useState(false);
 
+  const boxRef = useRef();
+
+  ClickOutside(boxRef, listActionsBox, () => {
+    toggleActionsBox(!listActionsBox);
+  });
+
+  const updateList = async (list) => {
+    try {
+      dispatch({
+        type: ACTIONS.EDIT_LIST,
+        data: list,
+      });
+
+      await api.patch(`/1/lists/${listData._id}`, {
+        listTitle: list.listTitle,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleListDelete = async (id) => {
+    try {
+      const { status } = await api.delete(`/1/lists/${id}`);
+
+      if (status === 200) {
+        dispatch({
+          type: ACTIONS.DELETE_LIST,
+          data: id,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const toggleActionsBox = () => {
+    setListActionsBox(!listActionsBox);
+  };
+
+  const handleTitleUpdate = (value) => {
+    const updatedList = { ...listData, listTitle: value };
+    updateList(updatedList);
+  };
+
   return (
-    <div className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-200 shadow-md w-64 mx-1.5 rounded-sm'>
+    <div className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-100 shadow-md w-64 mx-1.5 rounded-sm'>
       <div className='flex justify-between items-center py-2 px-2'>
-        <span className='font-medium px-2'>{listData.listTitle}</span>
+        <EditableText
+          value={listData.listTitle}
+          handleTitleUpdate={handleTitleUpdate}
+        />
         <div>
           <button
             onClick={() => setListActionsBox(!listActionsBox)}
@@ -19,15 +71,18 @@ const List = ({ listData, handleListDelete, dispatch }) => {
 
           {!listActionsBox ? null : (
             <ListActionsBox
-              setListActionsBox={setListActionsBox}
+              toggleActionsBox={toggleActionsBox}
+              boxRef={boxRef}
               handleListDelete={handleListDelete}
               listData={listData}
             />
           )}
         </div>
       </div>
-      {listData.cards.map((card) => {
-        return <Card key={card._id} cardData={card} />;
+      {cards.map((card) => {
+        return card.listId === listData._id ? (
+          <Card key={card._id} cardData={card} toggleCardBox={toggleCardBox} />
+        ) : null;
       })}
 
       <CardForm listData={listData} dispatch={dispatch} />
