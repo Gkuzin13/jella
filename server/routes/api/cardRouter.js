@@ -16,6 +16,12 @@ router.put(
   cardController.update_card_put
 );
 
+router.patch(
+  '/1/cards/:id/priority',
+  auth.checkAuthenticated,
+  cardController.update_card_priority_patch
+);
+
 router.delete(
   '/1/cards/:id',
   auth.checkAuthenticated,

@@ -64,9 +64,9 @@ const CheckList = ({ dispatch, selectedCard, subtasks }) => {
   };
 
   return (
-    <div className='flex flex-col items-start my-3'>
+    <div className='flex flex-col items-start my-5'>
       <div className='flex items-center text-gray-800'>
-        <span className='material-icons mr-3'>check_box</span>
+        <span className='material-icons mr-2.5'>assignment_turned_in</span>
         <span className='font-semibold text-xl'>Checklist</span>
       </div>
 

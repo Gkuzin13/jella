@@ -7,7 +7,7 @@ const EditableText = ({ value, handleTitleUpdate }) => {
     setTextValue(e.target.value);
   };
   return (
-    <div className='mr-1 pt-1'>
+    <div className='mb-1 mr-1 pt-1'>
       <h2 className='font-medium p-1 px-2 hidden'>{value}</h2>
       <input
         onBlur={() => handleTitleUpdate(textValue)}

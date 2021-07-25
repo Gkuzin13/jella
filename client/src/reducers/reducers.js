@@ -9,6 +9,7 @@ export const ACTIONS = {
   CREATE_SUBTASK: 'create-subtask',
   EDIT_SUBTASK: 'edit-subtask',
   DELETE_SUBTASK: 'delete-subtask',
+  UPDATE_PRIORITY: 'update-priority',
 };
 
 export const reducer = (boardData, action) => {
@@ -67,8 +68,19 @@ export const reducer = (boardData, action) => {
       const filteredChecklists = boardData.subtasks.filter((task) => {
         return task._id !== action.data.taskId ? task : null;
       });
-
       return { ...boardData, subtasks: filteredChecklists };
+
+    case ACTIONS.UPDATE_PRIORITY:
+      const newCardsPriority = boardData.cards.map((card) => {
+        return card._id === action.data.cardId
+          ? { ...card, priority: action.data.priority }
+          : card;
+      });
+
+      console.log(newCardsPriority);
+
+      return { ...boardData, cards: newCardsPriority };
+
     default:
       return boardData;
   }

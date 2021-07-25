@@ -73,6 +73,31 @@ exports.update_card_put = [
   },
 ];
 
+// Handle card update on PUT
+exports.update_card_priority_patch = [
+  body('priority', 'Title must not be empty').isString(),
+
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.send(errors.array());
+    }
+
+    try {
+      const newPriority = await Card.findOneAndUpdate(
+        { _id: req.params.id },
+        { priority: req.body.priority },
+        { new: true }
+      );
+
+      res.send(newPriority);
+    } catch (error) {
+      res.send(error);
+    }
+  },
+];
+
 // Handle card delete on DELETE
 exports.card_delete = async (req, res) => {
   try {

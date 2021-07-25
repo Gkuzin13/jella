@@ -13,20 +13,19 @@ const DescriptionForm = ({
   };
 
   return (
-    <div className='py-3'>
-      <button
+    <div>
+      <div
         onClick={() => setDescForm(true)}
         className={`${
           descForm
             ? 'opacity-0 hidden'
-            : 'flex items-center shadow bg-gray-50 hover:bg-gray-100 py-2.5 px-2.5 transition-opacity duration-75'
+            : ' hover:bg-gray-100 p-2.5 transition-opacity duration-75 break-all'
         } `}>
-        <p className='text-left text-gray-600 '>
+        <p className='text-left text-gray-600'>
           {description || 'Add a more detailed description...'}
         </p>
-      </button>
-      <form
-        onSubmit={(e) => handleDescUpdate(e)}
+      </div>
+      <div
         className={`${
           descForm ? 'block' : 'opacity-0 hidden'
         } w-full transition-opacity duration-75`}>
@@ -35,24 +34,25 @@ const DescriptionForm = ({
           onChange={(e) => onValueChange(e)}
           name='description'
           placeholder='Add a more detailed description...'
-          className=' resize-none p-2 w-full rounded-sm border-2'></textarea>
+          className='p-2 w-full rounded-sm border-2 h-auto'
+        />
         <div className='flex items-center py-1'>
           <button
-            type='submit'
+            onClick={() => handleDescUpdate(descValue)}
+            type='button'
             className='bg-green-600 text-white px-3 py-1 rounded-sm'>
             Save
           </button>
           <button
+            type='button'
             className='flex items-center ml-2'
             onClick={() => setDescForm(false)}>
-            <span
-              type='button'
-              className='material-icons cursor-pointer ml-1 hover:text-black'>
+            <span className='material-icons cursor-pointer ml-1 hover:text-black'>
               close
             </span>
           </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 };
