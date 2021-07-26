@@ -7,7 +7,7 @@ import { ACTIONS } from '../reducers/reducers';
 import CardForm from './CardForm';
 import ListActionsBox from './ListActionsBox';
 
-const List = ({ listData, cards, dispatch, toggleCardBox }) => {
+const List = ({ listData, cards, subtasks, dispatch, toggleCardBox }) => {
   const [listActionsBox, setListActionsBox] = useState(false);
 
   const boxRef = useRef();
@@ -81,7 +81,12 @@ const List = ({ listData, cards, dispatch, toggleCardBox }) => {
       </div>
       {cards.map((card) => {
         return card.listId === listData._id ? (
-          <Card key={card._id} cardData={card} toggleCardBox={toggleCardBox} />
+          <Card
+            key={card._id}
+            cardData={card}
+            subtasks={subtasks}
+            toggleCardBox={toggleCardBox}
+          />
         ) : null;
       })}
 

@@ -1,9 +1,9 @@
-import SubTaskForm from './SubTaskForm';
-import { ACTIONS } from '../reducers/reducers';
-import api from '../config/axiosConfig';
+import { ACTIONS } from '../../reducers/reducers';
+import api from '../../config/axiosConfig';
 import { useState } from 'react';
-import SubTask from './SubTask';
-import ProgressBar from './ProgressBar';
+import SubTask from '../CardDetailsBox/SubTask';
+import SubTaskForm from '../CardDetailsBox/SubTaskForm';
+import ProgressBar from '../CardDetailsBox/ProgressBar';
 
 const CheckList = ({ dispatch, selectedCard, subtasks }) => {
   const [taskForm, setTaskForm] = useState(false);
@@ -66,11 +66,11 @@ const CheckList = ({ dispatch, selectedCard, subtasks }) => {
   return (
     <div className='flex flex-col items-start my-5'>
       <div className='flex items-center text-gray-800'>
-        <span className='material-icons mr-2.5'>assignment_turned_in</span>
+        <span className='material-icons mr-2.5'>event_available</span>
         <span className='font-semibold text-xl'>Checklist</span>
       </div>
 
-      <ProgressBar subtasks={subtasks} />
+      <ProgressBar subtasks={subtasks} cardId={selectedCard._id} />
 
       <SubTask
         toggleCheckbox={toggleCheckbox}

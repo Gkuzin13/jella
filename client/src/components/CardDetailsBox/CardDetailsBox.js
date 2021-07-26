@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import api from '../config/axiosConfig';
-import { ACTIONS } from '../reducers/reducers';
-import DescriptionForm from './DescriptionForm';
-import EditableText from '../hooks/EditableText';
-import CheckList from './CheckList';
-import CardPriority from './CardPriority';
+import api from '../../config/axiosConfig';
+import { ACTIONS } from '../../reducers/reducers';
+import EditableText from '../../hooks/EditableText';
+import CheckList from '../CardDetailsBox/CheckList';
+import CardPriority from '../CardDetailsBox/CardPriority';
+import CardDescription from '../CardDetailsBox/CardDescription';
+import CardDate from './CardDate';
 
 const CardDetailsBox = ({
   toggleCardBox,
@@ -79,35 +80,20 @@ const CardDetailsBox = ({
               />
             </div>
           </div>
-          <div className='my-5'>
-            <div className='flex items-center text-gray-800 mb-1'>
-              <span className='material-icons mr-2.5 '>description</span>
-              <span className='font-semibold text-xl'>Description</span>
-            </div>
-            <DescriptionForm
-              setDescForm={setDescForm}
-              descForm={descForm}
-              handleDescUpdate={handleDescUpdate}
-              description={description}
-            />
-          </div>
 
+          <CardDescription
+            setDescForm={setDescForm}
+            descForm={descForm}
+            handleDescUpdate={handleDescUpdate}
+            description={description}
+          />
           <CheckList
             dispatch={dispatch}
             selectedCard={selectedCard}
             subtasks={cardSubTasks}
           />
-
           <CardPriority dispatch={dispatch} selectedCard={selectedCard} />
-
-          <div>
-            <div className='flex items-center font-semibold text-xl text-gray-800'>
-              <span className='material-icons mr-2.5'>event</span>
-              <h2>Date Added</h2>
-            </div>
-
-            <span>{selectedCard.createdAt}</span>
-          </div>
+          <CardDate selectedCard={selectedCard} />
 
           <div className='self-end py-2'>
             <button

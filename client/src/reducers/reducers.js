@@ -77,8 +77,6 @@ export const reducer = (boardData, action) => {
           : card;
       });
 
-      console.log(newCardsPriority);
-
       return { ...boardData, cards: newCardsPriority };
 
     default:

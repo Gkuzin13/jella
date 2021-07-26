@@ -6,7 +6,7 @@ import List from '../../components/List';
 import ListForm from '../../components/ListForm';
 import { reducer, ACTIONS } from '../../reducers/reducers';
 import Loader from '../../components/Loader';
-import CardDetailsBox from '../../components/CardDetailsBox';
+import CardDetailsBox from '../../components/CardDetailsBox/CardDetailsBox';
 
 const BoardPage = () => {
   const [boardData, dispatch] = useReducer(reducer, []);
@@ -59,6 +59,7 @@ const BoardPage = () => {
             key={list._id}
             listData={list}
             cards={boardData.cards}
+            subtasks={boardData.subtasks}
             dispatch={dispatch}
             toggleCardBox={toggleCardBox}
           />

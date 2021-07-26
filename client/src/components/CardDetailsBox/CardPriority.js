@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import api from '../config/axiosConfig';
-import { ACTIONS } from '../reducers/reducers';
+import api from '../../config/axiosConfig';
+import { ACTIONS } from '../../reducers/reducers';
+import { getPriorityIcon } from '../../utils/getPriorityIcon';
 
 const CardPriority = ({ dispatch, selectedCard }) => {
   const [priority, setPriority] = useState(selectedCard.priority);
@@ -23,16 +24,7 @@ const CardPriority = ({ dispatch, selectedCard }) => {
     }
   };
 
-  const getIcon = () => {
-    switch (priority) {
-      case 'medium':
-        return { color: 'yellow', icon: 'short_text' };
-      case 'high':
-        return { color: 'red', icon: 'sort' };
-      default:
-        return { color: 'green', icon: 'remove' };
-    }
-  };
+  const priorityIcon = getPriorityIcon(priority);
 
   return (
     <div className='my-5'>
@@ -50,8 +42,9 @@ const CardPriority = ({ dispatch, selectedCard }) => {
           <option value='high'>High</option>
         </select>
         <div className='flex items-center'>
-          <span className={`material-icons ml-5 text-${getIcon().color}-500`}>
-            {getIcon().icon}
+          <span
+            className={`material-icons ml-5 text-${priorityIcon.color}-500`}>
+            {priorityIcon.icon}
           </span>
         </div>
       </div>
