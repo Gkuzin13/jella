@@ -40,8 +40,8 @@ exports.create_list_post = [
   },
 ];
 
-// Handle list update on PATCH
-exports.update_list_patch = [
+// Handle list update on PUT
+exports.update_list_put = [
   // Validate form fields
   body('listTitle', 'Title must not be empty.').isLength({ min: 1 }),
 
@@ -57,6 +57,7 @@ exports.update_list_patch = [
         req.params.id,
         {
           listTitle: req.body.listTitle,
+          position: req.body.position,
         },
         {
           new: true,

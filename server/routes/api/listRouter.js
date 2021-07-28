@@ -10,10 +10,10 @@ router.post(
   listController.create_list_post
 );
 
-router.patch(
+router.put(
   '/1/lists/:id',
   auth.checkAuthenticated,
-  listController.update_list_patch
+  listController.update_list_put
 );
 
 router.delete(

@@ -15,6 +15,7 @@ exports.create_subtask_post = [
       const newSubTask = await new SubTask({
         taskName: req.body.taskName,
         isDone: req.body.isDone,
+        position: req.body.position,
         boardId: req.body.boardId,
         cardId: req.body.cardId,
       }).save();
@@ -33,7 +34,7 @@ exports.edit_subtask_patch = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.status(400).send({ errorMsg: errors.array() });
+      return res.sendStatus(401);
     }
 
     try {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import api from '../../config/axiosConfig';
-import { ACTIONS } from '../../reducers/reducers';
+import { ACTIONS } from '../../hooks/reducers/reducers';
 import { getPriorityIcon } from '../../utils/getPriorityIcon';
 
 const CardPriority = ({ dispatch, selectedCard }) => {

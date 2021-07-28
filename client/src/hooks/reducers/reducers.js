@@ -10,12 +10,22 @@ export const ACTIONS = {
   EDIT_SUBTASK: 'edit-subtask',
   DELETE_SUBTASK: 'delete-subtask',
   UPDATE_PRIORITY: 'update-priority',
+  REORDER_ITEM_APPEND: 'reorder-item-append',
+  REORDER_ITEM_INSERT: 'reorder-item-insert',
+  REORDER_ITEM_PREPEND: 'reorder-item-prepend',
 };
 
 export const reducer = (boardData, action) => {
   switch (action.type) {
     case ACTIONS.SET_BOARD:
-      return action.data;
+      const sortedLists = action.data.lists.sort((a, b) => {
+        return a.position - b.position;
+      });
+
+      return {
+        ...action.data,
+        lists: sortedLists,
+      };
 
     case ACTIONS.CREATE_LIST:
       return { ...boardData, lists: boardData.lists.concat(action.data) };

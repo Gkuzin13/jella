@@ -24,18 +24,7 @@ const ListActionsBox = ({
         }>
         <span>Add card...</span>
       </button>
-      <button
-        className={
-          'flex items-center w-full hover:bg-gray-200 p-1.5 transition-opacity duration-75 rounded-sm'
-        }>
-        <span>Move list...</span>
-      </button>
-      <button
-        className={
-          'flex items-center w-full hover:bg-gray-200 p-1.5 transition-opacity duration-75 rounded-sm'
-        }>
-        <span>Sort list...</span>
-      </button>
+
       <button
         onClick={() => handleListDelete(listData._id)}
         className={

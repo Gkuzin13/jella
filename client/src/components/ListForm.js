@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import api from '../config/axiosConfig';
-import { ACTIONS } from '../reducers/reducers';
+import { ACTIONS } from '../hooks/reducers/reducers';
+import { appendNew } from '../utils/reorderer';
 
-const ListForm = ({ boardId, dispatch }) => {
+const ListForm = ({ boardId, lists, dispatch }) => {
   const [listForm, setListForm] = useState(false);
   const [listTitle, setListTitle] = useState('');
 
@@ -12,19 +13,16 @@ const ListForm = ({ boardId, dispatch }) => {
     try {
       const { data } = await api.post('/1/lists/', {
         listTitle: listTitle,
-        position: 5,
+        position: appendNew(lists),
         boardId: boardId,
       });
-
       if (data) {
         dispatch({
           type: ACTIONS.CREATE_LIST,
           data: data,
         });
         console.log(data);
-
         setListForm(false);
-
         setListTitle('');
       }
     } catch (error) {
@@ -33,7 +31,7 @@ const ListForm = ({ boardId, dispatch }) => {
   };
 
   return (
-    <div className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-100 shadow-md w-64 p-2 mx-1.5 rounded-sm hover:bg-gray-200'>
+    <div className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-200 shadow-md w-64 p-2 mx-1.5 rounded-sm hover:bg-gray-200'>
       <button
         onClick={() => setListForm(true)}
         className={`${

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import api from '../config/axiosConfig';
-import { ACTIONS } from '../reducers/reducers';
+import { ACTIONS } from '../hooks/reducers/reducers';
+import { appendNew } from '../utils/reorderer';
 
 const CardForm = ({ listData, dispatch }) => {
   const [cardForm, setCardForm] = useState(false);
@@ -12,9 +13,9 @@ const CardForm = ({ listData, dispatch }) => {
     try {
       const newCard = {
         cardTitle: cardTitle,
+        position: appendNew(listData),
         listId: listData._id,
         boardId: listData.boardId,
-        position: 1,
       };
       const res = await api.post('/1/cards/', newCard);
 

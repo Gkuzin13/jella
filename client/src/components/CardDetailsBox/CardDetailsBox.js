@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import api from '../../config/axiosConfig';
-import { ACTIONS } from '../../reducers/reducers';
+import { ACTIONS } from '../../hooks/reducers/reducers';
 import EditableText from '../../hooks/EditableText';
 import CheckList from '../CardDetailsBox/CheckList';
 import CardPriority from '../CardDetailsBox/CardPriority';

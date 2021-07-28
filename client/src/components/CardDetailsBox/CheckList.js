@@ -1,9 +1,10 @@
-import { ACTIONS } from '../../reducers/reducers';
+import { ACTIONS } from '../../hooks/reducers/reducers';
 import api from '../../config/axiosConfig';
 import { useState } from 'react';
 import SubTask from '../CardDetailsBox/SubTask';
 import SubTaskForm from '../CardDetailsBox/SubTaskForm';
 import ProgressBar from '../CardDetailsBox/ProgressBar';
+import { appendNew } from '../../utils/reorderer';
 
 const CheckList = ({ dispatch, selectedCard, subtasks }) => {
   const [taskForm, setTaskForm] = useState(false);
@@ -13,6 +14,7 @@ const CheckList = ({ dispatch, selectedCard, subtasks }) => {
 
     const newSubtask = {
       taskName: e.target.taskName.value,
+      position: appendNew(subtasks),
       boardId: selectedCard.boardId,
       cardId: selectedCard._id,
     };
