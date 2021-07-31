@@ -1,22 +1,24 @@
 import { useRef, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import Card from '../components/Card';
-import api from '../config/axiosConfig';
+import { deleteList, updateList } from '../api/listController';
 import ClickOutside from '../hooks/ClickOutside';
 import EditableText from '../hooks/EditableText';
 import { ACTIONS } from '../hooks/reducers/reducers';
-import CardForm from './CardForm';
+import CardsContainer from './CardsContainer';
 import ListActionsBox from './ListActionsBox';
 
 const List = ({
   listData,
   cards,
   subtasks,
-  dispatch,
+  dispatchLists,
+  dispatchCards,
   toggleCardBox,
   index,
 }) => {
   const [listActionsBox, setListActionsBox] = useState(false);
+
+  const listCards = cards.filter((card) => card.listId === listData._id);
 
   const boxRef = useRef();
 
@@ -24,49 +26,29 @@ const List = ({
     toggleActionsBox(!listActionsBox);
   });
 
-  const updateList = async (list) => {
-    try {
-      dispatch({
-        type: ACTIONS.EDIT_LIST,
-        data: list,
-      });
-
-      await api.put(`/1/lists/${listData._id}`, {
-        listTitle: list.listTitle,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleListDelete = async (id) => {
-    try {
-      const { status } = await api.delete(`/1/lists/${id}`);
-
-      if (status === 200) {
-        dispatch({
-          type: ACTIONS.DELETE_LIST,
-          data: id,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const toggleActionsBox = () => {
     setListActionsBox(!listActionsBox);
   };
 
   const handleTitleUpdate = (value) => {
     const updatedList = { ...listData, listTitle: value };
+
+    dispatchLists({
+      type: ACTIONS.EDIT_LIST,
+      data: updatedList,
+    });
+
     updateList(updatedList);
   };
 
-  const handleListPos = (value) => {
-    const updatedList = { ...listData, position: value };
+  const handleListDelete = (id) => {
+    dispatchLists({
+      type: ACTIONS.DELETE_LIST,
+      data: id,
+    });
+    setListActionsBox(false);
 
-    updateList(updatedList);
+    deleteList(id);
   };
 
   return (
@@ -94,23 +76,19 @@ const List = ({
                   toggleActionsBox={toggleActionsBox}
                   boxRef={boxRef}
                   handleListDelete={handleListDelete}
-                  listData={listData}
+                  listId={listData._id}
                 />
               )}
             </div>
           </div>
-          {cards.map((card) => {
-            return card.listId === listData._id ? (
-              <Card
-                key={card._id}
-                cardData={card}
-                subtasks={subtasks}
-                toggleCardBox={toggleCardBox}
-              />
-            ) : null;
-          })}
 
-          <CardForm listData={listData} dispatch={dispatch} />
+          <CardsContainer
+            cards={listCards}
+            subtasks={subtasks}
+            listId={listData._id}
+            dispatchCards={dispatchCards}
+            toggleCardBox={toggleCardBox}
+          />
         </div>
       )}
     </Draggable>

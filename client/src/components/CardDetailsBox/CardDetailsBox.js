@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import api from '../../config/axiosConfig';
 import { ACTIONS } from '../../hooks/reducers/reducers';
 import EditableText from '../../hooks/EditableText';
 import CheckList from '../CardDetailsBox/CheckList';
 import CardPriority from '../CardDetailsBox/CardPriority';
 import CardDescription from '../CardDetailsBox/CardDescription';
 import CardDate from './CardDate';
+import { deleteCard, updateCard } from '../../api/cardController';
 
 const CardDetailsBox = ({
   toggleCardBox,
@@ -20,32 +20,23 @@ const CardDetailsBox = ({
   });
   const { cardTitle, description } = selectedCard;
 
-  const updateCard = async (card) => {
-    try {
-      dispatch({
-        type: ACTIONS.EDIT_CARD,
-        data: card,
-      });
-
-      await api.put(`/1/cards/${selectedCard._id}/`, card);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleCardUpdate = (card) => {
+    dispatch({
+      type: ACTIONS.EDIT_CARD,
+      data: card,
+    });
+    updateCard(card);
   };
 
-  const handleCardDelete = async () => {
-    try {
-      await api.delete(`/1/cards/${selectedCard._id}`);
+  const handleCardDelete = () => {
+    dispatch({
+      type: ACTIONS.DELETE_CARD,
+      data: { id: selectedCard._id },
+    });
 
-      dispatch({
-        type: ACTIONS.DELETE_CARD,
-        data: selectedCard,
-      });
+    toggleCardBox({}, false);
 
-      toggleCardBox({}, false);
-    } catch (error) {
-      console.log(error);
-    }
+    deleteCard(selectedCard._id);
   };
 
   const handleDescUpdate = (descValue) => {
@@ -53,13 +44,13 @@ const CardDetailsBox = ({
 
     toggleCardBox(updatedCard, true);
     setDescForm(false);
-    updateCard(updatedCard);
+    handleCardUpdate(updatedCard);
   };
 
   const handleTitleUpdate = (value) => {
     const updatedCard = { ...selectedCard, cardTitle: value };
 
-    updateCard(updatedCard);
+    handleCardUpdate(updatedCard);
   };
 
   return (

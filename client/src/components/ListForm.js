@@ -1,33 +1,31 @@
 import { useState } from 'react';
-import api from '../config/axiosConfig';
+import { Types } from 'mongoose';
+import { createList } from '../api/listController';
 import { ACTIONS } from '../hooks/reducers/reducers';
-import { appendNew } from '../utils/reorderer';
+import { appendItem } from '../utils/reorderer';
 
-const ListForm = ({ boardId, lists, dispatch }) => {
+const ListForm = ({ boardId, lists, dispatchLists }) => {
   const [listForm, setListForm] = useState(false);
   const [listTitle, setListTitle] = useState('');
 
   const handleNewList = async (e) => {
     e.preventDefault();
 
-    try {
-      const { data } = await api.post('/1/lists/', {
-        listTitle: listTitle,
-        position: appendNew(lists),
-        boardId: boardId,
-      });
-      if (data) {
-        dispatch({
-          type: ACTIONS.CREATE_LIST,
-          data: data,
-        });
-        console.log(data);
-        setListForm(false);
-        setListTitle('');
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    const newList = {
+      _id: Types.ObjectId().toHexString(),
+      listTitle: listTitle,
+      position: appendItem(lists),
+      boardId: boardId,
+    };
+
+    dispatchLists({
+      type: ACTIONS.CREATE_LIST,
+      data: newList,
+    });
+
+    setListForm(false);
+    setListTitle('');
+    createList(newList);
   };
 
   return (

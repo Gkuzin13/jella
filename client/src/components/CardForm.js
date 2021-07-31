@@ -1,36 +1,36 @@
 import { useState } from 'react';
-import api from '../config/axiosConfig';
+import { useParams } from 'react-router';
+import { Types } from 'mongoose';
+import { createCard } from '../api/cardController';
 import { ACTIONS } from '../hooks/reducers/reducers';
-import { appendNew } from '../utils/reorderer';
+import { appendItem } from '../utils/reorderer';
 
-const CardForm = ({ listData, dispatch }) => {
+const CardForm = ({ listCards, listId, dispatchCards }) => {
   const [cardForm, setCardForm] = useState(false);
   const [cardTitle, setCardTitle] = useState('');
+
+  const { id } = useParams();
 
   const handleCardCreate = async (e) => {
     e.preventDefault();
 
-    try {
-      const newCard = {
-        cardTitle: cardTitle,
-        position: appendNew(listData),
-        listId: listData._id,
-        boardId: listData.boardId,
-      };
-      const res = await api.post('/1/cards/', newCard);
+    const newCard = {
+      _id: Types.ObjectId().toHexString(),
+      cardTitle: cardTitle,
+      position: appendItem(listCards),
+      listId: listId,
+      boardId: id,
+    };
 
-      if (res.data) {
-        dispatch({
-          type: ACTIONS.CREATE_CARD,
-          data: res.data,
-        });
+    dispatchCards({
+      type: ACTIONS.CREATE_CARD,
+      data: newCard,
+    });
 
-        setCardForm(false);
-        setCardTitle('');
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    setCardForm(false);
+    setCardTitle('');
+
+    createCard(newCard);
   };
 
   return (
@@ -63,11 +63,10 @@ const CardForm = ({ listData, dispatch }) => {
             Add card
           </button>
           <button
+            type='button'
             className='flex items-center ml-2'
             onClick={() => setCardForm(false)}>
-            <span
-              type='button'
-              className='material-icons cursor-pointer ml-1 hover:text-black'>
+            <span className='material-icons cursor-pointer ml-1 hover:text-black'>
               close
             </span>
           </button>

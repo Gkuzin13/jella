@@ -1,10 +1,15 @@
-import { ACTIONS } from '../../hooks/reducers/reducers';
-import api from '../../config/axiosConfig';
 import { useState } from 'react';
+import { Types } from 'mongoose';
+import { ACTIONS } from '../../hooks/reducers/reducers';
 import SubTask from '../CardDetailsBox/SubTask';
 import SubTaskForm from '../CardDetailsBox/SubTaskForm';
 import ProgressBar from '../CardDetailsBox/ProgressBar';
-import { appendNew } from '../../utils/reorderer';
+import { appendItem } from '../../utils/reorderer';
+import {
+  createSubtask,
+  deleteSubtask,
+  updatedChecked,
+} from '../../api/subtaskController';
 
 const CheckList = ({ dispatch, selectedCard, subtasks }) => {
   const [taskForm, setTaskForm] = useState(false);
@@ -13,52 +18,42 @@ const CheckList = ({ dispatch, selectedCard, subtasks }) => {
     e.preventDefault();
 
     const newSubtask = {
+      _id: Types.ObjectId().toHexString(),
       taskName: e.target.taskName.value,
-      position: appendNew(subtasks),
+      position: appendItem(subtasks),
       boardId: selectedCard.boardId,
       cardId: selectedCard._id,
     };
 
-    try {
-      const { data } = await api.post('/1/checklists/', newSubtask);
+    dispatch({
+      type: ACTIONS.CREATE_SUBTASK,
+      data: newSubtask,
+    });
 
-      dispatch({
-        type: ACTIONS.CREATE_SUBTASK,
-        data: data,
-      });
+    setTaskValue('');
+    toggleTaskForm();
 
-      setTaskValue('');
-      toggleTaskForm();
-    } catch (error) {
-      console.log(error);
-    }
+    createSubtask(newSubtask);
   };
 
-  const toggleCheckbox = async (e, taskId) => {
+  const toggleCheckbox = (e, taskId) => {
     const isDone = e.target.checked;
 
-    try {
-      dispatch({
-        type: ACTIONS.EDIT_SUBTASK,
-        data: { isDone, taskId },
-      });
-      await api.patch(`/1/checklists/${taskId}`, { isDone });
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch({
+      type: ACTIONS.EDIT_SUBTASK,
+      data: { isDone, taskId },
+    });
+
+    updatedChecked(taskId, isDone);
   };
 
-  const deleteSubtask = async (taskId) => {
-    try {
-      dispatch({
-        type: ACTIONS.DELETE_SUBTASK,
-        data: { taskId },
-      });
+  const handleTaskDelete = (taskId) => {
+    dispatch({
+      type: ACTIONS.DELETE_SUBTASK,
+      data: { taskId },
+    });
 
-      await api.delete(`/1/checklists/${taskId}`);
-    } catch (error) {
-      console.log(error);
-    }
+    deleteSubtask(taskId);
   };
 
   const toggleTaskForm = () => {
@@ -76,7 +71,7 @@ const CheckList = ({ dispatch, selectedCard, subtasks }) => {
 
       <SubTask
         toggleCheckbox={toggleCheckbox}
-        deleteSubtask={deleteSubtask}
+        handleTaskDelete={handleTaskDelete}
         subtasks={subtasks}
         cardId={selectedCard._id}
       />

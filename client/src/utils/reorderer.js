@@ -1,25 +1,36 @@
-exports.appendNew = (items) => {
-  if (items.length === 0) return 16384;
+export const appendItem = (items) => {
+  if (items.length === 0) return 16 * 1024;
 
-  const itemsPos = items.map((item) => {
-    return item.position;
-  });
+  const pos = items.map((item) => item.position);
 
-  return Math.max(...itemsPos) + 1024;
+  return Math.max(...pos) + 16 * 1024;
 };
 
-exports.prependItem = (items) => {
-  if (items.length === 0) return 16384;
+export const prependItem = (items) => {
+  if (items.length === 0) return 16 * 1024;
 
-  const itemsPos = items.map((item) => {
-    return item.position;
-  });
+  const pos = items.map((item) => item.position);
 
-  return Math.min(...itemsPos) / 2;
+  return Math.min(...pos) / 2;
 };
 
-exports.insertItem = (prevPos, nextPos, items) => {
-  if (items.length === 0) return 16384;
-
+export const insertItemMiddle = (prevPos, nextPos) => {
   return (prevPos + nextPos) / 2;
+};
+
+export const setNewPos = (items, destination) => {
+  const targetIndex = destination.index;
+
+  if (targetIndex === 0) {
+    return prependItem(items);
+  }
+
+  if (targetIndex === items.length - 1) {
+    return appendItem(items);
+  }
+
+  return insertItemMiddle(
+    items[targetIndex - 1].position,
+    items[targetIndex + 1].position
+  );
 };

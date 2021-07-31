@@ -13,11 +13,11 @@ const mockItems = [
 ];
 
 test('should append new item correctly', () => {
-  expect(reorderer.appendNew(mockItems)).toBe(4096);
+  expect(reorderer.appendItem(mockItems)).toBe(4096);
 });
 
 test('should append new item if array is empty', () => {
-  expect(reorderer.appendNew([])).toBe(1024);
+  expect(reorderer.appendItem([])).toBe(16384);
 });
 
 test('should prepend item correctly', () => {
@@ -26,18 +26,10 @@ test('should prepend item correctly', () => {
 
 test('should insert item in middle correctly', () => {
   expect(
-    reorderer.insertItem(
-      mockItems[0].position,
-      mockItems[1].position,
-      mockItems
-    )
+    reorderer.insertItem(mockItems[0].position, mockItems[1].position)
   ).toBe(1536);
 
   expect(
-    reorderer.insertItem(
-      mockItems[1].position,
-      mockItems[2].position,
-      mockItems
-    )
+    reorderer.insertItem(mockItems[1].position, mockItems[2].position)
   ).toBe(2560);
 });

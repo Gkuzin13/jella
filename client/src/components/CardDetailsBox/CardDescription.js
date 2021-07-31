@@ -35,7 +35,7 @@ const CardDescription = ({
             descForm ? 'block' : 'opacity-0 hidden'
           } w-full transition-opacity duration-75`}>
           <textarea
-            value={descValue}
+            value={descValue || ''}
             onChange={(e) => onValueChange(e)}
             name='description'
             placeholder='Add a more detailed description...'

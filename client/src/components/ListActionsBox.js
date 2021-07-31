@@ -2,7 +2,7 @@ const ListActionsBox = ({
   toggleActionsBox,
   boxRef,
   handleListDelete,
-  listData,
+  listId,
 }) => {
   return (
     <div ref={boxRef} className='fixed my-1 bg-gray-50 p-2 w-64 shadow-md '>
@@ -26,7 +26,7 @@ const ListActionsBox = ({
       </button>
 
       <button
-        onClick={() => handleListDelete(listData._id)}
+        onClick={() => handleListDelete(listId)}
         className={
           'flex items-center w-full hover:bg-red-200  p-1.5 transition-opacity duration-75 rounded-sm'
         }>

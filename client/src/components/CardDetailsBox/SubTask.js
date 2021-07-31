@@ -1,4 +1,4 @@
-const SubTask = ({ toggleCheckbox, deleteSubtask, subtasks, cardId }) => {
+const SubTask = ({ toggleCheckbox, handleTaskDelete, subtasks }) => {
   return (
     <>
       {subtasks.map((task) => {
@@ -24,7 +24,7 @@ const SubTask = ({ toggleCheckbox, deleteSubtask, subtasks, cardId }) => {
 
             <button
               type='button'
-              onClick={() => deleteSubtask(task._id)}
+              onClick={() => handleTaskDelete(task._id)}
               className='flex items-center text-gray-300'>
               <span className='material-icons hover:text-red-500'>clear</span>
             </button>
