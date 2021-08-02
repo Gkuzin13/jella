@@ -26,6 +26,7 @@ exports.create_card_post = [
 
     try {
       const newCard = await new Card({
+        _id: req.body._id,
         cardTitle: req.body.cardTitle,
         position: req.body.position,
         listId: req.body.listId,

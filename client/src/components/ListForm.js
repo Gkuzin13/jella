@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Types } from 'mongoose';
 import { createList } from '../api/listController';
 import { ACTIONS } from '../hooks/reducers/reducers';
-import { appendItem } from '../utils/reorderer';
+import { appendItem } from '../utils/setNewPos';
 
 const ListForm = ({ boardId, lists, dispatchLists }) => {
   const [listForm, setListForm] = useState(false);
@@ -26,6 +26,8 @@ const ListForm = ({ boardId, lists, dispatchLists }) => {
     setListForm(false);
     setListTitle('');
     createList(newList);
+
+    console.log(newList);
   };
 
   return (

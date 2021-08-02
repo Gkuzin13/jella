@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { Types } from 'mongoose';
 import { createCard } from '../api/cardController';
 import { ACTIONS } from '../hooks/reducers/reducers';
-import { appendItem } from '../utils/reorderer';
+import { appendItem } from '../utils/setNewPos';
 
 const CardForm = ({ listCards, listId, dispatchCards }) => {
   const [cardForm, setCardForm] = useState(false);
@@ -34,7 +34,7 @@ const CardForm = ({ listCards, listId, dispatchCards }) => {
   };
 
   return (
-    <div className='p-1 m-1 text-gray-500 rounded-sm'>
+    <div className='p-1 m-1.5 text-gray-500 rounded-sm'>
       <button
         onClick={() => setCardForm(true)}
         className={`${

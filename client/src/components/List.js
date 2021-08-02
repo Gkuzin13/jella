@@ -10,15 +10,12 @@ import ListActionsBox from './ListActionsBox';
 const List = ({
   listData,
   cards,
-  subtasks,
   dispatchLists,
   dispatchCards,
   toggleCardBox,
   index,
 }) => {
   const [listActionsBox, setListActionsBox] = useState(false);
-
-  const listCards = cards.filter((card) => card.listId === listData._id);
 
   const boxRef = useRef();
 
@@ -46,8 +43,8 @@ const List = ({
       type: ACTIONS.DELETE_LIST,
       data: id,
     });
-    setListActionsBox(false);
 
+    setListActionsBox(false);
     deleteList(id);
   };
 
@@ -58,7 +55,7 @@ const List = ({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-50 shadow-md w-64 mx-1.5 rounded-sm'>
+          className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-50 shadow-md w-64 mx-2 rounded-sm'>
           <div className=' flex justify-between items-center py-2 px-2'>
             <EditableText
               value={listData.listTitle}
@@ -83,8 +80,7 @@ const List = ({
           </div>
 
           <CardsContainer
-            cards={listCards}
-            subtasks={subtasks}
+            cards={cards}
             listId={listData._id}
             dispatchCards={dispatchCards}
             toggleCardBox={toggleCardBox}

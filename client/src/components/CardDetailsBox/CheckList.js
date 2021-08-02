@@ -1,18 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Types } from 'mongoose';
 import { ACTIONS } from '../../hooks/reducers/reducers';
 import SubTask from '../CardDetailsBox/SubTask';
 import SubTaskForm from '../CardDetailsBox/SubTaskForm';
 import ProgressBar from '../CardDetailsBox/ProgressBar';
-import { appendItem } from '../../utils/reorderer';
+import { appendItem } from '../../utils/setNewPos';
 import {
   createSubtask,
   deleteSubtask,
   updatedChecked,
 } from '../../api/subtaskController';
 
-const CheckList = ({ dispatch, selectedCard, subtasks }) => {
+const CheckList = ({ dispatchCards, selectedCard }) => {
   const [taskForm, setTaskForm] = useState(false);
+  const [subtasks, setSubtasks] = useState([]);
+
+  useEffect(() => {
+    setSubtasks(selectedCard.subtasks);
+  }, [selectedCard.subtasks]);
 
   const handleNewSubtask = async (e, setTaskValue) => {
     e.preventDefault();
@@ -20,18 +25,23 @@ const CheckList = ({ dispatch, selectedCard, subtasks }) => {
     const newSubtask = {
       _id: Types.ObjectId().toHexString(),
       taskName: e.target.taskName.value,
-      position: appendItem(subtasks),
+      position: appendItem(selectedCard.subtasks),
       boardId: selectedCard.boardId,
       cardId: selectedCard._id,
+      isDone: false,
     };
 
-    dispatch({
+    console.log(newSubtask);
+
+    dispatchCards({
       type: ACTIONS.CREATE_SUBTASK,
-      data: newSubtask,
+      data: { id: selectedCard._id, newSubtask },
     });
 
     setTaskValue('');
     toggleTaskForm();
+
+    setSubtasks(subtasks.concat(newSubtask));
 
     createSubtask(newSubtask);
   };
@@ -39,16 +49,16 @@ const CheckList = ({ dispatch, selectedCard, subtasks }) => {
   const toggleCheckbox = (e, taskId) => {
     const isDone = e.target.checked;
 
-    dispatch({
+    dispatchCards({
       type: ACTIONS.EDIT_SUBTASK,
-      data: { isDone, taskId },
+      data: { isDone, taskId, cardId: selectedCard._id },
     });
 
     updatedChecked(taskId, isDone);
   };
 
   const handleTaskDelete = (taskId) => {
-    dispatch({
+    dispatchCards({
       type: ACTIONS.DELETE_SUBTASK,
       data: { taskId },
     });
@@ -60,6 +70,8 @@ const CheckList = ({ dispatch, selectedCard, subtasks }) => {
     setTaskForm(!taskForm);
   };
 
+  console.log(subtasks);
+
   return (
     <div className='flex flex-col items-start my-5'>
       <div className='flex items-center text-gray-800'>
@@ -67,14 +79,19 @@ const CheckList = ({ dispatch, selectedCard, subtasks }) => {
         <span className='font-semibold text-xl'>Checklist</span>
       </div>
 
-      <ProgressBar subtasks={subtasks} cardId={selectedCard._id} />
+      <ProgressBar subtasks={selectedCard.subtasks} cardId={selectedCard._id} />
 
-      <SubTask
-        toggleCheckbox={toggleCheckbox}
-        handleTaskDelete={handleTaskDelete}
-        subtasks={subtasks}
-        cardId={selectedCard._id}
-      />
+      {subtasks.map((subtask) => {
+        return (
+          <SubTask
+            key={subtask._id}
+            toggleCheckbox={toggleCheckbox}
+            handleTaskDelete={handleTaskDelete}
+            subtask={subtask}
+            cardId={selectedCard._id}
+          />
+        );
+      })}
 
       <SubTaskForm
         taskForm={taskForm}

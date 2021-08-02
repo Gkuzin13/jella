@@ -35,17 +35,23 @@ exports.board_get = async (req, res) => {
       {
         $lookup: {
           from: 'cards',
-          localField: '_id',
-          foreignField: 'boardId',
+          let: { boardId: '$_id' },
+          pipeline: [
+            { $match: { $expr: { $eq: ['$boardId', '$$boardId'] } } },
+            {
+              $lookup: {
+                from: 'subtasks',
+                let: { cardId: '$_id' },
+                pipeline: [
+                  {
+                    $match: { $expr: { $eq: ['$cardId', '$$cardId'] } },
+                  },
+                ],
+                as: 'subtasks',
+              },
+            },
+          ],
           as: 'cards',
-        },
-      },
-      {
-        $lookup: {
-          from: 'subtasks',
-          localField: '_id',
-          foreignField: 'boardId',
-          as: 'subtasks',
         },
       },
     ]);

@@ -6,7 +6,6 @@ const BoardCanvas = ({
   boardId,
   lists,
   cards,
-  subtasks,
   dispatchLists,
   dispatchCards,
   toggleCardBox,
@@ -19,13 +18,13 @@ const BoardCanvas = ({
           ref={provided.innerRef}
           className='flex items-start p-2'>
           {lists.map((list, index) => {
+            const listCards = cards.filter((card) => card.listId === list._id);
             return (
               <List
                 key={list._id}
                 index={index}
                 listData={list}
-                cards={cards}
-                subtasks={subtasks}
+                cards={listCards}
                 dispatchLists={dispatchLists}
                 dispatchCards={dispatchCards}
                 toggleCardBox={toggleCardBox}

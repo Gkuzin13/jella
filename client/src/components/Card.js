@@ -2,8 +2,8 @@ import { Draggable } from 'react-beautiful-dnd';
 import { getPriorityIcon } from '../utils/getPriorityIcon';
 import { calcTasksStats } from '../utils/getProgressStats';
 
-const Card = ({ cardData, subtasks, toggleCardBox, index }) => {
-  const { total, done } = calcTasksStats(subtasks, cardData._id);
+const Card = ({ cardData, toggleCardBox, index }) => {
+  const { total, done } = calcTasksStats(cardData.subtasks || [], cardData._id);
 
   const priorityIcon = getPriorityIcon(cardData.priority);
 
@@ -16,7 +16,7 @@ const Card = ({ cardData, subtasks, toggleCardBox, index }) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className='mx-2.5 my-1 py-1.5 px-2 bg-white shadow-md cursor-pointer hover:bg-white hover:shadow-lg transition-all duration-200 rounded-sm'>
+          className='mx-2.5 mb-3 py-1.5 px-2 bg-white shadow-md cursor-pointer rounded-sm'>
           <div
             onClick={() => toggleCardBox(cardData, true)}
             className='flex flex-col w-full'>

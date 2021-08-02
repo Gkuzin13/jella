@@ -28,6 +28,7 @@ exports.create_list_post = [
     try {
       // Create new list object
       const newList = await new List({
+        _id: req.body._id,
         listTitle: req.body.listTitle,
         boardId: req.body.boardId,
         position: req.body.position,

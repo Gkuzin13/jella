@@ -1,5 +1,3 @@
-import { setNewPos } from '../../utils/reorderer';
-
 export const ACTIONS = {
   SET_LISTS: 'set-lists',
   CREATE_LIST: 'create-list',
@@ -24,9 +22,10 @@ export const listReducer = (lists, action) => {
 
   switch (action.type) {
     case ACTIONS.SET_LISTS:
-      return data.lists.sort((a, b) => a.position - b.position);
+      return data.sort((a, b) => a.position - b.position);
     case ACTIONS.CREATE_LIST:
-      return lists.concat(data);
+      const listsCopy = [...lists];
+      return listsCopy.concat(data);
 
     case ACTIONS.EDIT_LIST:
       const updatedLists = lists.map((list) => {
@@ -43,19 +42,7 @@ export const listReducer = (lists, action) => {
       return filteredLists;
 
     case ACTIONS.REORDER_LIST:
-      const listsCopy = [...lists];
-      const draggedList = listsCopy[data.source.index];
-
-      listsCopy.splice(data.source.index, 1);
-
-      listsCopy.splice(data.destination.index, 0, draggedList);
-
-      listsCopy.splice(data.destination.index, 1, {
-        ...draggedList,
-        position: setNewPos(listsCopy, data.destination),
-      });
-
-      return listsCopy;
+      return data;
 
     default:
       return lists;
@@ -67,10 +54,11 @@ export const cardReducer = (cards, action) => {
 
   switch (action.type) {
     case ACTIONS.SET_CARDS:
-      return data.cards.sort((a, b) => a.position - b.position);
+      return data.sort((a, b) => a.position - b.position);
 
     case ACTIONS.CREATE_CARD:
-      return cards.concat(data);
+      const cardsCopy = [...cards];
+      return cardsCopy.concat(data);
 
     case ACTIONS.EDIT_CARD:
       const updatedCards = cards.map((card) => {
@@ -95,71 +83,39 @@ export const cardReducer = (cards, action) => {
       return newCardsPriority;
 
     case ACTIONS.REORDER_CARD:
-      const sourceList = data.source.droppableId;
-      const targetList = data.destination.droppableId;
-
-      if (sourceList === targetList) {
-        const listCards = cards.filter((card) => card.listId === targetList);
-        const sourceCards = cards.filter((card) => card.listId !== sourceList);
-        const draggedCard = cards.find((card) => card._id === data.draggableId);
-
-        listCards.splice(data.source.index, 1);
-        listCards.splice(data.destination.index, 0, draggedCard);
-        listCards.splice(data.destination.index, 1, {
-          ...draggedCard,
-          position: setNewPos(listCards, data.destination),
-        });
-
-        return [...sourceCards, ...listCards];
-      } else {
-        const listCards = cards.filter((card) => card.listId === targetList);
-        const sourceCards = cards.filter((card) => card.listId === sourceList);
-        const draggedCard = cards.find((card) => card._id === data.draggableId);
-
-        sourceCards.splice(data.source.index, 1);
-
-        listCards.splice(data.destination.index, 0, draggedCard);
-        listCards.splice(data.destination.index, 1, {
-          ...draggedCard,
-          position: setNewPos(listCards, data.destination),
-          listId: targetList,
-        });
-
-        return [...sourceCards, ...listCards];
-      }
-
-    default:
-      return cards;
-  }
-};
-
-export const checklistReducer = (subtasks, action) => {
-  const { data } = action;
-
-  switch (action.type) {
-    case ACTIONS.SET_CHECKLIST:
-      return data.subtasks.sort((a, b) => a.position - b.position);
+      return data;
 
     case ACTIONS.CREATE_SUBTASK:
-      return subtasks.concat(data);
-
-    case ACTIONS.EDIT_SUBTASK:
-      const updatedChecklist = subtasks.map((task) => {
-        return task._id !== data.taskId
-          ? task
-          : { ...task, isDone: data.isDone };
+      const updatedCard = [...cards].map((card) => {
+        return card._id === data.id
+          ? { ...card, subtasks: card.subtasks.concat(data.newSubtask) }
+          : card;
       });
 
-      return updatedChecklist;
+      return updatedCard;
+
+    case ACTIONS.EDIT_SUBTASK:
+      const { subtasks } = cards.find((card) => card._id === data.cardId);
+      const updatedStatus = subtasks.map((s) => {
+        return s._id === data.taskId ? { ...s, isDone: data.isDone } : s;
+      });
+
+      const updatedCardsStatus = cards.map((card) => {
+        return card._id === data.cardId
+          ? { ...card, subtasks: updatedStatus }
+          : card;
+      });
+
+      return updatedCardsStatus;
 
     case ACTIONS.DELETE_SUBTASK:
-      const filteredChecklists = subtasks.filter((task) => {
+      const filteredChecklists = cards.filter((task) => {
         return task._id !== data.taskId ? task : null;
       });
       return filteredChecklists;
 
     case ACTIONS.REORDER_SUBTASK:
-      const updatedSubtasksPos = subtasks
+      const updatedSubtasksPos = cards
         .map((task) => {
           return task._id === data.draggableId
             ? { ...task, position: data.newPos }
@@ -172,6 +128,6 @@ export const checklistReducer = (subtasks, action) => {
       return updatedSubtasksPos;
 
     default:
-      return subtasks;
+      return cards;
   }
 };

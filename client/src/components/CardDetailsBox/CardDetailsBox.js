@@ -7,21 +7,16 @@ import CardDescription from '../CardDetailsBox/CardDescription';
 import CardDate from './CardDate';
 import { deleteCard, updateCard } from '../../api/cardController';
 
-const CardDetailsBox = ({
-  toggleCardBox,
-  selectedCard,
-  subtasks,
-  dispatch,
-}) => {
+const CardDetailsBox = ({ toggleCardBox, selectedCard, dispatchCards }) => {
   const [descForm, setDescForm] = useState(false);
 
-  const cardSubTasks = subtasks.filter((task) => {
+  const cardSubTasks = selectedCard.subtasks.filter((task) => {
     return task.cardId === selectedCard._id;
   });
   const { cardTitle, description } = selectedCard;
 
   const handleCardUpdate = (card) => {
-    dispatch({
+    dispatchCards({
       type: ACTIONS.EDIT_CARD,
       data: card,
     });
@@ -29,7 +24,7 @@ const CardDetailsBox = ({
   };
 
   const handleCardDelete = () => {
-    dispatch({
+    dispatchCards({
       type: ACTIONS.DELETE_CARD,
       data: { id: selectedCard._id },
     });
@@ -79,11 +74,14 @@ const CardDetailsBox = ({
             description={description}
           />
           <CheckList
-            dispatch={dispatch}
+            dispatchCards={dispatchCards}
             selectedCard={selectedCard}
             subtasks={cardSubTasks}
           />
-          <CardPriority dispatch={dispatch} selectedCard={selectedCard} />
+          <CardPriority
+            dispatchCards={dispatchCards}
+            selectedCard={selectedCard}
+          />
           <CardDate selectedCard={selectedCard} />
 
           <div className='self-end py-2'>

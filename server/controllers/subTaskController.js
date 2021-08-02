@@ -13,6 +13,7 @@ exports.create_subtask_post = [
 
     try {
       const newSubTask = await new SubTask({
+        _id: req.body._id,
         taskName: req.body.taskName,
         isDone: req.body.isDone,
         position: req.body.position,

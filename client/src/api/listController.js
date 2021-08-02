@@ -12,9 +12,11 @@ export const createList = async (listData) => {
   }
 };
 
-export const updateList = async (id, position, listTitle) => {
+export const updateList = async (updatedList) => {
+  const { _id, listTitle, position } = updatedList;
+
   try {
-    await api.put(`/1/lists/${id}`, {
+    await api.put(`/1/lists/${_id}`, {
       listTitle,
       position,
     });
