@@ -8,9 +8,9 @@ export const createSubtask = async (subtask) => {
   }
 };
 
-export const updatedChecked = async (taskId, isDone) => {
+export const updateSubtask = async (taskId, data) => {
   try {
-    await api.patch(`/1/checklists/${taskId}`, { isDone });
+    await api.put(`/1/checklists/${taskId}`, data);
   } catch (error) {
     console.log(error);
   }

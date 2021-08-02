@@ -95,37 +95,39 @@ export const cardReducer = (cards, action) => {
       return updatedCard;
 
     case ACTIONS.EDIT_SUBTASK:
-      const { subtasks } = cards.find((card) => card._id === data.cardId);
-      const updatedStatus = subtasks.map((s) => {
-        return s._id === data.taskId ? { ...s, isDone: data.isDone } : s;
+      const { subtasks: tasksToEdit } = data.selectedCard;
+      const updatedSubtask = tasksToEdit.map((t) => {
+        return t._id === data.taskId ? { ...t, isDone: data.isDone } : t;
       });
 
-      const updatedCardsStatus = cards.map((card) => {
-        return card._id === data.cardId
-          ? { ...card, subtasks: updatedStatus }
+      const editedCards = cards.map((card) => {
+        return card._id === data.selectedCard._id
+          ? { ...card, subtasks: updatedSubtask }
           : card;
       });
 
-      return updatedCardsStatus;
+      return editedCards;
 
     case ACTIONS.DELETE_SUBTASK:
-      const filteredChecklists = cards.filter((task) => {
-        return task._id !== data.taskId ? task : null;
+      const { subtasks: tasksToDel } = data.selectedCard;
+      const filteredSubtasks = tasksToDel.filter((t) => t._id !== data.taskId);
+
+      const cardSubtasks = cards.map((card) => {
+        return card._id === data.selectedCard._id
+          ? { ...card, subtasks: filteredSubtasks }
+          : card;
       });
-      return filteredChecklists;
+
+      return cardSubtasks;
 
     case ACTIONS.REORDER_SUBTASK:
-      const updatedSubtasksPos = cards
-        .map((task) => {
-          return task._id === data.draggableId
-            ? { ...task, position: data.newPos }
-            : task;
-        })
-        .sort((a, b) => {
-          return a.position - b.position;
-        });
+      const updatedSubtasks = cards.map((card) => {
+        return card._id === data.cardId
+          ? { ...card, subtasks: data.subtasksCopy }
+          : card;
+      });
 
-      return updatedSubtasksPos;
+      return updatedSubtasks;
 
     default:
       return cards;

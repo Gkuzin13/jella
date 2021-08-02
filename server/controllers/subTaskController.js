@@ -28,7 +28,7 @@ exports.create_subtask_post = [
   },
 ];
 
-exports.edit_subtask_patch = [
+exports.edit_subtask_put = [
   body('isDone', 'Must have a value').isBoolean(),
 
   async (req, res) => {
@@ -40,6 +40,7 @@ exports.edit_subtask_patch = [
 
     try {
       const updatedSubTask = await SubTask.findByIdAndUpdate(req.params.id, {
+        position: req.body.position,
         isDone: req.body.isDone,
       });
 

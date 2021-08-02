@@ -8,10 +8,10 @@ router.post(
   subtaskController.create_subtask_post
 );
 
-router.patch(
+router.put(
   '/1/checklists/:id',
   auth.checkAuthenticated,
-  subtaskController.edit_subtask_patch
+  subtaskController.edit_subtask_put
 );
 
 router.delete(

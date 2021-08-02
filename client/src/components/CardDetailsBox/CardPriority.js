@@ -3,7 +3,7 @@ import api from '../../config/axiosConfig';
 import { ACTIONS } from '../../hooks/reducers/reducers';
 import { getPriorityIcon } from '../../utils/getPriorityIcon';
 
-const CardPriority = ({ dispatch, selectedCard }) => {
+const CardPriority = ({ dispatchCards, selectedCard }) => {
   const [priority, setPriority] = useState(selectedCard.priority);
 
   const handleValueChange = async (e) => {
@@ -15,7 +15,7 @@ const CardPriority = ({ dispatch, selectedCard }) => {
         priority: newPriority,
       });
 
-      dispatch({
+      dispatchCards({
         type: ACTIONS.UPDATE_PRIORITY,
         data: { cardId: selectedCard._id, priority: newPriority },
       });

@@ -7,13 +7,10 @@ import CardDescription from '../CardDetailsBox/CardDescription';
 import CardDate from './CardDate';
 import { deleteCard, updateCard } from '../../api/cardController';
 
-const CardDetailsBox = ({ toggleCardBox, selectedCard, dispatchCards }) => {
+const CardDetailsBox = ({ toggleCardBox, cardId, cards, dispatchCards }) => {
   const [descForm, setDescForm] = useState(false);
 
-  const cardSubTasks = selectedCard.subtasks.filter((task) => {
-    return task.cardId === selectedCard._id;
-  });
-  const { cardTitle, description } = selectedCard;
+  const selectedCard = cards.find((card) => card._id === cardId);
 
   const handleCardUpdate = (card) => {
     dispatchCards({
@@ -29,7 +26,7 @@ const CardDetailsBox = ({ toggleCardBox, selectedCard, dispatchCards }) => {
       data: { id: selectedCard._id },
     });
 
-    toggleCardBox({}, false);
+    toggleCardBox('', false);
 
     deleteCard(selectedCard._id);
   };
@@ -37,7 +34,6 @@ const CardDetailsBox = ({ toggleCardBox, selectedCard, dispatchCards }) => {
   const handleDescUpdate = (descValue) => {
     const updatedCard = { ...selectedCard, description: descValue };
 
-    toggleCardBox(updatedCard, true);
     setDescForm(false);
     handleCardUpdate(updatedCard);
   };
@@ -61,7 +57,7 @@ const CardDetailsBox = ({ toggleCardBox, selectedCard, dispatchCards }) => {
             <div className='text-xl flex items-center'>
               <span className='material-icons mr-2.5'>video_label</span>
               <EditableText
-                value={cardTitle}
+                value={selectedCard.cardTitle}
                 handleTitleUpdate={handleTitleUpdate}
               />
             </div>
@@ -71,12 +67,11 @@ const CardDetailsBox = ({ toggleCardBox, selectedCard, dispatchCards }) => {
             setDescForm={setDescForm}
             descForm={descForm}
             handleDescUpdate={handleDescUpdate}
-            description={description}
+            description={selectedCard.description}
           />
           <CheckList
             dispatchCards={dispatchCards}
             selectedCard={selectedCard}
-            subtasks={cardSubTasks}
           />
           <CardPriority
             dispatchCards={dispatchCards}

@@ -21,7 +21,7 @@ const BoardPage = () => {
   const [boardData, setBoardData] = useState(null);
   const [lists, dispatchLists] = useReducer(listReducer, []);
   const [cards, dispatchCards] = useReducer(cardReducer, []);
-  const [selectedCard, setSelectedCard] = useState({}, { isOpen: false });
+  const [selectedCard, setSelectedCard] = useState('', { isOpen: false });
 
   const { user } = useContext(AuthContext);
   const { id } = useParams();
@@ -49,8 +49,8 @@ const BoardPage = () => {
     getBoardData();
   }, [id]);
 
-  const toggleCardBox = (card, isOpen) => {
-    setSelectedCard({ ...card, isOpen });
+  const toggleCardBox = (cardId, isOpen) => {
+    setSelectedCard({ cardId, isOpen });
   };
 
   const handleOnDragEnd = (result) => {
@@ -109,14 +109,13 @@ const BoardPage = () => {
     return <Loader />;
   }
 
-  console.log(cards);
-
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <div className='flex flex-col justify-start items-start '>
         {!selectedCard.isOpen ? null : (
           <CardDetailsBox
-            selectedCard={selectedCard}
+            cards={cards}
+            cardId={selectedCard.cardId}
             toggleCardBox={toggleCardBox}
             dispatchCards={dispatchCards}
           />

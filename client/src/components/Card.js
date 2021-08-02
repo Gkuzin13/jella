@@ -18,7 +18,7 @@ const Card = ({ cardData, toggleCardBox, index }) => {
           {...provided.dragHandleProps}
           className='mx-2.5 mb-3 py-1.5 px-2 bg-white shadow-md cursor-pointer rounded-sm'>
           <div
-            onClick={() => toggleCardBox(cardData, true)}
+            onClick={() => toggleCardBox(cardData._id, true)}
             className='flex flex-col w-full'>
             <span className='p-1 mb-1'>{cardTitle}</span>
             <div className='flex items-center justify-start w-full px-1'>
