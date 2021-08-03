@@ -1,11 +1,11 @@
 import { Switch, Route } from 'react-router-dom';
+import { useContext } from 'react';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Home from './pages/Home/Home';
 import BoardPage from './pages/BoardPage/BoardPage';
 import LoginPage from './pages/LandingPage/LoginPage';
 import SignupPage from './pages/LandingPage/SignupPage';
 import PrivateRoute from './hooks/PrivateRoute';
-import { useContext } from 'react';
 import { AuthContext } from './config/Auth';
 
 function App() {
@@ -17,7 +17,6 @@ function App() {
 
   return (
     <>
-      <nav>NAV</nav>
       <Switch>
         <Route exact path='/'>
           <LandingPage />

@@ -27,7 +27,6 @@ const CardDetailsBox = ({ toggleCardBox, cardId, cards, dispatchCards }) => {
     });
 
     toggleCardBox('', false);
-
     deleteCard(selectedCard._id);
   };
 
@@ -82,7 +81,7 @@ const CardDetailsBox = ({ toggleCardBox, cardId, cards, dispatchCards }) => {
           <div className='self-end py-2'>
             <button
               onClick={() => handleCardDelete()}
-              className='bg-red-300 hover:bg-red-500 px-3 py-1 rounded-sm shadow-md text-white transition-colors duration-75'>
+              className='bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-600 font-medium px-3 py-1 rounded-sm transition-colors duration-75'>
               Delete Card
             </button>
           </div>

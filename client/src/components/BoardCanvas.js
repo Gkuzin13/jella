@@ -1,5 +1,5 @@
-import List from './List';
-import ListForm from './ListForm';
+import List from './List/List';
+import ListForm from './List/ListForm';
 import { Droppable } from 'react-beautiful-dnd';
 
 const BoardCanvas = ({

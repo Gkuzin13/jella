@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../../config/Auth';
 import api from '../../config/axiosConfig';
 
@@ -52,8 +53,16 @@ const SignupPage = () => {
           placeholder='Enter password'
           required></input>
 
-        <button type='submit'>Log in</button>
+        <button type='submit'>Sign Up</button>
       </form>
+
+      <div>
+        <span>Already have an account?</span>
+        <Link to='/login' className='font-semibold'>
+          {' '}
+          Log In
+        </Link>
+      </div>
     </div>
   );
 };

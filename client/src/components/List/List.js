@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { deleteList, updateList } from '../api/listController';
-import ClickOutside from '../hooks/ClickOutside';
-import EditableText from '../hooks/EditableText';
-import { ACTIONS } from '../hooks/reducers/reducers';
-import CardsContainer from './CardsContainer';
-import ListActionsBox from './ListActionsBox';
+import { deleteList, updateList } from '../../api/listController';
+import ClickOutside from '../../hooks/ClickOutside';
+import EditableText from '../../hooks/EditableText';
+import { ACTIONS } from '../../hooks/reducers/reducers';
+import CardsContainer from '../Card/CardsContainer';
+import ListActionsBox from '../List/ListActionsBox';
 
 const List = ({
   listData,
@@ -55,7 +55,7 @@ const List = ({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-50 shadow-md w-64 mx-2 rounded-sm'>
+          className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-100 shadow w-64 mx-2 p-1 rounded-sm'>
           <div className=' flex justify-between items-center py-2 px-2'>
             <EditableText
               value={listData.listTitle}

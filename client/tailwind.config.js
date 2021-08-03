@@ -7,7 +7,7 @@ module.exports = {
         'open-sans': ['"Open Sans"', 'sans-serif'],
       },
       backgroundImage: (theme) => ({
-        main: 'radial-gradient( circle 993px at 0.5% 50.5%,  rgba(137,171,245,0.37) 0%, rgba(245,247,252,1) 100.2% )',
+        main: 'linear-gradient( 109.6deg,  rgba(245,239,249,1) 30.1%, rgba(207,211,236,1) 100.2% )',
       }),
       zIndex: {
         '-10': '-10',

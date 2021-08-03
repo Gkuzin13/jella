@@ -15,7 +15,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 const CheckList = ({ dispatchCards, selectedCard }) => {
   const [taskForm, setTaskForm] = useState(false);
 
-  const subtasks = selectedCard.subtasks.sort(
+  const subtasks = [...selectedCard.subtasks].sort(
     (a, b) => a.position - b.position
   );
 

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Types } from 'mongoose';
-import { createList } from '../api/listController';
-import { ACTIONS } from '../hooks/reducers/reducers';
-import { appendItem } from '../utils/setNewPos';
+import { createList } from '../../api/listController';
+import { ACTIONS } from '../../hooks/reducers/reducers';
+import { appendItem } from '../../utils/setNewPos';
 
 const ListForm = ({ boardId, lists, dispatchLists }) => {
   const [listForm, setListForm] = useState(false);
@@ -31,16 +31,16 @@ const ListForm = ({ boardId, lists, dispatchLists }) => {
   };
 
   return (
-    <div className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-200 shadow-md w-64 p-2 mx-1.5 rounded-sm hover:bg-gray-200'>
+    <div className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-100 shadow-md w-64 p-1.5 mx-1.5 rounded-sm '>
       <button
         onClick={() => setListForm(true)}
         className={`${
           listForm
             ? 'opacity-0 hidden'
-            : 'flex items-center w-full p-0.5 transition-opacity duration-75 opacity-50'
+            : 'flex items-center w-full transition-opacity duration-75 opacity-50 font-medium p-1 px-1.5'
         } `}>
         <span className='material-icons mr-1'>add</span>
-        <span>Add another list</span>
+        <span>{!lists.length ? 'Add list' : 'Add another list'}</span>
       </button>
       <form
         onSubmit={(e) => handleNewList(e)}
@@ -53,19 +53,19 @@ const ListForm = ({ boardId, lists, dispatchLists }) => {
           value={listTitle}
           onChange={(e) => setListTitle(e.target.value)}
           placeholder='Enter a title for this list...'
-          className='p-1 rounded-sm'
+          className='p-1 rounded-sm shadow'
         />
-        <div className='flex items-center mt-1'>
+        <div className='flex items-center mt-1.5 transition-colors duration-150'>
           <button
             type='submit'
-            className='bg-blue-600 text-white mt-1 px-2 py-1 rounded-sm'>
+            className=' text-blue-500 py-1 px-2 rounded-sm hover:bg-blue-100 hover:text-blue-600 font-medium'>
             Add list
           </button>
           <button
-            className='flex items-center opacity-50 hover:opacity-100'
             type='button'
+            className='flex items-center ml-1'
             onClick={() => setListForm(false)}>
-            <span className='material-icons cursor-pointer ml-1 hover:text-black'>
+            <span className='material-icons-outlined text-2xl text-gray-500 cursor-pointer ml-1 hover:text-black'>
               close
             </span>
           </button>

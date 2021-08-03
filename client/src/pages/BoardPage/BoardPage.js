@@ -1,12 +1,11 @@
 import { useEffect, useContext, useReducer, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { AuthContext } from '../../config/Auth';
 import api from '../../config/axiosConfig';
 import {
   listReducer,
   cardReducer,
-  checklistReducer,
   ACTIONS,
 } from '../../hooks/reducers/reducers';
 import Loader from '../../components/Loader';
@@ -16,6 +15,7 @@ import { updateList } from '../../api/listController';
 import { updateCard } from '../../api/cardController';
 import cardReorderer from '../../utils/cardReorderer';
 import { setNewPos } from '../../utils/setNewPos';
+import UserControl from '../../components/UserControl';
 
 const BoardPage = () => {
   const [boardData, setBoardData] = useState(null);
@@ -47,6 +47,17 @@ const BoardPage = () => {
     };
 
     getBoardData();
+
+    return () => {
+      dispatchLists({
+        type: ACTIONS.SET_LISTS,
+        data: [],
+      });
+      dispatchCards({
+        type: ACTIONS.SET_CARDS,
+        data: [],
+      });
+    };
   }, [id]);
 
   const toggleCardBox = (cardId, isOpen) => {
@@ -99,9 +110,7 @@ const BoardPage = () => {
         type: ACTIONS.REORDER_LIST,
         data: listsCopy,
       });
-
       updateList(updatedList);
-      return;
     }
   };
 
@@ -110,7 +119,7 @@ const BoardPage = () => {
   }
 
   return (
-    <DragDropContext onDragEnd={handleOnDragEnd}>
+    <div className='m-4'>
       <div className='flex flex-col justify-start items-start '>
         {!selectedCard.isOpen ? null : (
           <CardDetailsBox
@@ -120,21 +129,37 @@ const BoardPage = () => {
             dispatchCards={dispatchCards}
           />
         )}
+        <div className='flex justify-between w-full'>
+          <div className='flex items-center text-2xl font-medium my-4 mx-3'>
+            <Link
+              aria-label='Back to home'
+              className='flex items-center  px-1 mr-1 text-blue-500 rounded-sm hover:bg-blue-50 transition-colors duration-150'
+              to={`/${user.username}/boards`}>
+              <span className='material-icons-outlined mr-1.5 text-3xl'>
+                view_week
+              </span>
+              <span>Boards</span>
+            </Link>
 
-        <a href={`/${user.username}/boards`}>Home</a>
+            <div className='rounded-sm'>
+              <span> / {boardData.title}</span>
+            </div>
+          </div>
+          <UserControl />
+        </div>
 
-        <h1>{boardData.title}</h1>
-
-        <BoardCanvas
-          boardId={boardData.id}
-          lists={lists}
-          cards={cards}
-          dispatchLists={dispatchLists}
-          dispatchCards={dispatchCards}
-          toggleCardBox={toggleCardBox}
-        />
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <BoardCanvas
+            boardId={boardData.id}
+            lists={lists}
+            cards={cards}
+            dispatchLists={dispatchLists}
+            dispatchCards={dispatchCards}
+            toggleCardBox={toggleCardBox}
+          />
+        </DragDropContext>
       </div>
-    </DragDropContext>
+    </div>
   );
 };
 

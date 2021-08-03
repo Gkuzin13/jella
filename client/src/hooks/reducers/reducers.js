@@ -9,7 +9,6 @@ export const ACTIONS = {
   EDIT_CARD: 'edit-card',
   DELETE_CARD: 'delete-card',
   REORDER_CARD: 'reorder-card',
-  SET_CHECKLIST: 'set-checklist',
   CREATE_SUBTASK: 'create-subtask',
   EDIT_SUBTASK: 'edit-subtask',
   DELETE_SUBTASK: 'delete-subtask',

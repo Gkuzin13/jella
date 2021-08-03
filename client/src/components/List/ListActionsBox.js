@@ -5,11 +5,11 @@ const ListActionsBox = ({
   listId,
 }) => {
   return (
-    <div ref={boxRef} className='fixed my-1 bg-gray-50 p-2 w-64 shadow-md '>
-      <div className='flex items-center justify-center'>
+    <div ref={boxRef} className='fixed my-1 bg-white p-2 w-64 shadow-md'>
+      <div className='flex items-center justify-between px-1'>
         <span className='text-gray-400'>List actions</span>
         <button
-          className='flex items-center opacity-50 hover:opacity-100 self-end'
+          className='flex items-center opacity-50 hover:opacity-100'
           type='button'
           onClick={() => toggleActionsBox()}>
           <span className='material-icons cursor-pointer ml-1 hover:text-black'>
@@ -28,7 +28,7 @@ const ListActionsBox = ({
       <button
         onClick={() => handleListDelete(listId)}
         className={
-          'flex items-center w-full hover:bg-red-200  p-1.5 transition-opacity duration-75 rounded-sm'
+          'flex items-center w-full hover:bg-red-50 hover:text-red-600  p-1.5 transition-opacity duration-150 rounded-sm'
         }>
         <span>Delete list...</span>
       </button>
