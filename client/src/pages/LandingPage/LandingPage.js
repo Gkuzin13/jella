@@ -5,34 +5,37 @@ const LandingPage = () => {
   return (
     <div>
       <div className='bg-main w-full h-full -z-10 fixed'></div>
-      <div className='flex justify-between'>
+      <div>
         <span>LOGO</span>
       </div>
 
-      <div className='flex flex-col items-center justify-center my-10 mx-auto w-3/4 '>
-        <div className='flex-shrink-1'>
-          <h1 className='text-4xl font-bold'>
+      <div className='flex flex-col items-center justify-center my-10 mx-auto w-4/5 lg:flex-row'>
+        <div className=' w-2/3 mr-10'>
+          <h1 className='text-5xl font-bold h-full leading-tight'>
             Company helps teams move work forward.
           </h1>
-          <br></br>
-          <h3 className='text-2xl font-medium'>
+          <h3 className='text-2xl mt-2'>
             Collaborate, manage projects, and reach new productivity peaks. From
             high rises to the home office, the way your team works is
-            unique—accomplish it all with Trello
+            unique—accomplish it all with Company
           </h3>
-          <div className='mt-3'>
-            <Link to='/signup' className='bg-green-50 text-green-600 py-2 px-3'>
+          <div className='mt-8 text-xl '>
+            <Link
+              to='/signup'
+              className='bg-green-100 text-green-700 py-2.5 px-8 shadow font-medium 
+              rounded-sm hover:shadow-md transition-shadow duration-150'>
               Sign up
             </Link>
-            <button className='ml-2 bg-blue-50 text-blue-600 py-1.5 px-3'>
-              Continue as guest
+            <button
+              type='button'
+              className='ml-6 bg-blue-100 text-blue-700 py-2 px-8 shadow font-medium 
+              rounded-sm hover:shadow-md transition-shadow duration-150'>
+              Continue as Guest
             </button>
           </div>
         </div>
 
-        <div className='w-48'>
-          <BoardImg alt='People plan on board' />
-        </div>
+        <BoardImg alt='People plan on board' />
       </div>
     </div>
   );
