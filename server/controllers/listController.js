@@ -1,6 +1,7 @@
 const List = require('../models/list');
 const Card = require('../models/card');
 const { body, validationResult } = require('express-validator');
+const recalcItemsPos = require('../utils/recalcPos');
 
 // Handle get list on GET
 exports.list_get = async (req, res) => {
@@ -53,7 +54,8 @@ exports.update_list_put = [
     }
 
     try {
-      // Find current board and push new list to db
+      const newPos = req.body.position;
+      // Find list by id and update
       const updatedList = await List.findByIdAndUpdate(
         req.params.id,
         {
@@ -64,6 +66,13 @@ exports.update_list_put = [
           new: true,
         }
       );
+
+      // Check if list pos is less than 0.1
+      if (!Number.isInteger(newPos) && newPos % 1 < 0.1) {
+        const boardId = req.body.boardId;
+        await recalcItemsPos({ boardId: boardId }, List);
+        return;
+      }
 
       res.send(updatedList);
     } catch (error) {

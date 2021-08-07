@@ -1,5 +1,6 @@
 const SubTask = require('../models/subtask');
 const { body, validationResult } = require('express-validator');
+const recalcItemsPos = require('../utils/recalcPos');
 
 exports.create_subtask_post = [
   body('taskName', 'Sub task name must not be empty').isLength({ min: 1 }),
@@ -43,6 +44,13 @@ exports.edit_subtask_put = [
         position: req.body.position,
         isDone: req.body.isDone,
       });
+
+      // Check if list pos is less than 0.1
+      if (!Number.isInteger(newPos) && newPos % 1 < 0.1) {
+        const cardId = req.body.cardId;
+        await recalcItemsPos({ cardId }, SubTask);
+        return;
+      }
 
       res.send(updatedSubTask);
     } catch (error) {

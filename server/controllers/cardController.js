@@ -1,5 +1,6 @@
 const Card = require('../models/card');
 const { body, validationResult } = require('express-validator');
+const recalcItemsPos = require('../utils/recalcPos');
 
 // Handle current card GET
 exports.card_get = async (req, res) => {
@@ -45,7 +46,7 @@ exports.update_card_put = [
   body('cardTitle', 'Title must not be empty').isLength({ min: 1 }),
   body('position', 'Card position must be a number').isNumeric(),
 
-  async (req, res) => {
+  async (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -53,19 +54,27 @@ exports.update_card_put = [
     }
 
     try {
+      const newPos = req.body.position;
       const updatedCard = await Card.findByIdAndUpdate(
         req.params.id,
         {
           cardTitle: req.body.cardTitle,
           description: req.body.description,
           coverColor: req.body.coverColor,
-          position: req.body.position,
+          position: newPos,
           listId: req.body.listId,
         },
         {
           new: true,
         }
       );
+
+      // Check if card pos is less than 0.1
+      if (!Number.isInteger(newPos) && newPos % 1 < 0.1) {
+        const listId = req.body.listId;
+        const cards = await recalcItemsPos({ listId }, Card);
+        return res.send(cards);
+      }
 
       res.send(updatedCard);
     } catch (error) {
