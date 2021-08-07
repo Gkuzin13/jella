@@ -1,4 +1,4 @@
-import { Switch, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { useContext } from 'react';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Home from './pages/Home/Home';
@@ -7,6 +7,8 @@ import LoginPage from './pages/LandingPage/LoginPage';
 import SignupPage from './pages/LandingPage/SignupPage';
 import PrivateRoute from './hooks/PrivateRoute';
 import { AuthContext } from './config/Auth';
+import PublicRoute from './hooks/PublicRoute';
+import NotFound from './pages/NotFound';
 
 function App() {
   const { user, isLoading } = useContext(AuthContext);
@@ -18,24 +20,29 @@ function App() {
   return (
     <>
       <Switch>
-        <Route exact path='/'>
+        <PublicRoute exact path='/'>
           <LandingPage />
-        </Route>
+        </PublicRoute>
 
-        <Route path='/login'>
+        <PublicRoute path='/login'>
           <LoginPage />
-        </Route>
-        <Route path='/signup'>
-          <SignupPage />
-        </Route>
+        </PublicRoute>
 
-        <PrivateRoute path={`/${user.username}/boards`}>
+        <PublicRoute path='/signup'>
+          <SignupPage />
+        </PublicRoute>
+
+        <PrivateRoute path={`/:username/boards`}>
           <Home />
         </PrivateRoute>
 
         <PrivateRoute path='/b/:id/:boardTitle'>
           <BoardPage />
         </PrivateRoute>
+
+        <Route path='*'>
+          <NotFound user={user} />
+        </Route>
       </Switch>
     </>
   );
