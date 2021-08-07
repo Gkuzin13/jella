@@ -7,7 +7,7 @@ router.get('/b/:id', auth.checkAuthenticated, boardController.board_get);
 router.get(
   '/user/boards',
   auth.checkAuthenticated,
-  boardController.board_all_get
+  boardController.get_user_boards
 );
 
 router.post('/b/', auth.checkAuthenticated, boardController.create_board_post);

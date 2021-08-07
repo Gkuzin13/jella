@@ -1,11 +1,15 @@
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../config/Auth';
 import api from '../../config/axiosConfig';
 
 const SignupPage = () => {
-  const { setIsLoading, setUser } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+
+  const [error, setError] = useState(null);
+
   const history = useHistory();
 
   const handleSignup = async (e) => {
@@ -14,18 +18,24 @@ const SignupPage = () => {
     const { email, username, password } = e.target.elements;
 
     try {
-      // Sign up user
+      setLoading(true);
+      setError(null);
+
       const { data } = await api.post('/signup', {
         email: email.value,
         username: username.value,
         password: password.value,
       });
 
-      if (data) {
-        setUser(() => data);
-        setIsLoading(() => false);
-        history.push(`/${data.username}/boards`);
+      if (data.error) {
+        setLoading(false);
+        setError(data.error);
+        return;
       }
+
+      setLoading(false);
+      setUser(() => data);
+      history.push(`/${data.username}/boards`);
 
       console.log(data);
     } catch (error) {
@@ -37,7 +47,9 @@ const SignupPage = () => {
     <div>
       <div className='bg-main w-full h-full -z-10 fixed'></div>
       <div className='flex justify-center flex-col items-center'>
-        <div className='text-4xl font-bold my-10'>LOGO</div>
+        <Link to='/' className='text-4xl font-bold my-10'>
+          LOGO
+        </Link>{' '}
         <div className='bg-white p-12 shadow-lg rounded-sm '>
           <form
             onSubmit={(e) => handleSignup(e)}
@@ -63,13 +75,19 @@ const SignupPage = () => {
               type='password'
               name='password'
               placeholder='Enter password'
+              minLength='8'
               required
               className=' border-2 shadow-sm p-2 bg-gray-50 mb-4'
             />
+
+            <div className='mb-4 text-red-600 rounded-sm w-0 min-w-full'>
+              <span>{error ? error : null}</span>
+            </div>
+
             <button
               type='submit'
-              className='bg-green-100 text-green-600 font-medium text-lg p-1 shadow mb-5 
-              hover:bg-green-200 transition-colors duration-150'>
+              className='bg-blue-600 text-white font-medium text-md py-2 rounded-sm shadow mb-5 
+              hover:bg-blue-700 transition-colors duration-150'>
               Sign Up
             </button>
           </form>
@@ -77,7 +95,7 @@ const SignupPage = () => {
             <span className=' text-gray-600'>Already have an account?</span>
             <Link
               to='/login'
-              className='font-medium text-blue-500 hover:text-blue-600 p-1 transition-colors duration-150'>
+              className='font-medium text-blue-600 hover:text-blue-700 p-1 transition-colors duration-150'>
               {' '}
               Log In
             </Link>

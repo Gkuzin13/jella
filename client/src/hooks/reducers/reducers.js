@@ -17,7 +17,7 @@ export const ACTIONS = {
 };
 
 export const listReducer = (lists, action) => {
-  const { data } = action;
+  const { payload: data } = action;
 
   switch (action.type) {
     case ACTIONS.SET_LISTS:
@@ -49,7 +49,7 @@ export const listReducer = (lists, action) => {
 };
 
 export const cardReducer = (cards, action) => {
-  const { data } = action;
+  const { payload: data } = action;
 
   switch (action.type) {
     case ACTIONS.SET_CARDS:

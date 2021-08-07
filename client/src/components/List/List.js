@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { deleteList, updateList } from '../../api/listController';
+import listApi from '../../api/listApi';
 import ClickOutside from '../../hooks/ClickOutside';
 import EditableText from '../../hooks/EditableText';
 import { ACTIONS } from '../../hooks/reducers/reducers';
@@ -32,20 +32,20 @@ const List = ({
 
     dispatchLists({
       type: ACTIONS.EDIT_LIST,
-      data: updatedList,
+      payload: updatedList,
     });
 
-    updateList(updatedList);
+    listApi.updateList(updatedList);
   };
 
   const handleListDelete = (id) => {
     dispatchLists({
       type: ACTIONS.DELETE_LIST,
-      data: id,
+      payload: id,
     });
 
     setListActionsBox(false);
-    deleteList(id);
+    listApi.deleteList(id);
   };
 
   return (
@@ -55,7 +55,8 @@ const List = ({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-100 shadow w-64 mx-2 p-1 rounded-sm'>
+          className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-50 bg-opacity-90 bg-blend-color-burn shadow w-72 mx-2 mb-5 p-1 
+          rounded-sm'>
           <div className=' flex justify-between items-center py-2 px-2'>
             <EditableText
               value={listData.listTitle}

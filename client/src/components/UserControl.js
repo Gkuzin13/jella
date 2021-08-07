@@ -1,13 +1,15 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { useHistory } from 'react-router';
+import { AuthContext } from '../config/Auth';
 import api from '../config/axiosConfig';
 import ClickOutside from '../hooks/ClickOutside';
 
-const UserControl = ({ user }) => {
+const UserControl = () => {
   const [dropdown, setDropdown] = useState(false);
 
   const history = useHistory();
   const dropdownRef = useRef();
+  const { setUser } = useContext(AuthContext);
 
   ClickOutside(dropdownRef, dropdown, () => {
     setDropdown(false);
@@ -18,6 +20,7 @@ const UserControl = ({ user }) => {
       const { status } = await api.get('/logout');
 
       if (status === 200) {
+        setUser(null);
         history.push('/');
       }
     } catch (error) {
@@ -26,7 +29,7 @@ const UserControl = ({ user }) => {
   };
 
   return (
-    <div className=' flex flex-col items-end m-4 relative'>
+    <div className=' flex flex-col items-end m-4 relative z-10'>
       <button onClick={() => setDropdown(!dropdown)}>
         <div className='flex items-center px-1.5 py-0.5 rounded shadow-sm hover:bg-blue-50  text-blue-500 bg-gray-50 font-medium  transition-colors duration-150'>
           <span className='material-icons-outlined text-3xl'>

@@ -17,41 +17,42 @@ exports.create_account_post = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.send({ errorMsg: errors.array() });
+      return res.send({ error: errors.array({ onlyFirstError: true })[0] });
     }
 
     // Check if account exists
-    await Account.findOne({ email: req.body.email }, async (err, account) => {
-      if (err) {
-        return res.send(err);
-      }
+    try {
+      await Account.findOne({ email: req.body.email }, async (err, account) => {
+        if (err) {
+          return res.send(err);
+        }
 
-      if (account) {
-        res
-          .status(401)
-          .send(
-            'An account with this username or email address already exists.'
-          );
+        if (account) {
+          return res.send({
+            error:
+              'An account with this username or email address already exists.',
+          });
+        }
 
-        return;
-      }
+        try {
+          const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-      try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+          // Save new accont to db
+          await new Account({
+            email: req.body.email,
+            username: req.body.username,
+            password: hashedPassword,
+          }).save();
 
-        // Save new accont to db
-        await new Account({
-          email: req.body.email,
-          username: req.body.username,
-          password: hashedPassword,
-        }).save();
-
-        // Run next function to login the registered account
-        next();
-      } catch (err) {
-        return res.send(err);
-      }
-    });
+          // Run next function to login the registered account
+          next();
+        } catch (err) {
+          return res.send(err);
+        }
+      });
+    } catch (error) {
+      res.send(error);
+    }
   },
 ];
 
@@ -67,21 +68,25 @@ exports.account_login_post = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.send({ errorMsg: errors.array() });
+      return res.send({ error: errors.array() });
     }
 
     // Login account
-    passport.authenticate('local', (err, user) => {
+    passport.authenticate('local', (err, user, info) => {
       if (err) {
         return res.send(err);
       }
 
-      if (!user) return res.sendStatus(401);
+      if (!user) {
+        res.send(info);
+
+        return;
+      }
 
       req.login(user, (err) => {
         if (err) return res.send(err);
 
-        res.status(200).send({ ...user });
+        res.send({ ...user });
       });
     })(req, res, next);
   },

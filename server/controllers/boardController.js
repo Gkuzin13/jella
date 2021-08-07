@@ -1,9 +1,10 @@
 const Board = require('../models/board');
+const Card = require('../models/card');
 const mongoose = require('mongoose');
 const { body, validationResult } = require('express-validator');
 
 // Get all user's boards
-exports.board_all_get = async (req, res) => {
+exports.get_user_boards = async (req, res) => {
   try {
     await Board.find({ creatorId: req.user.id }, (err, data) => {
       if (err) {

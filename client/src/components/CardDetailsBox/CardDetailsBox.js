@@ -5,7 +5,7 @@ import CheckList from '../CardDetailsBox/CheckList';
 import CardPriority from '../CardDetailsBox/CardPriority';
 import CardDescription from '../CardDetailsBox/CardDescription';
 import CardDate from './CardDate';
-import { deleteCard, updateCard } from '../../api/cardController';
+import cardApi from '../../api/cardApi';
 
 const CardDetailsBox = ({ toggleCardBox, cardId, cards, dispatchCards }) => {
   const [descForm, setDescForm] = useState(false);
@@ -15,19 +15,20 @@ const CardDetailsBox = ({ toggleCardBox, cardId, cards, dispatchCards }) => {
   const handleCardUpdate = (card) => {
     dispatchCards({
       type: ACTIONS.EDIT_CARD,
-      data: card,
+      payload: card,
     });
-    updateCard(card);
+
+    cardApi.updateCardInDb(card);
   };
 
   const handleCardDelete = () => {
     dispatchCards({
       type: ACTIONS.DELETE_CARD,
-      data: { id: selectedCard._id },
+      payload: { id: selectedCard._id },
     });
 
     toggleCardBox('', false);
-    deleteCard(selectedCard._id);
+    cardApi.deleteCard(selectedCard._id);
   };
 
   const handleDescUpdate = (descValue) => {

@@ -11,11 +11,11 @@ import {
 import Loader from '../../components/Loader';
 import CardDetailsBox from '../../components/CardDetailsBox/CardDetailsBox';
 import BoardCanvas from '../../components/BoardCanvas';
-import { updateList } from '../../api/listController';
-import { updateCard } from '../../api/cardController';
+import listApi from '../../api/listApi';
+import cardApi from '../../api/cardApi';
 import cardReorderer from '../../utils/cardReorderer';
-import { setNewPos } from '../../utils/setNewPos';
 import UserControl from '../../components/UserControl';
+import listReorderer from '../../utils/listReorderer';
 
 const BoardPage = () => {
   const [boardData, setBoardData] = useState(null);
@@ -27,35 +27,33 @@ const BoardPage = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    const getBoardData = async () => {
+    (async () => {
       try {
         const { data } = await api.get(`/b/${id}`);
 
         setBoardData({ title: data.boardTitle, id: data._id });
-
         dispatchLists({
           type: ACTIONS.SET_LISTS,
-          data: data.lists,
+          payload: data.lists,
         });
         dispatchCards({
           type: ACTIONS.SET_CARDS,
-          data: data.cards,
+          payload: data.cards,
         });
       } catch (error) {
         console.log(error);
       }
-    };
-
-    getBoardData();
+    })();
 
     return () => {
+      setBoardData(null);
       dispatchLists({
         type: ACTIONS.SET_LISTS,
-        data: [],
+        payload: [],
       });
       dispatchCards({
         type: ACTIONS.SET_CARDS,
-        data: [],
+        payload: [],
       });
     };
   }, [id]);
@@ -64,7 +62,7 @@ const BoardPage = () => {
     setSelectedCard({ cardId, isOpen });
   };
 
-  const handleOnDragEnd = (result) => {
+  const handleOnDragEnd = async (result) => {
     if (!result.destination) return;
 
     const { destination, type, draggableId, source } = result;
@@ -83,35 +81,27 @@ const BoardPage = () => {
         source,
         draggableId
       );
+
       dispatchCards({
         type: ACTIONS.REORDER_CARD,
-        data: allCards,
+        payload: allCards,
       });
 
-      updateCard(updatedCard);
-      return;
+      return cardApi.updateCard(updatedCard);
     }
 
-    if (type === 'LIST') {
-      const listsCopy = [...lists];
-      const draggedList = listsCopy[source.index];
+    const { updatedLists, updatedList } = listReorderer(
+      lists,
+      destination,
+      source
+    );
 
-      listsCopy.splice(source.index, 1);
-      listsCopy.splice(destination.index, 0, draggedList);
+    dispatchLists({
+      type: ACTIONS.REORDER_LIST,
+      payload: updatedLists,
+    });
 
-      const updatedList = {
-        ...draggedList,
-        position: setNewPos(listsCopy, destination),
-      };
-
-      listsCopy.splice(destination.index, 1, updatedList);
-
-      dispatchLists({
-        type: ACTIONS.REORDER_LIST,
-        data: listsCopy,
-      });
-      updateList(updatedList);
-    }
+    listApi.updateList(updatedList);
   };
 
   if (!boardData) {
@@ -119,35 +109,35 @@ const BoardPage = () => {
   }
 
   return (
-    <div className='m-4'>
-      <div className='flex flex-col justify-start items-start '>
-        {!selectedCard.isOpen ? null : (
-          <CardDetailsBox
-            cards={cards}
-            cardId={selectedCard.cardId}
-            toggleCardBox={toggleCardBox}
-            dispatchCards={dispatchCards}
-          />
-        )}
-        <div className='flex justify-between w-full'>
-          <div className='flex items-center text-2xl font-medium my-4 mx-3'>
-            <Link
-              aria-label='Back to home'
-              className='flex items-center  px-1 mr-1 text-blue-500 rounded-sm hover:bg-blue-50 transition-colors duration-150'
-              to={`/${user.username}/boards`}>
-              <span className='material-icons-outlined mr-1.5 text-3xl'>
-                view_week
-              </span>
-              <span>Boards</span>
-            </Link>
+    <div className='flex flex-col h-full mr-0 px-3'>
+      {!selectedCard.isOpen ? null : (
+        <CardDetailsBox
+          cards={cards}
+          cardId={selectedCard.cardId}
+          toggleCardBox={toggleCardBox}
+          dispatchCards={dispatchCards}
+        />
+      )}
+      <div className='flex justify-between'>
+        <div className='flex items-center text-2xl font-medium my-4 mx-3'>
+          <Link
+            aria-label='Back to home'
+            className='flex items-center  px-1 mr-1 text-blue-500 rounded-sm hover:bg-blue-50 transition-colors duration-150'
+            to={`/${user.username}/boards`}>
+            <span className='material-icons-outlined mr-1.5 text-3xl'>
+              view_week
+            </span>
+            <span>Boards</span>
+          </Link>
 
-            <div className='rounded-sm'>
-              <span> / {boardData.title}</span>
-            </div>
+          <div className='rounded-sm'>
+            <span> / {boardData.title}</span>
           </div>
-          <UserControl />
         </div>
+        <UserControl />
+      </div>
 
+      <main className='relative flex-grow'>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <BoardCanvas
             boardId={boardData.id}
@@ -158,7 +148,7 @@ const BoardPage = () => {
             toggleCardBox={toggleCardBox}
           />
         </DragDropContext>
-      </div>
+      </main>
     </div>
   );
 };

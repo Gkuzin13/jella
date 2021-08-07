@@ -8,7 +8,9 @@ const initialize = (passport) => {
       if (err) return done(err);
 
       if (!user) {
-        return done(null, false, { errorMsg: 'Incorrect email.' });
+        return done(null, false, {
+          error: 'The username or password you entered is incorrect.',
+        });
       }
 
       try {
@@ -19,7 +21,9 @@ const initialize = (passport) => {
             id: user._id,
           });
         } else {
-          return done(null, false, { errorMsg: 'Incorrect password.' });
+          return done(null, false, {
+            error: 'The username or password you entered is incorrect.',
+          });
         }
       } catch (err) {
         return done(err);

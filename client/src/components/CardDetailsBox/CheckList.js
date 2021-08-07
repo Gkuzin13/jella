@@ -5,17 +5,13 @@ import SubTask from '../CardDetailsBox/SubTask';
 import SubTaskForm from '../CardDetailsBox/SubTaskForm';
 import ProgressBar from '../CardDetailsBox/ProgressBar';
 import { appendItem, setNewPos } from '../../utils/setNewPos';
-import {
-  createSubtask,
-  deleteSubtask,
-  updateSubtask,
-} from '../../api/subtaskController';
+import subtaskApi from '../../api/subtaskApi';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const CheckList = ({ dispatchCards, selectedCard }) => {
   const [taskForm, setTaskForm] = useState(false);
 
-  const subtasks = [...selectedCard.subtasks].sort(
+  const subtasks = [...selectedCard?.subtasks].sort(
     (a, b) => a.position - b.position
   );
 
@@ -33,13 +29,13 @@ const CheckList = ({ dispatchCards, selectedCard }) => {
 
     dispatchCards({
       type: ACTIONS.CREATE_SUBTASK,
-      data: { id: selectedCard._id, newSubtask },
+      payload: { id: selectedCard._id, newSubtask },
     });
 
     setTaskValue('');
     toggleTaskForm();
 
-    createSubtask(newSubtask);
+    subtaskApi.createSubtask(newSubtask);
   };
 
   const toggleCheckbox = (e, taskId) => {
@@ -47,22 +43,22 @@ const CheckList = ({ dispatchCards, selectedCard }) => {
 
     dispatchCards({
       type: ACTIONS.EDIT_SUBTASK,
-      data: { isDone, taskId, selectedCard },
+      payload: { isDone, taskId, selectedCard },
     });
 
     const taskToEdit = subtasks.find((t) => t._id === taskId);
     const updatedSubtask = { ...taskToEdit, isDone };
 
-    updateSubtask(taskId, updatedSubtask);
+    subtaskApi.updateSubtask(taskId, updatedSubtask);
   };
 
   const handleTaskDelete = (taskId) => {
     dispatchCards({
       type: ACTIONS.DELETE_SUBTASK,
-      data: { taskId, selectedCard },
+      payload: { taskId, selectedCard },
     });
 
-    deleteSubtask(taskId);
+    subtaskApi.deleteSubtask(taskId);
   };
 
   const handleTaskReorder = (result) => {
@@ -89,10 +85,10 @@ const CheckList = ({ dispatchCards, selectedCard }) => {
 
     dispatchCards({
       type: ACTIONS.REORDER_SUBTASK,
-      data: { cardId: selectedCard._id, subtasksCopy },
+      payload: { cardId: selectedCard._id, subtasksCopy },
     });
 
-    updateSubtask(draggableId, updatedSubtask);
+    subtaskApi.updateSubtask(draggableId, updatedSubtask);
   };
 
   const toggleTaskForm = () => {

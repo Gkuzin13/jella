@@ -3,29 +3,36 @@ import { Link, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../config/Auth';
 import api from '../../config/axiosConfig';
 import UserControl from '../../components/UserControl';
+import ConfirmBox from '../../components/ConfirmBox';
+import boardApi from '../../api/boardApi';
+import Loader from '../../components/Loader';
 
 const Home = () => {
-  const [userBoards, setUserBoards] = useState();
+  const [userBoards, setUserBoards] = useState([]);
+  const [confirmBox, setConfirmBox] = useState({ id: null, isOpen: false });
+  const [isLoading, setIsLoading] = useState(false);
 
   const history = useHistory();
-
   const { user } = useContext(AuthContext);
-  console.log(userBoards, user);
 
   useEffect(() => {
-    const getUserBoards = async () => {
+    (async () => {
+      setIsLoading(true);
+
       try {
         const { data } = await api.get('/user/boards');
 
-        if (data) {
-          setUserBoards(() => [...data]);
+        if (data.error) {
+          return console.log(data.error);
         }
+
+        setUserBoards(() => [...data]);
+
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
-    };
-
-    getUserBoards();
+    })();
 
     return () => setUserBoards([]);
   }, [user]);
@@ -48,14 +55,31 @@ const Home = () => {
     }
   };
 
-  if (userBoards === undefined) {
-    return <div>Loading...</div>;
+  const handleDelBoard = async (id) => {
+    const filteredBoards = [...userBoards].filter((board) => board._id !== id);
+    setUserBoards(filteredBoards);
+
+    await boardApi.deleteBoard(id);
+
+    setConfirmBox({ id: '', isOpen: false });
+  };
+
+  if (isLoading) {
+    return <Loader />;
   }
 
   return (
     <div className='m-4'>
+      {confirmBox.isOpen ? (
+        <ConfirmBox
+          handleFunc={handleDelBoard}
+          id={confirmBox.id}
+          setConfirmBox={setConfirmBox}
+          isLoading={isLoading}
+        />
+      ) : null}
       <div className='flex justify-between mb-10'>
-        <h1 className='my-4 text-2xl text-blue-500 font-medium'>
+        <h1 className='my-4 text-2xl text-blue-600 font-medium'>
           Welcome, {user.username}
         </h1>
         <UserControl user={user} />
@@ -73,7 +97,7 @@ const Home = () => {
         />
         <button
           type='submit'
-          className='bg-gray-50 text-green-500 py-1 px-2 shadow-sm hover:bg-green-50
+          className='bg-green-50 text-green-600 py-1 px-2 shadow-sm hover:bg-green-50
           rounded-sm ml-5 text-lg flex items-center transition-colors duration-150 '>
           <span className='material-icons-outlined mr-1'>add</span>
           <span className='font-medium pr-1.5'>Create board</span>
@@ -91,10 +115,10 @@ const Home = () => {
           return (
             <div
               key={board._id}
-              className='flex items-center group cursor-pointer mb-3.5 hover:text-blue-500 '>
+              className='flex items-center group cursor-pointer mb-5 hover:text-blue-500 '>
               <Link
                 to={`/b/${board._id}/${board.boardTitle}`}
-                className='bg-gray-100 hover:text-blue-600 hover:bg-blue-50 py-2 px-3.5 font-medium rounded-sm 
+                className='bg-gray-50 hover:text-blue-600 py-3 px-6 font-medium rounded-sm shadow 
                 flex flex-col'
                 aria-label='Go to selected board'>
                 <span className=' text-2xl '>{board.boardTitle}</span>
@@ -104,6 +128,7 @@ const Home = () => {
                 </span>
               </Link>
               <button
+                onClick={() => setConfirmBox({ id: board._id, isOpen: true })}
                 type='button'
                 className='text-gray-300 bg-gray-50 p-0.5 ml-2 opacity-0 flex items-center 
                 rounded-sm group-hover:opacity-100 hover:text-red-500 hover:bg-red-50 

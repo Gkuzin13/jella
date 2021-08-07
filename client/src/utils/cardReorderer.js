@@ -21,6 +21,17 @@ const cardReorderer = (cards, destination, source, draggableId) => {
     };
     targetCards.splice(destination.index, 1, updatedCard);
 
+    const newPos = updatedCard.position;
+
+    if (!Number.isInteger(newPos) && newPos % 1 < 0.1) {
+      let num = 16384;
+
+      for (let card of targetCards) {
+        card.position = num;
+        num += 16384;
+      }
+    }
+
     return { allCards: [...restCards, ...targetCards], updatedCard };
   }
 
@@ -32,7 +43,19 @@ const cardReorderer = (cards, destination, source, draggableId) => {
     position: setNewPos(targetCards, destination),
     listId: targetListId,
   };
+
   targetCards.splice(destination.index, 1, updatedCard);
+
+  const newPos = updatedCard.position;
+
+  if (!Number.isInteger(newPos) && newPos % 1 < 0.1) {
+    let num = 16384;
+
+    for (let card of targetCards) {
+      card.position = num;
+      num += 16384;
+    }
+  }
 
   return {
     allCards: [...restCards, ...sourceCards, ...targetCards],

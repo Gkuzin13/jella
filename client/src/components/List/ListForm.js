@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Types } from 'mongoose';
-import { createList } from '../../api/listController';
+import listApi from '../../api/listApi';
 import { ACTIONS } from '../../hooks/reducers/reducers';
 import { appendItem } from '../../utils/setNewPos';
 
@@ -20,12 +20,13 @@ const ListForm = ({ boardId, lists, dispatchLists }) => {
 
     dispatchLists({
       type: ACTIONS.CREATE_LIST,
-      data: newList,
+      payload: newList,
     });
 
     setListForm(false);
     setListTitle('');
-    createList(newList);
+
+    listApi.createList(newList);
 
     console.log(newList);
   };
@@ -58,7 +59,7 @@ const ListForm = ({ boardId, lists, dispatchLists }) => {
         <div className='flex items-center mt-1.5 transition-colors duration-150'>
           <button
             type='submit'
-            className=' text-blue-500 py-1 px-2 rounded-sm hover:bg-blue-100 hover:text-blue-600 font-medium'>
+            className=' bg-gray-100 text-blue-600 py-1 px-2 rounded-sm  hover:bg-blue-50 font-medium shadow'>
             Add list
           </button>
           <button

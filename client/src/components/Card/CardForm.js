@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import { Types } from 'mongoose';
-import { createCard } from '../../api/cardController';
+import cardApi from '../../api/cardApi';
 import { ACTIONS } from '../../hooks/reducers/reducers';
 import { appendItem } from '../../utils/setNewPos';
 
@@ -24,13 +24,13 @@ const CardForm = ({ listCards, listId, dispatchCards }) => {
 
     dispatchCards({
       type: ACTIONS.CREATE_CARD,
-      data: newCard,
+      payload: newCard,
     });
 
     setCardForm(false);
     setCardTitle('');
 
-    createCard(newCard);
+    cardApi.createCard(newCard);
   };
 
   return (
@@ -59,7 +59,7 @@ const CardForm = ({ listCards, listId, dispatchCards }) => {
         <div className='flex items-center mt-1'>
           <button
             type='submit'
-            className=' text-blue-500 py-1 px-2 rounded-sm hover:bg-blue-100 hover:text-blue-600 font-medium'>
+            className=' bg-gray-200 text-blue-600 py-1 px-2 rounded-sm  hover:bg-gray-300 font-medium shadow'>
             Add card
           </button>
           <button

@@ -7,7 +7,10 @@ const CardsContainer = ({ listId, cards, dispatchCards, toggleCardBox }) => {
   return (
     <Droppable droppableId={listId} type='CARD'>
       {(provided) => (
-        <div {...provided.droppableProps} ref={provided.innerRef}>
+        <div
+          className=' overflow-y-auto overflow-x-hidden whitespace-nowrap min-h-0'
+          {...provided.droppableProps}
+          ref={provided.innerRef}>
           {cards.map((card, index) => {
             return (
               <Card

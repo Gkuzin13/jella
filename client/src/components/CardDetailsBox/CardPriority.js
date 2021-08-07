@@ -17,7 +17,7 @@ const CardPriority = ({ dispatchCards, selectedCard }) => {
 
       dispatchCards({
         type: ACTIONS.UPDATE_PRIORITY,
-        data: { cardId: selectedCard._id, priority: newPriority },
+        payload: { cardId: selectedCard._id, priority: newPriority },
       });
     } catch (error) {
       console.log(error);
