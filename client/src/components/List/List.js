@@ -55,8 +55,8 @@ const List = ({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-50 bg-opacity-90 bg-blend-color-burn shadow w-72 mx-2 mb-5 p-1 
-          rounded-sm'>
+          className='flex flex-col flex-shrink-0 max-h-full bg-gray-100 
+          shadow w-72 mx-2 p-1 rounded-sm '>
           <div className=' flex justify-between items-center py-2 px-2'>
             <EditableText
               value={listData.listTitle}

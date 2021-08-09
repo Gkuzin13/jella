@@ -31,23 +31,28 @@ const ListForm = ({ boardId, lists, dispatchLists }) => {
     console.log(newList);
   };
 
+  if (!listForm) {
+    return (
+      <div
+        className='cursor-pointer flex flex-shrink-0 bg-gray-200 bg-opacity-80
+    shadow w-72 p-1.5 mx-1.5 rounded-sm text-gray-600 hover:bg-opacity-100 transition-colors duration-150'>
+        <button
+          onClick={() => setListForm(true)}
+          className='flex items-center w-full transition-opacity duration-75 font-medium p-1 px-1.5'>
+          <span className='material-icons mr-1'>add</span>
+          <span>{!lists.length ? 'Add list' : 'Add another list'}</span>
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-100 shadow-md w-64 p-1.5 mx-1.5 rounded-sm '>
-      <button
-        onClick={() => setListForm(true)}
-        className={`${
-          listForm
-            ? 'opacity-0 hidden'
-            : 'flex items-center w-full transition-opacity duration-75 opacity-50 font-medium p-1 px-1.5'
-        } `}>
-        <span className='material-icons mr-1'>add</span>
-        <span>{!lists.length ? 'Add list' : 'Add another list'}</span>
-      </button>
+    <div
+      className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-50
+    shadow w-72 p-1.5 mx-1.5 rounded-sm '>
       <form
         onSubmit={(e) => handleNewList(e)}
-        className={`${
-          listForm ? 'block' : 'opacity-0 hidden'
-        } w-full transition-opacity duration-75 flex flex-col`}>
+        className='w-full transition-opacity duration-75 flex flex-col'>
         <input
           name='listTitle'
           required

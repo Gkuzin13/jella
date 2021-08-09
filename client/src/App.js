@@ -32,7 +32,7 @@ function App() {
           <SignupPage />
         </PublicRoute>
 
-        <PrivateRoute path={`/:username/boards`}>
+        <PrivateRoute path='/:username/boards'>
           <Home />
         </PrivateRoute>
 

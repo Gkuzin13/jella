@@ -109,7 +109,7 @@ const BoardPage = () => {
   }
 
   return (
-    <div className='flex flex-col h-full mr-0 px-3'>
+    <div className='px-3 h-screen flex flex-col'>
       {!selectedCard.isOpen ? null : (
         <CardDetailsBox
           cards={cards}
@@ -137,7 +137,7 @@ const BoardPage = () => {
         <UserControl />
       </div>
 
-      <main className='relative flex-grow'>
+      <div className='flex h-full pb-2 overflow-y-hidden'>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <BoardCanvas
             boardId={boardData.id}
@@ -148,7 +148,7 @@ const BoardPage = () => {
             toggleCardBox={toggleCardBox}
           />
         </DragDropContext>
-      </main>
+      </div>
     </div>
   );
 };

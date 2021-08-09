@@ -33,11 +33,11 @@ const Card = ({ cardData, toggleCardBox, index }) => {
                 </div>
               )}
 
-              {cardData.description ? (
+              {cardData.description && (
                 <span className='material-icons-outlined text-gray-300'>
                   subject
                 </span>
-              ) : null}
+              )}
 
               <span
                 className={`material-icons p-0.5 ml-auto text-${priorityIcon.color}-500`}>

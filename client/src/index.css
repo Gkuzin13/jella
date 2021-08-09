@@ -31,3 +31,42 @@ html {
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
+
+/* Custom Scrollbar*/
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(180, 180, 180) rgb(224, 224, 224);
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(224, 224, 224);
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(180, 180, 180);
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+}

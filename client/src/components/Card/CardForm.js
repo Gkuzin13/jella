@@ -33,40 +33,45 @@ const CardForm = ({ listCards, listId, dispatchCards }) => {
     cardApi.createCard(newCard);
   };
 
+  if (!cardForm) {
+    return (
+      <div className='p-1 text-gray-500 rounded-sm mx-1.5'>
+        <button
+          onClick={() => setCardForm(true)}
+          className='flex items-center w-full font-medium hover:bg-gray-200 
+          hover:text-gray-700 p-1.5 px-2 transition-colors duration-150'>
+          <span className='material-icons mr-1'>add</span>
+          <span>Add a card</span>
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className='p-1 text-gray-500 rounded-sm mx-1.5'>
-      <button
-        onClick={() => setCardForm(true)}
-        className={`${
-          cardForm
-            ? 'opacity-0 hidden'
-            : 'flex items-center w-full font-medium hover:bg-gray-200 p-1.5 px-2 transition-opacity duration-75'
-        } `}>
-        <span className='material-icons mr-1'>add</span>
-        <span>Add a card</span>
-      </button>
       <form
         onSubmit={(e) => handleCardCreate(e)}
-        className={`${
-          cardForm ? 'block' : 'opacity-0 hidden'
-        } w-full transition-opacity duration-75`}>
+        className='w-full transition-opacity duration-75'>
         <textarea
           name='cardTitle'
           value={cardTitle}
           onChange={(e) => setCardTitle(e.target.value)}
-          placeholder='Enter a title for this card...'
+          placeholder='Enter a title for this card'
           className='resize-none p-1.5 w-full rounded-sm shadow'></textarea>
         <div className='flex items-center mt-1'>
           <button
             type='submit'
-            className=' bg-gray-200 text-blue-600 py-1 px-2 rounded-sm  hover:bg-gray-300 font-medium shadow'>
+            className=' bg-blue-600 text-white py-1 px-2 rounded-sm  hover:bg-blue-700 
+            font-medium shadow transition-colors duration-150'>
             Add card
           </button>
           <button
             type='button'
             className='flex items-center ml-1'
             onClick={() => setCardForm(false)}>
-            <span className='material-icons-outlined text-2xl text-gray-500 cursor-pointer ml-1 hover:text-black'>
+            <span
+              className='material-icons-outlined text-2xl text-gray-500 
+            cursor-pointer ml-2 hover:text-gray-700'>
               close
             </span>
           </button>
