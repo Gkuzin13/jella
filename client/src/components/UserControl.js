@@ -28,30 +28,45 @@ const UserControl = () => {
     }
   };
 
-  return (
-    <div className=' flex flex-col items-end m-4 relative z-10'>
-      <button onClick={() => setDropdown(!dropdown)}>
-        <div className='flex items-center px-1.5 py-0.5 rounded shadow-sm hover:bg-blue-50  text-blue-500 bg-gray-50 font-medium  transition-colors duration-150'>
+  if (!dropdown) {
+    return (
+      <div>
+        <button
+          onClick={() => setDropdown(!dropdown)}
+          className='flex items-center px-1.5 py-0.5 mx-2 rounded-sm shadow-sm 
+        text-gray-600 bg-gray-50 font-medium  transition-colors duration-150'>
           <span className='material-icons-outlined text-3xl'>
             manage_accounts
           </span>
-        </div>
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className='relative'>
+      <button
+        onClick={() => setDropdown(!dropdown)}
+        className='flex items-center px-1.5 py-0.5 mx-2 rounded-sm shadow-sm   
+        text-blue-600 bg-gray-50 font-medium  transition-colors duration-150'>
+        <span className='material-icons-outlined text-3xl'>
+          manage_accounts
+        </span>
       </button>
       <div
         ref={dropdownRef}
-        className={`${
-          dropdown ? 'block fixed top-12' : 'hidden'
-        } my-1 bg-white p-2 w-48 shadow-md`}>
-        <div className='flex items-center justify-between px-1'>
-          <span className='text-gray-400 font-medium'>Account</span>
+        className='absolute right-0 flex items-center flex-col
+        bg-white py-3 px-4 shadow-xl w-64'>
+        <div className='flex items-center flex-row pb-4 relative px-2'>
+          <span className='text-lg text-gray-500'>Account</span>
           <button
             onClick={() => setDropdown(false)}
-            className='flex items-center opacity-40 hover:opacity-100'
+            className='flex text-gray-500 hover:text-gray-700 absolute -right-16 transition-colors duration-150'
             type='button'>
             <span className='material-icons cursor-pointer ml-1'>close</span>
           </button>
         </div>
-        <div className=' border-solid border border-gray-100 my-3'></div>
+        <div className='w-full border mb-3'></div>
 
         <button
           onClick={() => {

@@ -35,7 +35,7 @@ const CardForm = ({ listCards, listId, dispatchCards }) => {
 
   if (!cardForm) {
     return (
-      <div className='p-1 text-gray-500 rounded-sm mx-1.5'>
+      <div className='text-gray-500 bg-gray-200 rounded-sm mx-2.5 mb-2 mt-2'>
         <button
           onClick={() => setCardForm(true)}
           className='flex items-center w-full font-medium hover:bg-gray-200 
@@ -48,7 +48,7 @@ const CardForm = ({ listCards, listId, dispatchCards }) => {
   }
 
   return (
-    <div className='p-1 text-gray-500 rounded-sm mx-1.5'>
+    <div className='p-1 text-gray-500 rounded-sm mx-2.5 mt-2'>
       <form
         onSubmit={(e) => handleCardCreate(e)}
         className='w-full transition-opacity duration-75'>
@@ -61,8 +61,8 @@ const CardForm = ({ listCards, listId, dispatchCards }) => {
         <div className='flex items-center mt-1'>
           <button
             type='submit'
-            className=' bg-blue-600 text-white py-1 px-2 rounded-sm  hover:bg-blue-700 
-            font-medium shadow transition-colors duration-150'>
+            className=' bg-gray-200 text-blue-600 py-1 px-2 rounded-sm  hover:bg-gray-300 
+            font-medium shadow-sm transition-colors duration-150'>
             Add card
           </button>
           <button

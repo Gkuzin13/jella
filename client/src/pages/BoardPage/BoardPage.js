@@ -109,7 +109,7 @@ const BoardPage = () => {
   }
 
   return (
-    <div className='px-3 h-screen flex flex-col'>
+    <div className=' h-screen flex flex-col'>
       {!selectedCard.isOpen ? null : (
         <CardDetailsBox
           cards={cards}
@@ -118,11 +118,11 @@ const BoardPage = () => {
           dispatchCards={dispatchCards}
         />
       )}
-      <div className='flex justify-between'>
-        <div className='flex items-center text-2xl font-medium my-4 mx-3'>
+      <div className='flex justify-between items-center py-2 px-1'>
+        <div className='flex items-center text-2xl font-medium my-4 mx-3 '>
           <Link
             aria-label='Back to home'
-            className='flex items-center  px-1 mr-1 text-blue-500 rounded-sm hover:bg-blue-50 transition-colors duration-150'
+            className='flex items-center  px-1 mr-1 text-blue-500 rounded-sm transition-colors duration-150'
             to={`/${user.username}/boards`}>
             <span className='material-icons-outlined mr-1.5 text-3xl'>
               view_week
@@ -130,14 +130,14 @@ const BoardPage = () => {
             <span>Boards</span>
           </Link>
 
-          <div className='rounded-sm'>
+          <div>
             <span> / {boardData.title}</span>
           </div>
         </div>
         <UserControl />
       </div>
 
-      <div className='flex h-full pb-2 overflow-y-hidden'>
+      <div className='flex h-full overflow-x-auto'>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <BoardCanvas
             boardId={boardData.id}
