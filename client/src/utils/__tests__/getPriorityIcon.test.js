@@ -6,5 +6,13 @@ describe('Should return the correct priority icon', () => {
       color: 'green',
       icon: 'remove',
     });
+    expect(getPriorityIcon('medium')).toMatchObject({
+      color: 'yellow',
+      icon: 'short_text',
+    });
+    expect(getPriorityIcon('high')).toMatchObject({
+      color: 'red',
+      icon: 'sort',
+    });
   });
 });
