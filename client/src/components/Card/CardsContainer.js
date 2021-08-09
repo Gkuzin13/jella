@@ -5,7 +5,7 @@ import CardForm from './CardForm';
 
 const CardsContainer = ({ listId, cards, dispatchCards, toggleCardBox }) => {
   return (
-    <Droppable droppableId={listId} type='CARD'>
+    <Droppable droppableId={listId} type='CARD' direction='vertical'>
       {(provided) => (
         <div
           className=' overflow-y-auto overflow-x-hidden whitespace-nowrap min-h-0'

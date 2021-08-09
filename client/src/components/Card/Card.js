@@ -14,12 +14,12 @@ const Card = ({ cardData, toggleCardBox, index }) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className='mx-2.5 mb-3 py-2.5 px-2 bg-white shadow-md cursor-pointer rounded-sm hover:shadow-lg transition-shadow duration-150'>
+          className='mx-2.5 mb-3 bg-white shadow-md cursor-pointer rounded-sm hover:shadow-lg transition-shadow duration-150'>
           <div
             onClick={() => toggleCardBox(cardData._id, true)}
             className='flex flex-col w-full'>
-            <span className='p-1 mb-1.5'>{cardData.cardTitle}</span>
-            <div className='flex items-center justify-start w-full px-1'>
+            <span className='px-2 py-1.5 mb-1.5'>{cardData.cardTitle}</span>
+            <div className='flex items-center justify-start w-full px-2 pt-0.5 pb-2'>
               {total === 0 ? null : (
                 <div
                   className={`${progressColor} flex items-center justify-center rounded px-1.5 mr-3 `}>
@@ -39,10 +39,12 @@ const Card = ({ cardData, toggleCardBox, index }) => {
                 </span>
               )}
 
-              <span
-                className={`material-icons p-0.5 ml-auto text-${priorityIcon.color}-500`}>
-                {priorityIcon.icon}
-              </span>
+              {priorityIcon.color === 'green' ? null : (
+                <span
+                  className={`material-icons p-0.5 ml-auto text-${priorityIcon.color}-500`}>
+                  {priorityIcon.icon}
+                </span>
+              )}
             </div>
           </div>
         </div>

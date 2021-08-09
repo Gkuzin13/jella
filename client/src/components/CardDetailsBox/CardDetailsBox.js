@@ -18,7 +18,7 @@ const CardDetailsBox = ({ toggleCardBox, cardId, cards, dispatchCards }) => {
       payload: card,
     });
 
-    cardApi.updateCardInDb(card);
+    cardApi.updateCard(card);
   };
 
   const handleCardDelete = () => {
@@ -45,7 +45,7 @@ const CardDetailsBox = ({ toggleCardBox, cardId, cards, dispatchCards }) => {
   };
 
   return (
-    <div className='fixed top-0 right-0 left-0 bottom-0 overflow-auto bg-opacity-40 bg-black z-10'>
+    <div className='fixed top-0 right-0 left-0 bottom-0 overflow-auto bg-opacity-40 bg-black z-20'>
       <div className='grid place-items-center py-20'>
         <div className='flex flex-col p-6 pb-12 w-5/6 bg-white shadow-2xl'>
           <button
