@@ -1,5 +1,6 @@
 const Account = require('../models/account');
 const bcrypt = require('bcrypt');
+const populate = require('../utils/populateBoard');
 const { body, validationResult } = require('express-validator');
 const passport = require('passport');
 
@@ -56,6 +57,43 @@ exports.create_account_post = [
   },
 ];
 
+// Create guest account on POST
+exports.create_guest_account = [
+  // Validate form fields
+  body('email', 'Must be a valid email address,').isEmail(),
+  body('password', 'Password must be at least 8 characters long.').isLength({
+    min: 8,
+    max: 32,
+  }),
+
+  async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.send({ error: errors.array({ onlyFirstError: true })[0] });
+    }
+
+    try {
+      // Save new accont to db
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+      // Save new accont to db
+      const account = await new Account({
+        email: req.body.email,
+        username: 'Guest',
+        password: hashedPassword,
+      }).save();
+      console.log(account._id);
+
+      await populate.populateGuestBoard(account._id);
+
+      next();
+    } catch (err) {
+      return res.send(err);
+    }
+  },
+];
+
 // Handle login on POST
 exports.account_login_post = [
   // Validate form fields
@@ -103,7 +141,7 @@ exports.user_get = (req, res, next) => {
   next();
 };
 
-//Logout account on GET
+// Logout account
 exports.account_logout = (req, res, next) => {
   req.logout();
 
