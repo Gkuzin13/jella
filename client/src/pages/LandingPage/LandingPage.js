@@ -1,7 +1,40 @@
-import { Link } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { Types } from 'mongoose';
+import MiniLoader from '../../components/MiniLoader';
+import { AuthContext } from '../../config/Auth';
+import api from '../../config/axiosConfig';
 import { ReactComponent as BoardImg } from '../../images/boardplanner.svg';
 
 const LandingPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const { setUser } = useContext(AuthContext);
+
+  const history = useHistory();
+
+  const handleGuestLogin = async () => {
+    setIsLoading(true);
+
+    try {
+      const { data } = await api.post('/login/guest', {
+        email: `${Types.ObjectId().toHexString()}@mail.com`,
+        password: '123456781',
+      });
+      console.log(data);
+
+      if (data.error) {
+        setIsLoading(false);
+        return;
+      }
+      setIsLoading(false);
+
+      if (data.username) {
+        setUser(() => data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <div className='bg-main w-full h-full -z-10 fixed top-0'></div>
@@ -34,12 +67,13 @@ const LandingPage = () => {
             unique—accomplish it all with Company
           </p>
           <div className='mt-12 text-xl flex items-center text-center mb-10'>
-            <Link
-              to='#'
+            <button
+              onClick={() => handleGuestLogin()}
+              aria-label='Continue as a guest user button'
               className='bg-blue-600 text-white py-2.5 px-8 shadow font-medium 
               rounded-sm hover:bg-blue-500 transition-colors duration-150 w-full lg:w-1/2 whitespace-nowrap'>
-              Continue as Guest
-            </Link>
+              {isLoading ? <MiniLoader /> : 'Continue as Guest'}
+            </button>
           </div>
         </div>
 

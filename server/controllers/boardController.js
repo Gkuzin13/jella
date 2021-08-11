@@ -1,5 +1,7 @@
 const Board = require('../models/board');
+const List = require('../models/list');
 const Card = require('../models/card');
+const Subtask = require('../models/subtask');
 const mongoose = require('mongoose');
 const { body, validationResult } = require('express-validator');
 
@@ -93,6 +95,9 @@ exports.create_board_post = [
 exports.board_delete = async (req, res) => {
   try {
     await Board.findByIdAndDelete(req.params.id);
+    await List.deleteMany({ boardId: req.params.id });
+    await Card.deleteMany({ boardId: req.params.id });
+    await Subtask.deleteMany({ boardId: req.params.id });
 
     res.sendStatus(200);
   } catch (error) {

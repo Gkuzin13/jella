@@ -16,7 +16,7 @@ const BoardCanvas = ({
         <div
           {...provided.droppableProps}
           ref={provided.innerRef}
-          className='flex flex-nowrap items-start px-2'>
+          className='flex flex-nowrap items-start px-3'>
           {lists.map((list, index) => {
             const listCards = cards.filter((card) => card.listId === list._id);
             return (

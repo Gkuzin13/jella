@@ -17,7 +17,7 @@ const UserControl = () => {
 
   const handleLogout = async () => {
     try {
-      const { status } = await api.get('/logout');
+      const { status } = await api.post('/logout');
 
       if (status === 200) {
         setUser(null);

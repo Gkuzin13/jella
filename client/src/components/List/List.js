@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import listApi from '../../api/listApi';
 import ClickOutside from '../../hooks/ClickOutside';
-import EditableText from '../../hooks/EditableText';
 import { ACTIONS } from '../../hooks/reducers/reducers';
 import CardsContainer from '../Card/CardsContainer';
 import ListActionsBox from '../List/ListActionsBox';
@@ -64,8 +63,8 @@ const List = ({
           className='flex flex-col flex-shrink-0  bg-gray-100 
           shadow w-72 mr-4 rounded-sm '>
           <div
-            className='flex justify-between items-center py-2 px-2 bg-gray-400 
-            rounded-t-sm rounded-b-none'>
+            className={`flex justify-between items-center py-1 px-2 bg-${listData.coverColor}-500 bg-opacity-90
+            rounded-t-sm rounded-b-none`}>
             <div>
               <h2 className='font-medium p-1 px-2 hidden'>{textValue}</h2>
               <input

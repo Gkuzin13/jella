@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import Loader from '../../components/Loader';
+import MiniLoader from '../../components/MiniLoader';
 import { AuthContext } from '../../config/Auth';
 import api from '../../config/axiosConfig';
 
@@ -73,7 +73,7 @@ const LoginPage = () => {
               type='submit'
               className='bg-gray-50 text-blue-700 font-medium text-md py-2 shadow mb-5 
               hover:bg-gray-100 transition-colors duration-150'>
-              {loading ? <Loader /> : 'Log In'}
+              {loading ? <MiniLoader /> : 'Log In'}
             </button>
           </form>
           <div className='text-center mt-4'>

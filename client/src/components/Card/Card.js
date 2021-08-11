@@ -19,11 +19,13 @@ const Card = ({ cardData, toggleCardBox, index }) => {
           <div
             onClick={() => toggleCardBox(cardData._id, true)}
             className='flex flex-col w-full'>
-            <span className='px-2 py-1.5 mb-1.5'>{cardData.cardTitle}</span>
-            <div className='flex items-center justify-start w-full px-2 pt-0.5 pb-2'>
+            <span className='px-3 py-2 font-medium text-gray-800'>
+              {cardData.cardTitle}
+            </span>
+            <div className='flex items-center justify-start w-full'>
               {total === 0 ? null : (
                 <div
-                  className={`${progressColor} flex items-center justify-center rounded px-1.5 mr-3 `}>
+                  className={`${progressColor} flex items-center justify-center rounded px-1.5 ml-3 mb-2.5 `}>
                   <span className='material-icons-outlined text-lg pr-0.5'>
                     check_box
                   </span>
@@ -35,17 +37,15 @@ const Card = ({ cardData, toggleCardBox, index }) => {
               )}
 
               {cardData.description && (
-                <span className='material-icons-outlined text-gray-300'>
+                <span className='material-icons-outlined text-gray-300 mb-2.5 ml-3'>
                   subject
                 </span>
               )}
 
-              {priorityIcon.color === 'green' ? null : (
-                <span
-                  className={`material-icons p-0.5 ml-auto text-${priorityIcon.color}-500`}>
-                  {priorityIcon.icon}
-                </span>
-              )}
+              <span
+                className={`material-icons mb-2.5 mr-3 ml-auto text-${priorityIcon.color}-500`}>
+                {priorityIcon.icon}
+              </span>
             </div>
           </div>
         </div>

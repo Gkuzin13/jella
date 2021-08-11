@@ -70,3 +70,7 @@ html {
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
 }
+
+.miniloader {
+  border-top-color: rgba(37, 99, 235);
+}
