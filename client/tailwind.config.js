@@ -12,6 +12,9 @@ module.exports = {
       zIndex: {
         '-10': '-10',
       },
+      outline: {
+        blue: '2px solid rgb(37, 99, 235)',
+      },
       animation: {
         stretch: 'stretch 1.2s ease-in-out infinite',
         stretch2: 'stretch2 1.1s ease-in-out infinite',

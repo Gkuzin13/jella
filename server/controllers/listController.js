@@ -61,6 +61,7 @@ exports.update_list_put = [
         {
           listTitle: req.body.listTitle,
           position: req.body.position,
+          coverColor: req.body.coverColor,
         },
         {
           new: true,

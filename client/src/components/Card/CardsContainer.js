@@ -7,7 +7,7 @@ const CardsContainer = ({ listId, cards, toggleCardBox }) => {
     <Droppable droppableId={listId} type='CARD' direction='vertical'>
       {(provided) => (
         <div
-          className='mt-2'
+          className='pb-3'
           {...provided.droppableProps}
           ref={provided.innerRef}>
           {cards.map((card, index) => {

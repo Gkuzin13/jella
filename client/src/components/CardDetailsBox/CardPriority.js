@@ -29,7 +29,7 @@ const CardPriority = ({ dispatchCards, selectedCard }) => {
   return (
     <div className='my-5'>
       <div className='flex items-center '>
-        <span className='material-icons mr-2.5'>low_priority</span>
+        <span className='material-icons-outlined mr-4'>low_priority</span>
         <span className='text-lg font-bold'>Priority</span>
       </div>
       <div className='flex'>

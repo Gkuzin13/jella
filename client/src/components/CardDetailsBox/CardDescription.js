@@ -16,14 +16,14 @@ const CardDescription = ({
     return (
       <div className='my-5'>
         <div className='flex items-center text-gray-800 mb-1'>
-          <span className='material-icons mr-2.5 '>event_note</span>
+          <span className='material-icons-outlined mr-4 '>event_note</span>
           <span className='font-semibold text-xl'>Description</span>
         </div>
         <div>
           <div
             onClick={() => setDescForm(true)}
             className=' hover:bg-gray-100 cursor-pointer px-3 py-1.5 pb-8 transition-colors 
-            duration-150 break-all'>
+            duration-150 break-words'>
             <p>{description || 'Add a more detailed description...'}</p>
           </div>
         </div>
@@ -34,7 +34,7 @@ const CardDescription = ({
   return (
     <div className='my-5'>
       <div className='flex items-center text-gray-800 mb-1'>
-        <span className='material-icons mr-2.5 '>event_note</span>
+        <span className='material-icons-outlined mr-4 '>event_note</span>
         <span className='font-semibold text-xl'>Description</span>
       </div>
       <div>
@@ -44,8 +44,9 @@ const CardDescription = ({
             onChange={(e) => onValueChange(e)}
             name='description'
             rows='4'
+            autoFocus
             placeholder='Add a more detailed description...'
-            className='px-2.5 py-1 w-full rounded-sm border-2 h-auto'
+            className='px-2.5 py-1 w-full rounded-sm border-2 h-auto focus:outline-blue'
           />
           <div className='flex items-center py-1'>
             <button

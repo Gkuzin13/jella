@@ -97,7 +97,7 @@ const CheckList = ({ dispatchCards, selectedCard }) => {
   return (
     <div className='flex flex-col items-start my-5'>
       <div className='flex items-center text-gray-800'>
-        <span className='material-icons mr-2.5'>event_available</span>
+        <span className='material-icons-outlined mr-4'>event_available</span>
         <span className='font-semibold text-xl'>Checklist</span>
       </div>
 

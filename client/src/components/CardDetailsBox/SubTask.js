@@ -10,21 +10,21 @@ const SubTask = ({ toggleCheckbox, handleTaskDelete, subtask, index }) => {
           {...provided.dragHandleProps}
           className='flex justify-between items-center w-full mb-2 bg-gray-50 hover:bg-gray-100 p-1 shadow-sm'
           key={subtask._id}>
-          <label className='flex items-center my-1'>
+          <div className='flex items-center'>
             <input
               name='isDone'
               type='checkbox'
-              className='form-checkbox h-5 w-5 text-red-600'
+              className='form-checkbox h-4 w-4 text-red-600 mr-3 cursor-pointer'
               defaultChecked={subtask.isDone}
               onChange={(e) => toggleCheckbox(e, subtask._id)}
             />
-            <span
+            <label
               className={`ml-2 text-gray-700 ${
-                subtask.isDone ? 'line-through text-gray-400' : null
+                subtask.isDone && 'line-through text-gray-400'
               } `}>
               {subtask.taskName}
-            </span>
-          </label>
+            </label>
+          </div>
 
           <button
             type='button'

@@ -20,6 +20,7 @@ const CardForm = ({ listCards, listId, dispatchCards }) => {
       position: appendItem(listCards),
       listId: listId,
       boardId: id,
+      createdAt: Date.now(),
     };
 
     dispatchCards({
@@ -35,7 +36,7 @@ const CardForm = ({ listCards, listId, dispatchCards }) => {
 
   if (!cardForm) {
     return (
-      <div className='text-gray-500 bg-gray-200 rounded-sm mx-2.5 mb-2 mt-2'>
+      <div className='text-gray-600 bg-gray-200 rounded-sm mx-2.5 mt-2'>
         <button
           onClick={() => setCardForm(true)}
           className='flex items-center w-full font-medium hover:bg-gray-200 
@@ -48,7 +49,7 @@ const CardForm = ({ listCards, listId, dispatchCards }) => {
   }
 
   return (
-    <div className='p-1 text-gray-500 rounded-sm mx-2.5 mt-2'>
+    <div className='p-1 text-gray-500 rounded-sm mx-2.5 mt-1'>
       <form
         onSubmit={(e) => handleCardCreate(e)}
         className='w-full transition-opacity duration-75'>
@@ -56,8 +57,9 @@ const CardForm = ({ listCards, listId, dispatchCards }) => {
           name='cardTitle'
           value={cardTitle}
           onChange={(e) => setCardTitle(e.target.value)}
+          autoFocus
           placeholder='Enter a title for this card'
-          className='resize-none p-1.5 w-full rounded-sm shadow'></textarea>
+          className='resize-none p-1.5 w-full rounded-sm shadow focus:outline-blue'></textarea>
         <div className='flex items-center mt-1'>
           <button
             type='submit'

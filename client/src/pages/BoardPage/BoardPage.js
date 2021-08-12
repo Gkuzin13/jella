@@ -110,9 +110,11 @@ const BoardPage = () => {
 
   return (
     <div className=' h-screen flex flex-col'>
+      <div className='bg-main absolute w-full h-screen -z-10'></div>
       {!selectedCard.isOpen ? null : (
         <CardDetailsBox
           cards={cards}
+          lists={lists}
           cardId={selectedCard.cardId}
           toggleCardBox={toggleCardBox}
           dispatchCards={dispatchCards}

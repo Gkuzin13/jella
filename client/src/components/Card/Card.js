@@ -14,12 +14,12 @@ const Card = ({ cardData, toggleCardBox, index }) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className='mx-2.5 mb-3 bg-white shadow-md cursor-pointer rounded-sm hover:shadow-lg hover:bg-gray-50
+          className='mt-3 mx-3 bg-white shadow-md cursor-pointer rounded-sm hover:shadow-lg hover:bg-gray-50
           transition-shadow duration-150'>
           <div
             onClick={() => toggleCardBox(cardData._id, true)}
             className='flex flex-col w-full'>
-            <span className='px-3 py-2 font-medium text-gray-800'>
+            <span className='px-3 py-2 font-medium text-gray-900 break-words'>
               {cardData.cardTitle}
             </span>
             <div className='flex items-center justify-start w-full'>

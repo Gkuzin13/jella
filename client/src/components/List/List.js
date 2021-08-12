@@ -6,6 +6,7 @@ import { ACTIONS } from '../../hooks/reducers/reducers';
 import CardsContainer from '../Card/CardsContainer';
 import ListActionsBox from '../List/ListActionsBox';
 import CardForm from '../Card/CardForm';
+import ListTitle from './ListTitle';
 
 const List = ({
   listData,
@@ -16,7 +17,6 @@ const List = ({
   index,
 }) => {
   const [listActionsBox, setListActionsBox] = useState(false);
-  const [textValue, setTextValue] = useState(listData.listTitle);
 
   const boxRef = useRef();
 
@@ -49,8 +49,15 @@ const List = ({
     listApi.deleteList(id);
   };
 
-  const handleOnChange = (e) => {
-    setTextValue(e.target.value);
+  const handleColorChange = (color) => {
+    const updatedList = { ...listData, coverColor: color };
+
+    dispatchLists({
+      type: ACTIONS.EDIT_LIST,
+      payload: updatedList,
+    });
+
+    listApi.updateList(updatedList);
   };
 
   return (
@@ -60,23 +67,14 @@ const List = ({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className='flex flex-col flex-shrink-0  bg-gray-100 
-          shadow w-72 mr-4 rounded-sm '>
+          className='flex flex-col flex-shrink-0 bg-gray-100 bg-opacity-90 shadow-md w-72 mr-4 rounded-sm'>
           <div
-            className={`flex justify-between items-center py-1 px-2 bg-${listData.coverColor}-500 bg-opacity-90
+            className={`flex justify-between items-center py-1 px-2 bg-${listData.coverColor}-600 
             rounded-t-sm rounded-b-none`}>
-            <div>
-              <h2 className='font-medium p-1 px-2 hidden'>{textValue}</h2>
-              <input
-                onBlur={() => handleTitleUpdate(textValue)}
-                onChange={(e) => handleOnChange(e)}
-                className='font-medium bg-transparent focus:bg-white focus:text-black text-white 
-                p-1 px-2'
-                value={textValue}
-                name='cardTitle'
-                autoComplete='off'
-              />
-            </div>
+            <ListTitle
+              listTitle={listData.listTitle}
+              handleTitleUpdate={handleTitleUpdate}
+            />
             <div>
               <button
                 onClick={() => setListActionsBox(!listActionsBox)}
@@ -89,7 +87,8 @@ const List = ({
                   toggleActionsBox={toggleActionsBox}
                   boxRef={boxRef}
                   handleListDelete={handleListDelete}
-                  listId={listData._id}
+                  handleColorChange={handleColorChange}
+                  listData={listData}
                 />
               )}
             </div>

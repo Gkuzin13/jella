@@ -15,6 +15,7 @@ const ListForm = ({ boardId, lists, dispatchLists }) => {
       _id: Types.ObjectId().toHexString(),
       listTitle: listTitle,
       position: appendItem(lists),
+      coverColor: 'gray',
       boardId: boardId,
     };
 
@@ -35,7 +36,8 @@ const ListForm = ({ boardId, lists, dispatchLists }) => {
     return (
       <div
         className='cursor-pointer flex flex-shrink-0 bg-gray-200 bg-opacity-80
-    shadow w-72 p-1.5 mx-1.5 rounded-sm text-gray-600 hover:bg-opacity-100 transition-colors duration-150'>
+        shadow-md w-72 p-1.5 mx-1.5 rounded-sm text-gray-600 hover:bg-opacity-100 
+        transition-colors duration-150'>
         <button
           onClick={() => setListForm(true)}
           className='flex items-center w-full transition-opacity duration-75 font-medium p-1 px-1.5'>
@@ -49,7 +51,7 @@ const ListForm = ({ boardId, lists, dispatchLists }) => {
   return (
     <div
       className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-50
-    shadow w-72 p-1.5 mx-1.5 rounded-sm '>
+    shadow-md w-72 p-1.5 mx-1.5 rounded-sm '>
       <form
         onSubmit={(e) => handleNewList(e)}
         className='w-full transition-opacity duration-75 flex flex-col'>
@@ -58,13 +60,16 @@ const ListForm = ({ boardId, lists, dispatchLists }) => {
           required
           value={listTitle}
           onChange={(e) => setListTitle(e.target.value)}
+          maxLength='32'
+          autoFocus
+          autoComplete='off'
           placeholder='Enter a title for this list...'
-          className='p-1 rounded-sm shadow'
+          className='p-1 rounded-sm shadow focus:outline-blue'
         />
         <div className='flex items-center mt-1.5 transition-colors duration-150'>
           <button
             type='submit'
-            className=' bg-gray-100 text-blue-600 py-1 px-2 rounded-sm  hover:bg-blue-50 font-medium shadow'>
+            className=' bg-gray-100 text-blue-600 py-1 px-2 rounded-sm  hover:bg-gray-200 font-medium shadow'>
             Add list
           </button>
           <button
