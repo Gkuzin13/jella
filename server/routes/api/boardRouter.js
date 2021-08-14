@@ -5,7 +5,7 @@ const auth = require('../../middleware/auth');
 router.get('/b/:id', auth.checkAuthenticated, boardController.board_get);
 
 router.get(
-  '/user/boards',
+  '/:userId/boards',
   auth.checkAuthenticated,
   boardController.get_user_boards
 );

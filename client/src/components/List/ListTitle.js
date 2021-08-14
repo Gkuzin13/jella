@@ -9,7 +9,9 @@ const ListTitle = ({ listTitle, handleTitleUpdate }) => {
 
   return (
     <div>
-      <h2 className='font-medium p-1 px-2 hidden'>{textValue}</h2>
+      <label htmlFor='cardTitle' className='font-medium p-1 px-2 hidden'>
+        {textValue}
+      </label>
       <input
         onBlur={() => handleTitleUpdate(textValue)}
         onChange={(e) => handleOnChange(e)}

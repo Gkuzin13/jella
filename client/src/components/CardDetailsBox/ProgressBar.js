@@ -4,6 +4,10 @@ const ProgressBar = ({ subtasks, cardId }) => {
   const { total, done } = calcTasksStats(subtasks, cardId);
 
   const completed = calcPercentage(done, total);
+
+  if (!total) {
+    return null;
+  }
   return (
     <div className='flex justify-between items-center w-full my-1 text-center'>
       <span className='w-8 mr-2 text-center text-sm font-medium text-gray-500 transition-all duration-200 delay-200'>{`${completed}%`}</span>

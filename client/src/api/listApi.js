@@ -1,36 +1,12 @@
 import api from '../config/axiosConfig';
 
 const listApi = {
-  createList: async (listData) => {
-    try {
-      const { data } = await api.post('/1/lists/', listData);
+  createList: (listData) => api.post('/1/lists/', listData),
 
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  },
+  updateList: (updatedList) =>
+    api.put(`/1/lists/${updatedList._id}`, updatedList),
 
-  updateList: async (updatedList) => {
-    try {
-      const { data } = await api.put(
-        `/1/lists/${updatedList._id}`,
-        updatedList
-      );
-
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  },
-
-  deleteList: async (id) => {
-    try {
-      await api.delete(`/1/lists/${id}`);
-    } catch (error) {
-      console.log(error);
-    }
-  },
+  deleteList: (id) => api.delete(`/1/lists/${id}`),
 };
 
 export default listApi;

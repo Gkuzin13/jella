@@ -3,11 +3,9 @@ import { Link, useParams } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { AuthContext } from '../../config/Auth';
 import api from '../../config/axiosConfig';
-import {
-  listReducer,
-  cardReducer,
-  ACTIONS,
-} from '../../hooks/reducers/reducers';
+import listReducer from '../../reducers/listReducer';
+import cardReducer from '../../reducers/cardReducer';
+import ACTIONS from '../../reducers/actions';
 import Loader from '../../components/Loader';
 import CardDetailsBox from '../../components/CardDetailsBox/CardDetailsBox';
 import BoardCanvas from '../../components/BoardCanvas';
@@ -21,7 +19,7 @@ const BoardPage = () => {
   const [boardData, setBoardData] = useState(null);
   const [lists, dispatchLists] = useReducer(listReducer, []);
   const [cards, dispatchCards] = useReducer(cardReducer, []);
-  const [selectedCard, setSelectedCard] = useState('', { isOpen: false });
+  const [cardBox, setCardBox] = useState('', { isOpen: false });
 
   const { user } = useContext(AuthContext);
   const { id } = useParams();
@@ -59,7 +57,7 @@ const BoardPage = () => {
   }, [id]);
 
   const toggleCardBox = (cardId, isOpen) => {
-    setSelectedCard({ cardId, isOpen });
+    setCardBox({ cardId, isOpen });
   };
 
   const handleOnDragEnd = async (result) => {
@@ -111,23 +109,22 @@ const BoardPage = () => {
   return (
     <div className=' h-screen flex flex-col'>
       <div className='bg-main absolute w-full h-screen -z-10'></div>
-      {!selectedCard.isOpen ? null : (
+      {!cardBox.isOpen ? null : (
         <CardDetailsBox
-          cards={cards}
-          lists={lists}
-          cardId={selectedCard.cardId}
+          cardData={{ cards, lists, cardId: cardBox.cardId }}
           toggleCardBox={toggleCardBox}
+          cardBox={cardBox}
           dispatchCards={dispatchCards}
         />
       )}
-      <div className='flex justify-between items-center py-2 px-1'>
-        <div className='flex items-center text-2xl font-medium my-4 mx-3 '>
+      <div className='flex justify-between items-center py-2 px-6'>
+        <div className='flex items-center text-2xl font-medium my-4'>
           <Link
             aria-label='Back to home'
-            className='flex items-center  px-1 mr-1 text-blue-500 rounded-sm transition-colors duration-150'
+            className='flex items-center  px-1 mr-1 text-blue-600 hover:text-blue-700 rounded-sm transition-colors duration-150'
             to={`/${user.username}/boards`}>
             <span className='material-icons-outlined mr-1.5 text-3xl'>
-              view_week
+              home
             </span>
             <span>Boards</span>
           </Link>

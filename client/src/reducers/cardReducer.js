@@ -1,54 +1,6 @@
-export const ACTIONS = {
-  SET_LISTS: 'set-lists',
-  CREATE_LIST: 'create-list',
-  EDIT_LIST: 'edit-list',
-  DELETE_LIST: 'delete-list',
-  REORDER_LIST: 'reorder-list',
-  SET_CARDS: 'set-cards',
-  CREATE_CARD: 'create-card',
-  EDIT_CARD: 'edit-card',
-  DELETE_CARD: 'delete-card',
-  REORDER_CARD: 'reorder-card',
-  CREATE_SUBTASK: 'create-subtask',
-  EDIT_SUBTASK: 'edit-subtask',
-  DELETE_SUBTASK: 'delete-subtask',
-  UPDATE_PRIORITY: 'update-priority',
-  REORDER_SUBTASK: 'reorder-subtask',
-};
+import ACTIONS from './actions';
 
-export const listReducer = (lists, action) => {
-  const { payload: data } = action;
-
-  switch (action.type) {
-    case ACTIONS.SET_LISTS:
-      return data.sort((a, b) => a.position - b.position);
-    case ACTIONS.CREATE_LIST:
-      const listsCopy = [...lists];
-      return listsCopy.concat(data);
-
-    case ACTIONS.EDIT_LIST:
-      const updatedLists = lists.map((list) => {
-        return list._id === data._id ? data : list;
-      });
-
-      return updatedLists;
-
-    case ACTIONS.DELETE_LIST:
-      const filteredLists = lists.filter((list) => {
-        return list._id !== data ? list : null;
-      });
-
-      return filteredLists;
-
-    case ACTIONS.REORDER_LIST:
-      return data;
-
-    default:
-      return lists;
-  }
-};
-
-export const cardReducer = (cards, action) => {
+const cardReducer = (cards, action) => {
   const { payload: data } = action;
 
   switch (action.type) {
@@ -132,3 +84,5 @@ export const cardReducer = (cards, action) => {
       return cards;
   }
 };
+
+export default cardReducer;

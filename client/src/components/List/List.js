@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import listApi from '../../api/listApi';
-import ClickOutside from '../../hooks/ClickOutside';
-import { ACTIONS } from '../../hooks/reducers/reducers';
+import useClickOutside from '../../hooks/useClickOutside';
+import ACTIONS from '../../reducers/actions';
 import CardsContainer from '../Card/CardsContainer';
 import ListActionsBox from '../List/ListActionsBox';
 import CardForm from '../Card/CardForm';
@@ -20,7 +20,7 @@ const List = ({
 
   const boxRef = useRef();
 
-  ClickOutside(boxRef, listActionsBox, () => {
+  useClickOutside(boxRef, listActionsBox, () => {
     toggleActionsBox(!listActionsBox);
   });
 

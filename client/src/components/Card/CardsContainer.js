@@ -5,9 +5,11 @@ import Card from './Card';
 const CardsContainer = ({ listId, cards, toggleCardBox }) => {
   return (
     <Droppable droppableId={listId} type='CARD' direction='vertical'>
-      {(provided) => (
+      {(provided, snapshot) => (
         <div
-          className='pb-3'
+          className={`pt-1.5 pb-0.5 px-2.5 ${
+            snapshot.isDraggingOver && 'bg-green-100'
+          }`}
           {...provided.droppableProps}
           ref={provided.innerRef}>
           {cards.map((card, index) => {

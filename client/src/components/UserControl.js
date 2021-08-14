@@ -2,16 +2,16 @@ import { useState, useRef, useContext } from 'react';
 import { useHistory } from 'react-router';
 import { AuthContext } from '../config/Auth';
 import api from '../config/axiosConfig';
-import ClickOutside from '../hooks/ClickOutside';
+import useClickOutside from '../hooks/useClickOutside';
 
-const UserControl = () => {
+const UserControl = ({ user }) => {
   const [dropdown, setDropdown] = useState(false);
 
   const history = useHistory();
   const dropdownRef = useRef();
   const { setUser } = useContext(AuthContext);
 
-  ClickOutside(dropdownRef, dropdown, () => {
+  useClickOutside(dropdownRef, dropdown, () => {
     setDropdown(false);
   });
 
@@ -33,11 +33,9 @@ const UserControl = () => {
       <div>
         <button
           onClick={() => setDropdown(!dropdown)}
-          className='flex items-center px-1.5 py-0.5 mx-2 rounded-sm shadow-sm 
-        text-gray-600 bg-gray-50 font-medium  transition-colors duration-150'>
-          <span className='material-icons-outlined text-3xl'>
-            manage_accounts
-          </span>
+          className='flex items-center px-2 py-1.5 rounded-sm 
+        text-black bg-gray-200 font-medium  transition-colors duration-150'>
+          <span className='material-icons-outlined'>manage_accounts</span>
         </button>
       </div>
     );
@@ -47,11 +45,9 @@ const UserControl = () => {
     <div className='relative'>
       <button
         onClick={() => setDropdown(!dropdown)}
-        className='flex items-center px-1.5 py-0.5 mx-2 rounded-sm shadow-sm   
-        text-blue-600 bg-gray-50 font-medium  transition-colors duration-150'>
-        <span className='material-icons-outlined text-3xl'>
-          manage_accounts
-        </span>
+        className='flex items-center px-2 py-1.5 focus:text-blue-600 rounded-sm
+        text-gray-600 bg-gray-50 font-medium  transition-colors duration-150'>
+        <span className='material-icons-outlined '>manage_accounts</span>
       </button>
       <div
         ref={dropdownRef}

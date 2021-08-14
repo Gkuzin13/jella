@@ -25,7 +25,7 @@ const ListActionsBox = ({
       </div>
       <div className='w-full border mb-3'></div>
       <span className='self-start text text-gray-600'>Cover Color:</span>
-      <div class='flex items-center justify-between w-full mt-0.5 mb-4'>
+      <div className='flex items-center justify-between w-full mt-0.5 mb-4'>
         {colors.map((col) => {
           return (
             <button
@@ -47,7 +47,7 @@ const ListActionsBox = ({
 
       <button
         onClick={() => handleListDelete(_id)}
-        className='flex items-center w-full bg-gray-100 text-gray-600 hover:bg-red-50 hover:text-red-600 px-2.5 py-1.5
+        className='flex items-center w-full text-gray-600 hover:bg-red-50 hover:text-red-600 px-2.5 py-1.5
          transition-colors duration-150 rounded-sm'>
         <span>Delete list</span>
       </button>

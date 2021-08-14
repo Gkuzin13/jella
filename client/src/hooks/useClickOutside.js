@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const ClickOutside = (ref, state, callback) => {
+const useClickOutside = (ref, state, callback) => {
   useEffect(() => {
     const handleClick = (e) => {
       if (!ref.current) {
@@ -20,4 +20,4 @@ const ClickOutside = (ref, state, callback) => {
   }, [ref, state, callback]);
 };
 
-export default ClickOutside;
+export default useClickOutside;

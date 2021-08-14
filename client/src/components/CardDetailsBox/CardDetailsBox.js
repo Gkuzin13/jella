@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { ACTIONS } from '../../hooks/reducers/reducers';
+import { useRef } from 'react';
+import useClickOutside from '../../hooks/useClickOutside';
+import ACTIONS from '../../reducers/actions';
 import CardTitle from './CardTitle';
-import CheckList from '../CardDetailsBox/CheckList';
+import Checklist from '../CardDetailsBox/Checklist';
 import CardPriority from '../CardDetailsBox/CardPriority';
 import CardDescription from '../CardDetailsBox/CardDescription';
 import CardDate from './CardDate';
@@ -9,12 +10,16 @@ import cardApi from '../../api/cardApi';
 
 const CardDetailsBox = ({
   toggleCardBox,
-  cardId,
-  cards,
-  lists,
+  cardBox,
+  cardData,
   dispatchCards,
 }) => {
-  const [descForm, setDescForm] = useState(false);
+  const boxRef = useRef();
+  const { cards, lists, cardId } = cardData;
+
+  useClickOutside(boxRef, cardBox, () => {
+    toggleCardBox('', false);
+  });
 
   const selectedCard = cards.find((card) => card._id === cardId);
   const inList = lists.find((list) => list._id === selectedCard.listId);
@@ -41,7 +46,6 @@ const CardDetailsBox = ({
   const handleDescUpdate = (descValue) => {
     const updatedCard = { ...selectedCard, description: descValue };
 
-    setDescForm(false);
     handleCardUpdate(updatedCard);
   };
 
@@ -54,11 +58,13 @@ const CardDetailsBox = ({
   return (
     <div className='fixed top-0 right-0 left-0 bottom-0 overflow-auto bg-opacity-30 bg-black z-20'>
       <div className='grid place-items-center py-20'>
-        <div className='flex flex-col p-6 pb-12 w-11/12 lg:w-2/4 lg:px-10 bg-white shadow-2xl'>
+        <div className='flex flex-col justify-between relative p-6 w-11/12 lg:w-2/4 lg:px-10 bg-white shadow-2xl'>
           <button
-            className='flex items-center self-end hover:bg-gray-100 transition-colors duration-150 p-1'
+            className='flex items-center absolute right-0 top-0 m-4 hover:bg-gray-100 group transition-colors duration-150 p-1.5 mb-2'
             onClick={() => toggleCardBox()}>
-            <span className='material-icons text-gray-500'>close</span>
+            <span className='material-icons text-gray-500 group-hover:text-gray-600'>
+              close
+            </span>
           </button>
 
           <CardTitle
@@ -67,12 +73,10 @@ const CardDetailsBox = ({
             inList={inList}
           />
           <CardDescription
-            setDescForm={setDescForm}
-            descForm={descForm}
             handleDescUpdate={handleDescUpdate}
             description={selectedCard.description}
           />
-          <CheckList
+          <Checklist
             dispatchCards={dispatchCards}
             selectedCard={selectedCard}
           />
@@ -82,7 +86,7 @@ const CardDetailsBox = ({
           />
           <CardDate selectedCard={selectedCard} />
 
-          <div className='self-end py-2'>
+          <div className='self-end py-2 mt-6'>
             <button
               onClick={() => handleCardDelete()}
               className='bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-600 font-medium px-3 py-1 rounded-sm transition-colors duration-75'>

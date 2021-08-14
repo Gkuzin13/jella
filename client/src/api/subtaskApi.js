@@ -1,29 +1,11 @@
 import api from '../config/axiosConfig';
 
 const subtaskApi = {
-  createSubtask: async (subtask) => {
-    try {
-      await api.post('/1/checklists/', subtask);
-    } catch (error) {
-      console.log(error);
-    }
-  },
+  createSubtask: (subtask) => api.post('/1/checklists/', subtask),
 
-  updateSubtask: async (taskId, data) => {
-    try {
-      await api.put(`/1/checklists/${taskId}`, data);
-    } catch (error) {
-      console.log(error);
-    }
-  },
+  updateSubtask: (taskId, data) => api.put(`/1/checklists/${taskId}`, data),
 
-  deleteSubtask: async (taskId) => {
-    try {
-      await api.delete(`/1/checklists/${taskId}`);
-    } catch (error) {
-      console.log(error);
-    }
-  },
+  deleteSubtask: (taskId) => api.delete(`/1/checklists/${taskId}`),
 };
 
 export default subtaskApi;

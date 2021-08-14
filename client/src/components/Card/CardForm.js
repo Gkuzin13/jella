@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router';
 import { Types } from 'mongoose';
 import cardApi from '../../api/cardApi';
-import { ACTIONS } from '../../hooks/reducers/reducers';
+import ACTIONS from '../../reducers/actions';
 import { appendItem } from '../../utils/setNewPos';
 
 const CardForm = ({ listCards, listId, dispatchCards }) => {
@@ -36,7 +36,7 @@ const CardForm = ({ listCards, listId, dispatchCards }) => {
 
   if (!cardForm) {
     return (
-      <div className='text-gray-600 bg-gray-200 rounded-sm mx-2.5 mt-2'>
+      <div className='text-gray-600 bg-gray-200 rounded-sm mx-2.5 mt-2.5 mb-1'>
         <button
           onClick={() => setCardForm(true)}
           className='flex items-center w-full font-medium hover:bg-gray-200 

@@ -1,22 +1,30 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import useClickOutside from '../../hooks/useClickOutside';
 
-const CardDescription = ({
-  descForm,
-  setDescForm,
-  handleDescUpdate,
-  description,
-}) => {
+const CardDescription = ({ handleDescUpdate, description }) => {
+  const [descForm, setDescForm] = useState(false);
   const [descValue, setDescValue] = useState(description);
+
+  const boxRef = useRef();
+
+  useClickOutside(boxRef, descForm, () => {
+    setDescForm(false);
+  });
 
   const onValueChange = (e) => {
     setDescValue(e.target.value);
   };
 
+  const handleNewDesc = (value) => {
+    handleDescUpdate(value);
+    setDescForm(false);
+  };
+
   if (!descForm) {
     return (
-      <div className='my-5'>
+      <div className='my-6'>
         <div className='flex items-center text-gray-800 mb-1'>
-          <span className='material-icons-outlined mr-4 '>event_note</span>
+          <span className='material-icons-outlined mr-2.5'>event_note</span>
           <span className='font-semibold text-xl'>Description</span>
         </div>
         <div>
@@ -32,12 +40,12 @@ const CardDescription = ({
   }
 
   return (
-    <div className='my-5'>
+    <div className='my-6'>
       <div className='flex items-center text-gray-800 mb-1'>
-        <span className='material-icons-outlined mr-4 '>event_note</span>
+        <span className='material-icons-outlined mr-2.5'>event_note</span>
         <span className='font-semibold text-xl'>Description</span>
       </div>
-      <div>
+      <div ref={boxRef}>
         <div>
           <textarea
             value={descValue || ''}
@@ -50,7 +58,7 @@ const CardDescription = ({
           />
           <div className='flex items-center py-1'>
             <button
-              onClick={() => handleDescUpdate(descValue)}
+              onClick={() => handleNewDesc(descValue)}
               type='button'
               className='bg-green-500 font-medium text-white hover:bg-green-600 
               transition-colors duration-150 px-3 py-1 rounded-sm shadow-sm'>

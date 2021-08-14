@@ -5,9 +5,9 @@ import Home from './pages/Home/Home';
 import BoardPage from './pages/BoardPage/BoardPage';
 import LoginPage from './pages/LandingPage/LoginPage';
 import SignupPage from './pages/LandingPage/SignupPage';
-import PrivateRoute from './hooks/PrivateRoute';
+import PrivateRoute from './routes/PrivateRoute';
+import PublicRoute from './routes/PublicRoute';
 import { AuthContext } from './config/Auth';
-import PublicRoute from './hooks/PublicRoute';
 import NotFound from './pages/NotFound';
 
 function App() {

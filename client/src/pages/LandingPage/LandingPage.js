@@ -4,7 +4,7 @@ import { Types } from 'mongoose';
 import MiniLoader from '../../components/MiniLoader';
 import { AuthContext } from '../../config/Auth';
 import api from '../../config/axiosConfig';
-import { ReactComponent as BoardImg } from '../../images/boardplanner.svg';
+import { ReactComponent as BoardImg } from '../../assets/boardplanner.svg';
 
 const LandingPage = () => {
   const [isLoading, setIsLoading] = useState(false);

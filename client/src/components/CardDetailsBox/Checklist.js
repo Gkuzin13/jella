@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Types } from 'mongoose';
-import { ACTIONS } from '../../hooks/reducers/reducers';
-import SubTask from '../CardDetailsBox/SubTask';
-import SubTaskForm from '../CardDetailsBox/SubTaskForm';
-import ProgressBar from '../CardDetailsBox/ProgressBar';
+import ACTIONS from '../../reducers/actions';
+import SubTask from './SubTask';
+import SubTaskForm from './SubTaskForm';
+import ProgressBar from './ProgressBar';
 import { appendItem, setNewPos } from '../../utils/setNewPos';
 import subtaskApi from '../../api/subtaskApi';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-const CheckList = ({ dispatchCards, selectedCard }) => {
+const Checklist = ({ dispatchCards, selectedCard }) => {
   const [taskForm, setTaskForm] = useState(false);
 
   const subtasks =
@@ -95,9 +95,9 @@ const CheckList = ({ dispatchCards, selectedCard }) => {
   };
 
   return (
-    <div className='flex flex-col items-start my-5'>
+    <div className='flex flex-col items-start my-8'>
       <div className='flex items-center text-gray-800'>
-        <span className='material-icons-outlined mr-4'>event_available</span>
+        <span className='material-icons-outlined mr-2.5'>event_available</span>
         <span className='font-semibold text-xl'>Checklist</span>
       </div>
 
@@ -130,6 +130,7 @@ const CheckList = ({ dispatchCards, selectedCard }) => {
 
       <SubTaskForm
         taskForm={taskForm}
+        setTaskForm={setTaskForm}
         toggleTaskForm={toggleTaskForm}
         handleNewSubtask={handleNewSubtask}
       />
@@ -137,4 +138,4 @@ const CheckList = ({ dispatchCards, selectedCard }) => {
   );
 };
 
-export default CheckList;
+export default Checklist;

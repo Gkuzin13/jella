@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import api from '../../config/axiosConfig';
-import { ACTIONS } from '../../hooks/reducers/reducers';
+import ACTIONS from '../../reducers/actions';
 import { getPriorityIcon } from '../../utils/getPriorityIcon';
 
 const CardPriority = ({ dispatchCards, selectedCard }) => {
@@ -27,19 +27,25 @@ const CardPriority = ({ dispatchCards, selectedCard }) => {
   const priorityIcon = getPriorityIcon(priority);
 
   return (
-    <div className='my-5'>
+    <div className='my-6'>
       <div className='flex items-center '>
-        <span className='material-icons-outlined mr-4'>low_priority</span>
+        <span className='material-icons-outlined mr-2.5'>low_priority</span>
         <span className='text-lg font-bold'>Priority</span>
       </div>
       <div className='flex'>
         <select
           value={priority}
-          className='p-1.5 my-2 bg-gray-50 shadow cursor-pointer'
+          className='p-1.5 my-2 bg-gray-50 shadow cursor-pointer font-medium'
           onChange={(e) => handleValueChange(e)}>
-          <option value='low'>Low</option>
-          <option value='medium'>Medium</option>
-          <option value='high'>High</option>
+          <option value='low' className='font-medium'>
+            Low
+          </option>
+          <option value='medium' className='font-medium'>
+            Medium
+          </option>
+          <option value='high' className='font-medium'>
+            High
+          </option>
         </select>
         <div className='flex items-center'>
           <span

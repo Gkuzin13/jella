@@ -9,27 +9,24 @@ const CardTitle = ({ value, handleTitleUpdate, inList }) => {
     setTextValue(e.target.value);
   };
   return (
-    <div className='mb-5'>
-      <div className='flex items-start w-full mb-2'>
-        <span className='material-icons-outlined mr-2'>video_label</span>
-        <div className='text-xl w-full'>
-          <h2 className='font-medium p-1 px-2 hidden'>{value}</h2>
-          <input
-            onBlur={() => handleTitleUpdate(textValue)}
-            onChange={(e) => handleOnChange(e)}
-            className='font-medium bg-transparent w-full px-2 
-            resize-none focus:outline-blue'
-            value={textValue}
-            name='cardTitle'
-            maxLength='32'
-            autoComplete='off'
-          />
-        </div>
+    <div className='flex items-start w-full mb-6 mt-8'>
+      <span className='material-icons-outlined mr-1'>video_label</span>
+      <div className='w-full'>
+        <h2 className='font-medium p-1 px-2 hidden'>{value}</h2>
+        <input
+          onBlur={() => handleTitleUpdate(textValue)}
+          onChange={(e) => handleOnChange(e)}
+          className='font-medium bg-transparent w-full px-2 
+            resize-none focus:outline-blue text-xl'
+          value={textValue}
+          name='cardTitle'
+          maxLength='32'
+          autoComplete='off'
+        />
+        <p className='text-gray-600 pl-2 leading-relaxed'>
+          <strong>{listTitle}</strong> list
+        </p>
       </div>
-
-      <p className='text-gray-600'>
-        <strong>{listTitle}</strong> List
-      </p>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Types } from 'mongoose';
 import listApi from '../../api/listApi';
-import { ACTIONS } from '../../hooks/reducers/reducers';
+import ACTIONS from '../../reducers/actions';
 import { appendItem } from '../../utils/setNewPos';
 
 const ListForm = ({ boardId, lists, dispatchLists }) => {

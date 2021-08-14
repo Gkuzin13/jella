@@ -8,7 +8,7 @@ const { body, validationResult } = require('express-validator');
 // Get all user's boards
 exports.get_user_boards = async (req, res) => {
   try {
-    await Board.find({ creatorId: req.user.id }, (err, data) => {
+    await Board.find({ creatorId: req.params.userId }, (err, data) => {
       if (err) {
         return res.send(err);
       }
