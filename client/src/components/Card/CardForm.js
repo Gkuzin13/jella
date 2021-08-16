@@ -1,37 +1,16 @@
 import { useState } from 'react';
-import { useParams } from 'react-router';
-import { Types } from 'mongoose';
-import cardApi from '../../api/cardApi';
-import ACTIONS from '../../reducers/actions';
-import { appendItem } from '../../utils/setNewPos';
 
-const CardForm = ({ listCards, listId, dispatchCards }) => {
+const CardForm = ({ handleNewCard }) => {
   const [cardForm, setCardForm] = useState(false);
   const [cardTitle, setCardTitle] = useState('');
 
-  const { id } = useParams();
-
-  const handleCardCreate = async (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
 
-    const newCard = {
-      _id: Types.ObjectId().toHexString(),
-      cardTitle: cardTitle,
-      position: appendItem(listCards),
-      listId: listId,
-      boardId: id,
-      createdAt: Date.now(),
-    };
-
-    dispatchCards({
-      type: ACTIONS.CREATE_CARD,
-      payload: newCard,
-    });
+    handleNewCard(cardTitle);
 
     setCardForm(false);
     setCardTitle('');
-
-    cardApi.createCard(newCard);
   };
 
   if (!cardForm) {
@@ -51,7 +30,7 @@ const CardForm = ({ listCards, listId, dispatchCards }) => {
   return (
     <div className='p-1 text-gray-500 rounded-sm mx-2.5 mt-1'>
       <form
-        onSubmit={(e) => handleCardCreate(e)}
+        onSubmit={(e) => handleOnSubmit(e)}
         className='w-full transition-opacity duration-75'>
         <textarea
           name='cardTitle'

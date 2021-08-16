@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const getUserStatus = async () => {
+    (async () => {
       try {
         const { data } = await api.get('/user');
 
@@ -18,9 +18,9 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.log(error);
       }
-    };
+    })();
 
-    getUserStatus();
+    return () => setUser(null);
   }, []);
 
   return (

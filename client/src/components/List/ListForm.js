@@ -1,35 +1,20 @@
 import { useState } from 'react';
-import { Types } from 'mongoose';
-import listApi from '../../api/listApi';
-import ACTIONS from '../../reducers/actions';
-import { appendItem } from '../../utils/setNewPos';
 
-const ListForm = ({ boardId, lists, dispatchLists }) => {
+const ListForm = ({ lists, handleNewList }) => {
   const [listForm, setListForm] = useState(false);
   const [listTitle, setListTitle] = useState('');
 
-  const handleNewList = async (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
 
-    const newList = {
-      _id: Types.ObjectId().toHexString(),
-      listTitle: listTitle,
-      position: appendItem(lists),
-      coverColor: 'gray',
-      boardId: boardId,
-    };
-
-    dispatchLists({
-      type: ACTIONS.CREATE_LIST,
-      payload: newList,
-    });
+    handleNewList(listTitle);
 
     setListForm(false);
     setListTitle('');
+  };
 
-    listApi.createList(newList);
-
-    console.log(newList);
+  const handleOnChange = (e) => {
+    setListTitle(e.target.value);
   };
 
   if (!listForm) {
@@ -42,7 +27,7 @@ const ListForm = ({ boardId, lists, dispatchLists }) => {
           onClick={() => setListForm(true)}
           className='flex items-center w-full transition-opacity duration-75 font-medium p-1 px-1.5'>
           <span className='material-icons mr-1'>add</span>
-          <span>{!lists.length ? 'Add list' : 'Add another list'}</span>
+          <span>{!lists ? 'Add list' : 'Add another list'}</span>
         </button>
       </div>
     );
@@ -53,13 +38,13 @@ const ListForm = ({ boardId, lists, dispatchLists }) => {
       className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-50
     shadow-md w-72 p-1.5 mx-1.5 rounded-sm '>
       <form
-        onSubmit={(e) => handleNewList(e)}
+        onSubmit={(e) => handleOnSubmit(e)}
         className='w-full transition-opacity duration-75 flex flex-col'>
         <input
           name='listTitle'
           required
           value={listTitle}
-          onChange={(e) => setListTitle(e.target.value)}
+          onChange={(e) => handleOnChange(e)}
           maxLength='32'
           autoFocus
           autoComplete='off'

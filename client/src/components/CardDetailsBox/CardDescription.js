@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react';
 import useClickOutside from '../../hooks/useClickOutside';
 
-const CardDescription = ({ handleDescUpdate, description }) => {
+const CardDescription = ({ handleCardUpdate, selectedCard }) => {
   const [descForm, setDescForm] = useState(false);
-  const [descValue, setDescValue] = useState(description);
+  const [descValue, setDescValue] = useState(selectedCard.description);
 
   const boxRef = useRef();
 
@@ -15,24 +15,27 @@ const CardDescription = ({ handleDescUpdate, description }) => {
     setDescValue(e.target.value);
   };
 
-  const handleNewDesc = (value) => {
-    handleDescUpdate(value);
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    const updatedCard = { ...selectedCard, description: descValue };
+
+    handleCardUpdate(updatedCard);
     setDescForm(false);
   };
 
   if (!descForm) {
     return (
-      <div className='my-6'>
-        <div className='flex items-center text-gray-800 mb-1'>
+      <div className='mt-6 mb-8'>
+        <div className='flex items-center text-gray-800 mb-4'>
           <span className='material-icons-outlined mr-2.5'>event_note</span>
           <span className='font-semibold text-xl'>Description</span>
         </div>
         <div>
           <div
             onClick={() => setDescForm(true)}
-            className=' hover:bg-gray-100 cursor-pointer px-3 py-1.5 pb-8 transition-colors 
+            className=' hover:shadow text-gray-800 bg-gray-50 cursor-pointer px-3 py-1.5 pb-8 transition-shadow 
             duration-150 break-words'>
-            <p>{description || 'Add a more detailed description...'}</p>
+            <p>{descValue || 'Add a description to this card...'}</p>
           </div>
         </div>
       </div>
@@ -40,26 +43,25 @@ const CardDescription = ({ handleDescUpdate, description }) => {
   }
 
   return (
-    <div className='my-6'>
-      <div className='flex items-center text-gray-800 mb-1'>
+    <div className='mt-6 mb-8'>
+      <div className='flex items-center text-gray-800 mb-4'>
         <span className='material-icons-outlined mr-2.5'>event_note</span>
         <span className='font-semibold text-xl'>Description</span>
       </div>
       <div ref={boxRef}>
-        <div>
+        <form onSubmit={(e) => handleOnSubmit(e)}>
           <textarea
             value={descValue || ''}
             onChange={(e) => onValueChange(e)}
             name='description'
             rows='4'
             autoFocus
-            placeholder='Add a more detailed description...'
+            placeholder='Add a description to this card...'
             className='px-2.5 py-1 w-full rounded-sm border-2 h-auto focus:outline-blue'
           />
           <div className='flex items-center py-1'>
             <button
-              onClick={() => handleNewDesc(descValue)}
-              type='button'
+              type='submit'
               className='bg-green-500 font-medium text-white hover:bg-green-600 
               transition-colors duration-150 px-3 py-1 rounded-sm shadow-sm'>
               Save
@@ -73,7 +75,7 @@ const CardDescription = ({ handleDescUpdate, description }) => {
               </span>
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

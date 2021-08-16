@@ -1,34 +1,23 @@
 import { useState } from 'react';
-import api from '../../config/axiosConfig';
-import ACTIONS from '../../reducers/actions';
 import { getPriorityIcon } from '../../utils/getPriorityIcon';
 
-const CardPriority = ({ dispatchCards, selectedCard }) => {
+const CardPriority = ({ handleCardUpdate, selectedCard }) => {
   const [priority, setPriority] = useState(selectedCard.priority);
+
+  const priorityIcon = getPriorityIcon(priority);
 
   const handleValueChange = async (e) => {
     const newPriority = e.target.value;
     setPriority(newPriority);
 
-    try {
-      await api.patch(`/1/cards/${selectedCard._id}/priority`, {
-        priority: newPriority,
-      });
+    const updatedCard = { ...selectedCard, priority: newPriority };
 
-      dispatchCards({
-        type: ACTIONS.UPDATE_PRIORITY,
-        payload: { cardId: selectedCard._id, priority: newPriority },
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    handleCardUpdate(updatedCard);
   };
-
-  const priorityIcon = getPriorityIcon(priority);
 
   return (
     <div className='my-6'>
-      <div className='flex items-center '>
+      <div className='flex items-center mb-2'>
         <span className='material-icons-outlined mr-2.5'>low_priority</span>
         <span className='text-lg font-bold'>Priority</span>
       </div>

@@ -89,7 +89,7 @@ const SignupPage = () => {
               type='submit'
               className='bg-blue-600 text-white font-medium text-md py-2 shadow mb-5 
               hover:bg-gray-100 transition-colors duration-150'>
-              {loading ? <MiniLoader /> : 'Sign Up'}
+              {loading ? <MiniLoader color={true} /> : 'Sign Up'}
             </button>
           </form>
           <div className='text-center mt-4'>

@@ -1,13 +1,10 @@
 import { useState, useRef } from 'react';
 import useClickOutside from '../../hooks/useClickOutside';
 
-const SubTaskForm = ({
-  taskForm,
-  setTaskForm,
-  toggleTaskForm,
-  handleNewSubtask,
-}) => {
+const SubTaskForm = ({ handleNewSubtask }) => {
   const [taskValue, setTaskValue] = useState('');
+  const [taskForm, setTaskForm] = useState(false);
+
   const boxRef = useRef();
 
   useClickOutside(boxRef, taskForm, () => {
@@ -19,11 +16,20 @@ const SubTaskForm = ({
     setTaskValue(e.target.value);
   };
 
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+
+    handleNewSubtask(taskValue);
+
+    setTaskForm(false);
+    setTaskValue('');
+  };
+
   if (!taskForm) {
     return (
       <div>
         <button
-          onClick={() => toggleTaskForm()}
+          onClick={() => setTaskForm(true)}
           className='flex items-center w-full shadow bg-gray-50 hover:bg-gray-100 py-1 px-2 
           transition-opacity duration-75 '>
           <span className='material-icons-outlined text-2xl mr-2'>add</span>
@@ -37,7 +43,7 @@ const SubTaskForm = ({
 
   return (
     <div ref={boxRef} className='w-full'>
-      <form onSubmit={(e) => handleNewSubtask(e, setTaskValue)}>
+      <form onSubmit={(e) => handleOnSubmit(e)}>
         <textarea
           value={taskValue}
           onChange={(e) => onTaskValChange(e)}
@@ -55,7 +61,7 @@ const SubTaskForm = ({
           <button
             type='button'
             className='flex items-center ml-2 hover:text-gray-700 transition-colors duration-150'
-            onClick={() => toggleTaskForm()}>
+            onClick={() => setTaskForm(false)}>
             <span className='material-icons cursor-pointer ml-1'>close</span>
           </button>
         </div>

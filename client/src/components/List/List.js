@@ -1,17 +1,15 @@
 import { useRef, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import listApi from '../../api/listApi';
 import useClickOutside from '../../hooks/useClickOutside';
-import ACTIONS from '../../reducers/actions';
 import CardsContainer from '../Card/CardsContainer';
 import ListActionsBox from '../List/ListActionsBox';
-import CardForm from '../Card/CardForm';
 import ListTitle from './ListTitle';
 
 const List = ({
   listData,
   cards,
-  dispatchLists,
+  handleListUpdate,
+  handleListDelete,
   dispatchCards,
   toggleCardBox,
   index,
@@ -28,38 +26,6 @@ const List = ({
     setListActionsBox(!listActionsBox);
   };
 
-  const handleTitleUpdate = (value) => {
-    const updatedList = { ...listData, listTitle: value };
-
-    dispatchLists({
-      type: ACTIONS.EDIT_LIST,
-      payload: updatedList,
-    });
-
-    listApi.updateList(updatedList);
-  };
-
-  const handleListDelete = (id) => {
-    dispatchLists({
-      type: ACTIONS.DELETE_LIST,
-      payload: id,
-    });
-
-    setListActionsBox(false);
-    listApi.deleteList(id);
-  };
-
-  const handleColorChange = (color) => {
-    const updatedList = { ...listData, coverColor: color };
-
-    dispatchLists({
-      type: ACTIONS.EDIT_LIST,
-      payload: updatedList,
-    });
-
-    listApi.updateList(updatedList);
-  };
-
   return (
     <Draggable draggableId={listData._id} index={index}>
       {(provided) => (
@@ -72,8 +38,8 @@ const List = ({
             className={`flex justify-between items-center py-1 px-2 bg-${listData.coverColor}-600 
             rounded-t-sm rounded-b-none`}>
             <ListTitle
-              listTitle={listData.listTitle}
-              handleTitleUpdate={handleTitleUpdate}
+              listData={listData}
+              handleListUpdate={handleListUpdate}
             />
             <div>
               <button
@@ -87,22 +53,18 @@ const List = ({
                   toggleActionsBox={toggleActionsBox}
                   boxRef={boxRef}
                   handleListDelete={handleListDelete}
-                  handleColorChange={handleColorChange}
+                  handleListUpdate={handleListUpdate}
                   listData={listData}
                 />
               )}
             </div>
           </div>
-          <CardForm
-            listCards={cards}
-            listId={listData._id}
-            dispatchCards={dispatchCards}
-          />
+
           <CardsContainer
             cards={cards}
-            listId={listData._id}
-            dispatchCards={dispatchCards}
+            listData={listData}
             toggleCardBox={toggleCardBox}
+            dispatchCards={dispatchCards}
           />
         </div>
       )}

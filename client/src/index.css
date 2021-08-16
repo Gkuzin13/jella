@@ -71,6 +71,10 @@ html {
   -o-border-radius: 2px;
 }
 
-.miniloader {
+.miniloader-blue {
   border-top-color: rgba(37, 99, 235);
+}
+
+.miniloader-gray {
+  border-top-color: rgb(255, 255, 255);
 }

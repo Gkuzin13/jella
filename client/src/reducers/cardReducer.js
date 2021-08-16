@@ -46,22 +46,26 @@ const cardReducer = (cards, action) => {
       return updatedCard;
 
     case ACTIONS.EDIT_SUBTASK:
-      const { subtasks: tasksToEdit } = data.selectedCard;
-      const updatedSubtask = tasksToEdit.map((t) => {
-        return t._id === data.taskId ? { ...t, isDone: data.isDone } : t;
+      const { subtasks } = data.selectedCard;
+      const editedSubtasks = subtasks.map((subtask) => {
+        return subtask._id === data.updatedSubtask._id
+          ? data.updatedSubtask
+          : subtask;
       });
 
       const editedCards = cards.map((card) => {
         return card._id === data.selectedCard._id
-          ? { ...card, subtasks: updatedSubtask }
+          ? { ...card, subtasks: editedSubtasks }
           : card;
       });
 
       return editedCards;
 
     case ACTIONS.DELETE_SUBTASK:
-      const { subtasks: tasksToDel } = data.selectedCard;
-      const filteredSubtasks = tasksToDel.filter((t) => t._id !== data.taskId);
+      const { subtasks: subtasksToDel } = data.selectedCard;
+      const filteredSubtasks = subtasksToDel.filter(
+        (t) => t._id !== data.subtaskId
+      );
 
       const cardSubtasks = cards.map((card) => {
         return card._id === data.selectedCard._id

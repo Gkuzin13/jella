@@ -14,7 +14,7 @@ const Card = ({ cardData, toggleCardBox, index }) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className='bg-white shadow-md cursor-pointer rounded-sm hover:shadow-lg hover:bg-gray-50
+          className='bg-white shadow-md cursor-pointer rounded-sm hover:shadow-lg
           transition-shadow duration-150 mb-3'>
           <div
             onClick={() => toggleCardBox(cardData._id, true)}

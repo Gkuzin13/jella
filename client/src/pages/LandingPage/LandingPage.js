@@ -72,7 +72,7 @@ const LandingPage = () => {
               aria-label='Continue as a guest user button'
               className='bg-blue-600 text-white py-2.5 px-8 shadow font-medium 
               rounded-sm hover:bg-blue-500 transition-colors duration-150 w-full lg:w-1/2 whitespace-nowrap'>
-              {isLoading ? <MiniLoader /> : 'Continue as Guest'}
+              {isLoading ? <MiniLoader color={true} /> : 'Continue as Guest'}
             </button>
           </div>
         </div>

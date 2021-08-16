@@ -2,11 +2,16 @@ const ListActionsBox = ({
   toggleActionsBox,
   boxRef,
   handleListDelete,
-  handleColorChange,
+  handleListUpdate,
   listData,
 }) => {
   const { coverColor, _id } = listData;
   const colors = ['gray', 'blue', 'green', 'purple', 'yellow', 'red'];
+
+  const onListColorChange = (newColor) => {
+    handleListUpdate({ ...listData, coverColor: newColor });
+  };
+
   return (
     <div
       ref={boxRef}
@@ -30,13 +35,11 @@ const ListActionsBox = ({
           return (
             <button
               key={col}
-              onClick={() => {
-                handleColorChange(col);
-              }}
+              onClick={() => onListColorChange(col)}
               className={`w-9 h-7 rounded-sm bg-${col}-600 bg-opacity-90 hover:bg-opacity-100 
                transition-colors transform duration-75 ease-linear`}>
               {col === coverColor && (
-                <span class='material-icons-outlined text-xl text-white'>
+                <span className='material-icons-outlined text-xl text-white'>
                   done
                 </span>
               )}

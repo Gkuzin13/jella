@@ -1,10 +1,18 @@
 import { useState } from 'react';
 
-const ListTitle = ({ listTitle, handleTitleUpdate }) => {
-  const [textValue, setTextValue] = useState(listTitle);
+const ListTitle = ({ listData, handleListUpdate }) => {
+  const [textValue, setTextValue] = useState(listData.listTitle);
 
   const handleOnChange = (e) => {
     setTextValue(e.target.value);
+  };
+
+  const handleOnBlur = () => {
+    if (textValue === listData.listTitle) {
+      return;
+    }
+
+    handleListUpdate({ ...listData, listTitle: textValue });
   };
 
   return (
@@ -13,10 +21,10 @@ const ListTitle = ({ listTitle, handleTitleUpdate }) => {
         {textValue}
       </label>
       <input
-        onBlur={() => handleTitleUpdate(textValue)}
+        onBlur={() => handleOnBlur()}
         onChange={(e) => handleOnChange(e)}
         className='font-medium bg-transparent focus:bg-white focus:text-black
-      text-white p-1 px-2 focus:ring-2 focus:ring-blue-600 '
+      text-white p-1 px-2 focus:outline-none'
         value={textValue}
         name='cardTitle'
         autoComplete='off'

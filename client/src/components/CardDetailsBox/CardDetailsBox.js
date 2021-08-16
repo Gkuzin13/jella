@@ -9,50 +9,42 @@ import CardDate from './CardDate';
 import cardApi from '../../api/cardApi';
 
 const CardDetailsBox = ({
+  cards,
+  lists,
+  dispatchCards,
   toggleCardBox,
   cardBox,
-  cardData,
-  dispatchCards,
 }) => {
+  const selectedCard = cards.find((card) => card._id === cardBox.cardId);
+  const { listTitle } = lists.find((list) => list._id === selectedCard.listId);
+
   const boxRef = useRef();
-  const { cards, lists, cardId } = cardData;
 
   useClickOutside(boxRef, cardBox, () => {
     toggleCardBox('', false);
   });
 
-  const selectedCard = cards.find((card) => card._id === cardId);
-  const inList = lists.find((list) => list._id === selectedCard.listId);
-
-  const handleCardUpdate = (card) => {
+  const handleCardUpdate = async (updatedCard) => {
     dispatchCards({
       type: ACTIONS.EDIT_CARD,
-      payload: card,
+      payload: updatedCard,
     });
 
-    cardApi.updateCard(card);
+    try {
+      await cardApi.update(updatedCard);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleCardDelete = () => {
+  const handleCardDelete = async () => {
     dispatchCards({
       type: ACTIONS.DELETE_CARD,
       payload: { id: selectedCard._id },
     });
 
     toggleCardBox('', false);
-    cardApi.deleteCard(selectedCard._id);
-  };
-
-  const handleDescUpdate = (descValue) => {
-    const updatedCard = { ...selectedCard, description: descValue };
-
-    handleCardUpdate(updatedCard);
-  };
-
-  const handleTitleUpdate = (value) => {
-    const updatedCard = { ...selectedCard, cardTitle: value };
-
-    handleCardUpdate(updatedCard);
+    cardApi.delete(selectedCard._id);
   };
 
   return (
@@ -68,20 +60,20 @@ const CardDetailsBox = ({
           </button>
 
           <CardTitle
-            handleTitleUpdate={handleTitleUpdate}
-            value={selectedCard.cardTitle}
-            inList={inList}
+            handleCardUpdate={handleCardUpdate}
+            selectedCard={selectedCard}
+            inList={listTitle}
           />
           <CardDescription
-            handleDescUpdate={handleDescUpdate}
-            description={selectedCard.description}
+            handleCardUpdate={handleCardUpdate}
+            selectedCard={selectedCard}
           />
           <Checklist
             dispatchCards={dispatchCards}
             selectedCard={selectedCard}
           />
           <CardPriority
-            dispatchCards={dispatchCards}
+            handleCardUpdate={handleCardUpdate}
             selectedCard={selectedCard}
           />
           <CardDate selectedCard={selectedCard} />
@@ -89,7 +81,7 @@ const CardDetailsBox = ({
           <div className='self-end py-2 mt-6'>
             <button
               onClick={() => handleCardDelete()}
-              className='bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-600 font-medium px-3 py-1 rounded-sm transition-colors duration-75'>
+              className='bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600 font-medium px-3 py-1 rounded-sm transition-colors duration-75'>
               Delete Card
             </button>
           </div>
