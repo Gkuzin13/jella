@@ -40,15 +40,23 @@ exports.edit_subtask_put = [
     }
 
     try {
-      const updatedSubTask = await SubTask.findByIdAndUpdate(req.params.id, {
-        position: req.body.position,
-        isDone: req.body.isDone,
-      });
+      const newPos = req.body.position;
+      const updatedSubTask = await SubTask.findByIdAndUpdate(
+        req.params.idSubtask,
+        {
+          taskName: req.body.taskName,
+          position: newPos,
+          isDone: req.body.isDone,
+          cardId: req.body.cardId,
+          boardId: req.body.boardId,
+        },
+        { new: true }
+      );
 
-      // Check if list pos is less than 0.1
+      // Check if subtask pos is less than 0.1
       if (!Number.isInteger(newPos) && newPos % 1 < 0.1) {
         const cardId = req.body.cardId;
-        await recalcItemsPos({ cardId }, SubTask);
+        await recalcItemsPos({ cardId }, Subtask);
         return;
       }
 
@@ -61,7 +69,7 @@ exports.edit_subtask_put = [
 
 exports.subtask_delete = async (req, res) => {
   try {
-    await SubTask.findByIdAndDelete(req.params.id);
+    await SubTask.findByIdAndDelete(req.params.idSubtask);
 
     res.sendStatus(200);
   } catch (error) {

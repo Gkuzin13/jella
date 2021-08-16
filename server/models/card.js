@@ -5,7 +5,7 @@ const CardSchema = new Schema(
   {
     cardTitle: { type: String, required: true },
     description: String,
-    coverColor: String,
+    coverColor: { type: Schema.Types.String, default: 'gray', required: true },
     priority: { type: Schema.Types.String, default: 'low', required: true },
     position: { type: Schema.Types.Number, required: true },
     listId: { type: Schema.Types.ObjectId, ref: 'List', required: true },
