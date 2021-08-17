@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 const ListActionsBox = ({
   toggleActionsBox,
   boxRef,
@@ -13,7 +15,11 @@ const ListActionsBox = ({
   };
 
   return (
-    <div
+    <motion.div
+      key={listData._id}
+      transition={{ duration: 0.075 }}
+      initial={{ scale: 0.95, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
       ref={boxRef}
       className='fixed flex items-center flex-col bg-white py-3 px-4 shadow-xl w-72'>
       <div className='flex items-center flex-row pb-4 relative px-2'>
@@ -54,7 +60,7 @@ const ListActionsBox = ({
          transition-colors duration-150 rounded-sm'>
         <span>Delete list</span>
       </button>
-    </div>
+    </motion.div>
   );
 };
 

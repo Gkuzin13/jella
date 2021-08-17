@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const ListForm = ({ lists, handleNewList }) => {
   const [listForm, setListForm] = useState(false);
@@ -35,9 +36,13 @@ const ListForm = ({ lists, handleNewList }) => {
   }
 
   return (
-    <div
+    <motion.div
+      key={listTitle}
+      transition={{ duration: 0.075 }}
+      initial={{ y: -5, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
       className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-100
-    shadow-md w-72 p-1.5 mx-1.5 rounded-sm '>
+      shadow-md w-72 p-1.5 mx-1.5 rounded-sm '>
       <form
         onSubmit={(e) => handleOnSubmit(e)}
         className='w-full flex flex-col'>
@@ -71,7 +76,7 @@ const ListForm = ({ lists, handleNewList }) => {
           </button>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

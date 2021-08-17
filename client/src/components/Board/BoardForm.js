@@ -17,27 +17,28 @@ const BoardForm = ({ handleNewBoard }) => {
     setBoardTitle(e.target.value);
   };
   return (
-    <div>
+    <div className='px-4'>
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className='flex items-center mb-16 w-full'>
+        className='flex items-center justify-start flex-col lg:flex-row mb-16'>
         <input
           onChange={(e) => handleOnChange(e)}
           value={boardTitle}
           name='boardTitle'
-          required
           placeholder='Enter a title for this board...'
-          className='py-1 px-2 mr-4 rounded-sm border-2 shadow-sm text-lg font-medium focus:outline-blue'
+          className='py-1 px-2 self-start lg:mr-4 rounded-sm border-2 shadow-sm text-lg 
+          font-medium focus:outline-blue w-full lg:w-auto'
           autoComplete='off'
+          required
         />
         <button
           type='submit'
-          className='bg-green-600 px-4 w-44 h-10 hover:shadow-lg whitespace-nowrap 
-          transition-all duration-150'>
+          className='bg-green-600 w-full px-4 mt-2 self-start lg:m-0  lg:w-44 h-10 hover:shadow-lg 
+          whitespace-nowrap transition-shadow duration-150'>
           {isLoading ? (
             <MiniLoader color={false} />
           ) : (
-            <div className='flex items-center justify-evenly text-white'>
+            <div className='flex items-center justify-center text-white'>
               <span className='material-icons-outlined'>add</span>
               <span className='text-lg px-1.5 font-medium'>Create board</span>
             </div>

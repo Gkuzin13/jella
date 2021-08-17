@@ -6,6 +6,7 @@
     "@craco/craco": "^6.2.0",
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.1",
+    "framer-motion": "^4.1.17",
     "mongoose": "^5.13.5",
     "postcss": "^7.0.36",
     "react": "^17.0.2",

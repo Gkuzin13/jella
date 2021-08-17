@@ -76,15 +76,16 @@ const Home = () => {
   }
 
   return (
-    <div className='m-4'>
+    <div>
       {confirmBox.isOpen && (
         <ConfirmBox
           handleFunc={handleDelBoard}
           id={confirmBox.id}
           setConfirmBox={setConfirmBox}
+          confirmBox={confirmBox}
         />
       )}
-      <div className='flex items-center justify-between mb-10'>
+      <div className='flex items-center justify-between mb-10 px-4 py-1 lg:px-12'>
         <h1 className='my-4 text-2xl text-blue-600 font-medium'>
           Welcome, {user.username}
         </h1>

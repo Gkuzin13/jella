@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const CardForm = ({ handleNewCard }) => {
   const [cardForm, setCardForm] = useState(false);
@@ -28,7 +29,12 @@ const CardForm = ({ handleNewCard }) => {
   }
 
   return (
-    <div className='p-1 text-gray-500 rounded-sm mx-2.5 mt-1'>
+    <motion.div
+      key={cardTitle}
+      transition={{ duration: 0.075 }}
+      initial={{ y: -3, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      className='p-1 text-gray-500 rounded-sm mx-2.5 mt-1'>
       <form
         onSubmit={(e) => handleOnSubmit(e)}
         className='w-full transition-opacity duration-75'>
@@ -59,7 +65,7 @@ const CardForm = ({ handleNewCard }) => {
           </button>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

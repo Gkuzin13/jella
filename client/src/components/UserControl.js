@@ -1,5 +1,6 @@
 import { useState, useRef, useContext } from 'react';
 import { useHistory } from 'react-router';
+import { motion } from 'framer-motion';
 import { AuthContext } from '../config/Auth';
 import api from '../config/axiosConfig';
 import useClickOutside from '../hooks/useClickOutside';
@@ -53,7 +54,10 @@ const UserControl = ({ user }) => {
           manage_accounts
         </span>
       </button>
-      <div
+      <motion.div
+        transition={{ duration: 0.075 }}
+        initial={{ y: 2, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
         ref={dropdownRef}
         className='absolute right-0 mt-1 flex items-center flex-col
         bg-white py-3 px-4 shadow-xl w-64'>
@@ -77,7 +81,7 @@ const UserControl = ({ user }) => {
           duration-150 rounded-sm'>
           <span>Log Out</span>
         </button>
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import useClickOutside from '../../hooks/useClickOutside';
 import ACTIONS from '../../reducers/actions';
 import Checklist from '../CardDetailsBox/Checklist';
@@ -57,10 +58,17 @@ const CardDetailsBox = ({
   };
 
   return (
-    <div
+    <motion.div
+      transition={{ duration: 0.075 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       className='fixed top-0 right-0 left-0 bottom-0 overflow-auto bg-opacity-30 
     bg-black z-20'>
-      <div className='grid place-items-center py-20'>
+      <motion.div
+        transition={{ duration: 0.075 }}
+        initial={{ scale: 0.95 }}
+        animate={{ scale: 1 }}
+        className='grid place-items-center py-20'>
         <div
           className='flex flex-col justify-between relative p-6 w-11/12 lg:w-2/4 lg:px-10 
         bg-white shadow-2xl'>
@@ -110,8 +118,8 @@ const CardDetailsBox = ({
             </button>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

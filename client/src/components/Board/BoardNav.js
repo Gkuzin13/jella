@@ -21,7 +21,7 @@ const BoardNav = ({ boardData, user, setBoardData }) => {
   };
 
   return (
-    <div className='flex justify-between items-center py-2 px-6'>
+    <div className='flex justify-between items-center px-6 pb-4'>
       <div className='flex items-center text-2xl font-medium my-4'>
         <Link
           to={`/${user.username}/boards`}
