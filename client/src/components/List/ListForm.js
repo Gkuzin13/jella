@@ -25,7 +25,8 @@ const ListForm = ({ lists, handleNewList }) => {
         transition-colors duration-150'>
         <button
           onClick={() => setListForm(true)}
-          className='flex items-center w-full transition-opacity duration-75 font-medium p-1 px-1.5'>
+          className='flex items-center w-full transition-opacity duration-75 font-medium 
+          p-1 px-1.5'>
           <span className='material-icons mr-1'>add</span>
           <span>{!lists ? 'Add list' : 'Add another list'}</span>
         </button>
@@ -35,11 +36,11 @@ const ListForm = ({ lists, handleNewList }) => {
 
   return (
     <div
-      className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-50
+      className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-100
     shadow-md w-72 p-1.5 mx-1.5 rounded-sm '>
       <form
         onSubmit={(e) => handleOnSubmit(e)}
-        className='w-full transition-opacity duration-75 flex flex-col'>
+        className='w-full flex flex-col'>
         <input
           name='listTitle'
           required
@@ -54,14 +55,17 @@ const ListForm = ({ lists, handleNewList }) => {
         <div className='flex items-center mt-1.5 transition-colors duration-150'>
           <button
             type='submit'
-            className=' bg-gray-100 text-blue-600 py-1 px-2 rounded-sm  hover:bg-gray-200 font-medium shadow'>
+            className=' bg-blue-600 text-white py-1 px-2 rounded-sm  hover:bg-blue-700 
+            font-medium shadow'>
             Add list
           </button>
           <button
             type='button'
             className='flex items-center ml-1'
             onClick={() => setListForm(false)}>
-            <span className='material-icons-outlined text-2xl text-gray-500 cursor-pointer ml-1 hover:text-black'>
+            <span
+              className='material-icons-outlined text-2xl text-gray-500 cursor-pointer ml-1 
+            hover:text-black'>
               close
             </span>
           </button>

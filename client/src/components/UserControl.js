@@ -33,9 +33,11 @@ const UserControl = ({ user }) => {
       <div>
         <button
           onClick={() => setDropdown(!dropdown)}
-          className='flex items-center px-2 py-1.5 rounded-sm 
-        text-black bg-gray-200 font-medium  transition-colors duration-150'>
-          <span className='material-icons-outlined'>manage_accounts</span>
+          className='w-10 h-10 ml-2 flex items-center justify-center rounded-full text-white bg-blue-600 
+          transition-all duration-75 hover:bg-blue-700 '>
+          <span className='material-icons-outlined mb-0.5 ml-0.5'>
+            manage_accounts
+          </span>
         </button>
       </div>
     );
@@ -45,19 +47,22 @@ const UserControl = ({ user }) => {
     <div className='relative'>
       <button
         onClick={() => setDropdown(!dropdown)}
-        className='flex items-center px-2 py-1.5 focus:text-blue-600 rounded-sm
-        text-gray-600 bg-gray-50 font-medium  transition-colors duration-150'>
-        <span className='material-icons-outlined '>manage_accounts</span>
+        className='w-10 h-10 flex items-center justify-center rounded-full text-white bg-blue-600 
+          transition-all duration-75 focus:bg-blue-700 '>
+        <span className='material-icons-outlined mb-0.5 ml-0.5'>
+          manage_accounts
+        </span>
       </button>
       <div
         ref={dropdownRef}
-        className='absolute right-0 flex items-center flex-col
+        className='absolute right-0 mt-1 flex items-center flex-col
         bg-white py-3 px-4 shadow-xl w-64'>
         <div className='flex items-center flex-row pb-4 relative px-2'>
-          <span className='text-lg text-gray-500'>Account</span>
+          <span className='font-medium text-gray-500'>Account</span>
           <button
             onClick={() => setDropdown(false)}
-            className='flex text-gray-500 hover:text-gray-700 absolute -right-16 transition-colors duration-150'
+            className='flex text-gray-500 hover:text-gray-700 absolute -right-16 transition-colors 
+            duration-150'
             type='button'>
             <span className='material-icons cursor-pointer ml-1'>close</span>
           </button>
@@ -68,7 +73,8 @@ const UserControl = ({ user }) => {
           onClick={() => {
             handleLogout();
           }}
-          className='flex items-center w-full hover:bg-red-50 hover:text-red-600 p-1.5 transition-opacity duration-150 rounded-sm'>
+          className='flex items-center w-full hover:bg-red-50 hover:text-red-600 p-1.5 transition-opacity 
+          duration-150 rounded-sm'>
           <span>Log Out</span>
         </button>
       </div>

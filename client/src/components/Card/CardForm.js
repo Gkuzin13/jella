@@ -37,12 +37,13 @@ const CardForm = ({ handleNewCard }) => {
           value={cardTitle}
           onChange={(e) => setCardTitle(e.target.value)}
           autoFocus
-          placeholder='Enter a title for this card'
-          className='resize-none p-1.5 w-full rounded-sm shadow focus:outline-blue'></textarea>
+          placeholder='Enter a title for this card...'
+          className='resize-none p-1.5 w-full rounded-sm shadow focus:outline-blue'
+        />
         <div className='flex items-center mt-1'>
           <button
             type='submit'
-            className=' bg-gray-200 text-blue-600 py-1 px-2 rounded-sm  hover:bg-gray-300 
+            className=' bg-blue-600 text-white py-1 px-2 rounded-sm hover:bg-blue-700 
             font-medium shadow-sm transition-colors duration-150'>
             Add card
           </button>
