@@ -1,10 +1,10 @@
 import { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Types } from 'mongoose';
-import MiniLoader from '../../components/MiniLoader';
-import { AuthContext } from '../../config/Auth';
-import api from '../../config/axiosConfig';
-import { ReactComponent as BoardImg } from '../../assets/boardplanner.svg';
+import MiniLoader from '../components/MiniLoader';
+import { AuthContext } from '../config/Auth';
+import api from '../config/axiosConfig';
+import { ReactComponent as BoardImg } from '../assets/boardplanner.svg';
 
 const LandingPage = () => {
   const [isLoading, setIsLoading] = useState(false);

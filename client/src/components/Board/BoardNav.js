@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import UserControl from './UserControl';
-import boardApi from '../api/boardApi';
-import EditableText from './EditableText';
+import UserControl from '../UserControl';
+import boardApi from '../../api/boardApi';
+import EditableText from '../EditableText';
 
 const BoardNav = ({ boardData, user, setBoardData }) => {
   const handleBoardUpdate = async (updatedTitle) => {

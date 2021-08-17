@@ -1,10 +1,10 @@
-import List from './List/List';
-import ListForm from './List/ListForm';
+import List from '../List/List';
+import ListForm from '../List/ListForm';
 import { Types } from 'mongoose';
 import { Droppable } from 'react-beautiful-dnd';
-import { appendItem } from '../utils/setNewPos';
-import listApi from '../api/listApi';
-import ACTIONS from '../reducers/actions';
+import { appendItem } from '../../utils/setNewPos';
+import listApi from '../../api/listApi';
+import ACTIONS from '../../reducers/actions';
 
 const BoardCanvas = ({
   boardId,

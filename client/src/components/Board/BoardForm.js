@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import MiniLoader from './MiniLoader';
+import MiniLoader from '../MiniLoader';
 
 const BoardForm = ({ handleNewBoard }) => {
   const [boardTitle, setBoardTitle] = useState('');

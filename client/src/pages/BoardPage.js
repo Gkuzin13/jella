@@ -1,19 +1,19 @@
 import { useEffect, useContext, useReducer, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { AuthContext } from '../../config/Auth';
-import listReducer from '../../reducers/listReducer';
-import cardReducer from '../../reducers/cardReducer';
-import ACTIONS from '../../reducers/actions';
-import Loader from '../../components/Loader';
-import BoardCanvas from '../../components/BoardCanvas';
-import boardApi from '../../api/boardApi';
-import listApi from '../../api/listApi';
-import cardApi from '../../api/cardApi';
-import cardReorderer from '../../utils/cardReorderer';
-import listReorderer from '../../utils/listReorderer';
-import CardDetailsBox from '../../components/CardDetailsBox/CardDetailsBox';
-import BoardNav from '../../components/BoardNav';
+import { AuthContext } from '../config/Auth';
+import listReducer from '../reducers/listReducer';
+import cardReducer from '../reducers/cardReducer';
+import ACTIONS from '../reducers/actions';
+import Loader from '../components/Loader';
+import BoardCanvas from '../components/Board/BoardCanvas';
+import BoardNav from '../components/Board/BoardNav';
+import boardApi from '../api/boardApi';
+import listApi from '../api/listApi';
+import cardApi from '../api/cardApi';
+import cardReorderer from '../utils/cardReorderer';
+import listReorderer from '../utils/listReorderer';
+import CardDetailsBox from '../components/CardDetailsBox/CardDetailsBox';
 
 const BoardPage = () => {
   const [boardData, setBoardData] = useState(null);

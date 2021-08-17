@@ -1,10 +1,10 @@
 import { Route, Switch } from 'react-router-dom';
 import { useContext } from 'react';
-import LandingPage from './pages/LandingPage/LandingPage';
-import Home from './pages/Home/Home';
-import BoardPage from './pages/BoardPage/BoardPage';
-import LoginPage from './pages/LandingPage/LoginPage';
-import SignupPage from './pages/LandingPage/SignupPage';
+import LandingPage from './pages/LandingPage';
+import Home from './pages/Home';
+import BoardPage from './pages/BoardPage';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 import PrivateRoute from './routes/PrivateRoute';
 import PublicRoute from './routes/PublicRoute';
 import { AuthContext } from './config/Auth';

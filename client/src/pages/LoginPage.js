@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import MiniLoader from '../../components/MiniLoader';
-import { AuthContext } from '../../config/Auth';
-import api from '../../config/axiosConfig';
+import MiniLoader from '../components/MiniLoader';
+import { AuthContext } from '../config/Auth';
+import api from '../config/axiosConfig';
 
 const LoginPage = () => {
   const { setUser } = useContext(AuthContext);

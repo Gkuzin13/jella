@@ -1,12 +1,12 @@
 import { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../../config/Auth';
-import boardApi from '../../api/boardApi';
-import UserControl from '../../components/UserControl';
-import ConfirmBox from '../../components/ConfirmBox';
-import Loader from '../../components/Loader';
-import BoardForm from '../../components/BoardForm';
-import HomeBoards from '../../components/HomeBoards';
+import { AuthContext } from '../config/Auth';
+import boardApi from '../api/boardApi';
+import UserControl from '../components/UserControl';
+import ConfirmBox from '../components/ConfirmBox';
+import Loader from '../components/Loader';
+import BoardForm from '../components/Board/BoardForm';
+import HomeBoards from '../components/HomeBoards';
 
 const Home = () => {
   const [userBoards, setUserBoards] = useState([]);
