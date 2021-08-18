@@ -7,6 +7,7 @@ import ConfirmBox from '../components/ConfirmBox';
 import Loader from '../components/Loader';
 import BoardForm from '../components/Board/BoardForm';
 import HomeBoards from '../components/HomeBoards';
+import { AnimatePresence } from 'framer-motion';
 
 const Home = () => {
   const [userBoards, setUserBoards] = useState([]);
@@ -77,14 +78,18 @@ const Home = () => {
 
   return (
     <div>
-      {confirmBox.isOpen && (
-        <ConfirmBox
-          handleFunc={handleDelBoard}
-          id={confirmBox.id}
-          setConfirmBox={setConfirmBox}
-          confirmBox={confirmBox}
-        />
-      )}
+      <div className='bg-main absolute w-full h-screen -z-10'></div>
+
+      <AnimatePresence>
+        {confirmBox.isOpen && (
+          <ConfirmBox
+            handleFunc={handleDelBoard}
+            id={confirmBox.id}
+            setConfirmBox={setConfirmBox}
+            confirmBox={confirmBox}
+          />
+        )}
+      </AnimatePresence>
       <div className='flex items-center justify-between mb-10 px-4 py-1 lg:px-12'>
         <h1 className='my-4 text-2xl text-blue-600 font-medium'>
           Welcome, {user.username}

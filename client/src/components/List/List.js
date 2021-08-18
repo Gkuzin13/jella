@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import { AnimatePresence } from 'framer-motion';
 import useClickOutside from '../../hooks/useClickOutside';
 import CardsContainer from '../Card/CardsContainer';
 import ListActionsBox from '../List/ListActionsBox';
@@ -59,15 +60,17 @@ const List = ({
                 <span className='material-icons text-white'>more_horiz</span>
               </button>
 
-              {!listActionsBox ? null : (
-                <ListActionsBox
-                  toggleActionsBox={toggleActionsBox}
-                  boxRef={boxRef}
-                  handleListDelete={handleListDelete}
-                  handleListUpdate={handleListUpdate}
-                  listData={listData}
-                />
-              )}
+              <AnimatePresence>
+                {!listActionsBox ? null : (
+                  <ListActionsBox
+                    toggleActionsBox={toggleActionsBox}
+                    boxRef={boxRef}
+                    handleListDelete={handleListDelete}
+                    handleListUpdate={handleListUpdate}
+                    listData={listData}
+                  />
+                )}
+              </AnimatePresence>
             </div>
           </div>
 

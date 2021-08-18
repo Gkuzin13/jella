@@ -62,12 +62,14 @@ const CardDetailsBox = ({
       transition={{ duration: 0.075 }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       className='fixed top-0 right-0 left-0 bottom-0 overflow-auto bg-opacity-30 
     bg-black z-20'>
       <motion.div
         transition={{ duration: 0.075 }}
-        initial={{ scale: 0.95 }}
-        animate={{ scale: 1 }}
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.95, opacity: 0 }}
         className='grid place-items-center py-20'>
         <div
           className='flex flex-col justify-between relative p-6 w-11/12 lg:w-2/4 lg:px-10 

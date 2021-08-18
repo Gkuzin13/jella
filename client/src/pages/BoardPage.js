@@ -1,6 +1,7 @@
 import { useEffect, useContext, useReducer, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { AnimatePresence } from 'framer-motion';
 import { AuthContext } from '../config/Auth';
 import listReducer from '../reducers/listReducer';
 import cardReducer from '../reducers/cardReducer';
@@ -117,15 +118,17 @@ const BoardPage = () => {
 
   return (
     <div className=' h-screen flex flex-col'>
-      {!cardBox.isOpen ? null : (
-        <CardDetailsBox
-          cards={cards}
-          lists={lists}
-          toggleCardBox={toggleCardBox}
-          cardBox={cardBox}
-          dispatchCards={dispatchCards}
-        />
-      )}
+      <AnimatePresence>
+        {!cardBox.isOpen ? null : (
+          <CardDetailsBox
+            cards={cards}
+            lists={lists}
+            toggleCardBox={toggleCardBox}
+            cardBox={cardBox}
+            dispatchCards={dispatchCards}
+          />
+        )}
+      </AnimatePresence>
       <div className='bg-main absolute w-full h-screen -z-10'></div>
 
       <BoardNav user={user} boardData={boardData} setBoardData={setBoardData} />

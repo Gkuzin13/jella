@@ -17,9 +17,10 @@ const ListActionsBox = ({
   return (
     <motion.div
       key={listData._id}
-      transition={{ duration: 0.075 }}
+      transition={{ duration: 0.025 }}
       initial={{ scale: 0.95, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0.95, opacity: 0 }}
       ref={boxRef}
       className='fixed flex items-center flex-col bg-white py-3 px-4 shadow-xl w-72'>
       <div className='flex items-center flex-row pb-4 relative px-2'>
