@@ -1,5 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
 import { useContext } from 'react';
+import { AuthContext } from './config/Auth';
 import LandingPage from './pages/LandingPage';
 import Home from './pages/Home';
 import BoardPage from './pages/BoardPage';
@@ -7,7 +8,6 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import PrivateRoute from './routes/PrivateRoute';
 import PublicRoute from './routes/PublicRoute';
-import { AuthContext } from './config/Auth';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -33,11 +33,11 @@ function App() {
         </PublicRoute>
 
         <PrivateRoute path='/:username/boards'>
-          <Home />
+          <Home user={user} />
         </PrivateRoute>
 
         <PrivateRoute path='/b/:id/:boardTitle'>
-          <BoardPage />
+          <BoardPage user={user} />
         </PrivateRoute>
 
         <Route path='*'>

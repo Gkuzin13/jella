@@ -1,8 +1,7 @@
-import { useEffect, useContext, useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { AnimatePresence } from 'framer-motion';
-import { AuthContext } from '../config/Auth';
 import listReducer from '../reducers/listReducer';
 import cardReducer from '../reducers/cardReducer';
 import ACTIONS from '../reducers/actions';
@@ -16,13 +15,12 @@ import cardReorderer from '../utils/cardReorderer';
 import listReorderer from '../utils/listReorderer';
 import CardDetailsBox from '../components/CardDetailsBox/CardDetailsBox';
 
-const BoardPage = () => {
+const BoardPage = ({ user }) => {
   const [boardData, setBoardData] = useState(null);
   const [lists, dispatchLists] = useReducer(listReducer, []);
   const [cards, dispatchCards] = useReducer(cardReducer, []);
-  const [cardBox, setCardBox] = useState({ cardId: {}, isOpen: false });
+  const [cardBox, setCardBox] = useState({ cardId: null, isOpen: false });
 
-  const { user } = useContext(AuthContext);
   const { id } = useParams();
 
   useEffect(() => {

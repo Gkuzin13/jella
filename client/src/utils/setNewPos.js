@@ -1,11 +1,3 @@
-export const appendItem = (items) => {
-  if (items.length === 0) return 16 * 1024;
-
-  const pos = items.map((item) => item.position);
-
-  return Math.max(...pos) + 16 * 1024;
-};
-
 export const prependItem = (items) => {
   if (items.length === 0) return 16 * 1024;
 
@@ -16,6 +8,14 @@ export const prependItem = (items) => {
 
 export const insertItemMiddle = (prevPos, nextPos) => {
   return (prevPos + nextPos) / 2;
+};
+
+export const appendItem = (items) => {
+  if (items.length === 0) return 16 * 1024;
+
+  const pos = items.map((item) => item.position);
+
+  return Math.max(...pos) + 16 * 1024;
 };
 
 export const setNewPos = (items, destination) => {

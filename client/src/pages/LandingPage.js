@@ -39,7 +39,9 @@ const LandingPage = () => {
     <div>
       <div className='bg-main w-full h-full -z-10 fixed top-0'></div>
       <div className='flex justify-between items-center lg:pb-16 pt-8 px-8 lg:px-24'>
-        <a href='/'>LOGO</a>
+        <a href='/' className='font-semibold text-xl'>
+          LOGO
+        </a>
         <div>
           <Link
             to='/login'

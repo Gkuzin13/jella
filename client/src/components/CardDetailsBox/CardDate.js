@@ -1,3 +1,5 @@
+import React from 'react';
+
 const CardDate = ({ selectedCard }) => {
   const createdAt = new Date(selectedCard.createdAt).toLocaleString();
   return (

@@ -35,13 +35,17 @@ const BoardCanvas = ({
     }
   };
 
-  const handleListUpdate = (updatedList) => {
+  const handleListUpdate = async (updatedList) => {
     dispatchLists({
       type: ACTIONS.EDIT_LIST,
       payload: updatedList,
     });
 
-    listApi.update(updatedList);
+    try {
+      await listApi.update(updatedList);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleListDelete = async (id) => {

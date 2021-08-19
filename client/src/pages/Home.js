@@ -1,6 +1,5 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../config/Auth';
 import boardApi from '../api/boardApi';
 import UserControl from '../components/UserControl';
 import ConfirmBox from '../components/ConfirmBox';
@@ -9,12 +8,11 @@ import BoardForm from '../components/Board/BoardForm';
 import HomeBoards from '../components/HomeBoards';
 import { AnimatePresence } from 'framer-motion';
 
-const Home = () => {
+const Home = ({ user }) => {
   const [userBoards, setUserBoards] = useState([]);
   const [confirmBox, setConfirmBox] = useState({ id: null, isOpen: false });
   const [isLoading, setIsLoading] = useState(false);
 
-  const { user } = useContext(AuthContext);
   const history = useHistory();
 
   useEffect(() => {

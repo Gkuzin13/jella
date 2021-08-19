@@ -24,7 +24,7 @@ const CardPriority = ({ handleCardUpdate, selectedCard }) => {
       <div className='flex'>
         <select
           value={priority}
-          className='p-1.5 my-2 bg-gray-50 shadow cursor-pointer font-medium'
+          className='p-1.5 my-2 bg-gray-50 shadow cursor-pointer font-medium focus:outline-blue'
           onChange={(e) => handleValueChange(e)}>
           <option value='low' className='font-medium'>
             Low

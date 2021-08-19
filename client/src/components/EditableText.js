@@ -42,10 +42,9 @@ const EditableText = ({ style, dataText, dataUpdateFunc }) => {
   };
 
   return (
-    <div className='w-full'>
+    <div className='w-full' role='button' onClick={() => setIsEditing(true)}>
       <label
         htmlFor='title'
-        onClick={() => setIsEditing(true)}
         className={`${style} ${!isEditing ? 'block' : 'hidden'}`}>
         {textValue}
       </label>

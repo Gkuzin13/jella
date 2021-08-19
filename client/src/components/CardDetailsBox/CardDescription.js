@@ -31,12 +31,13 @@ const CardDescription = ({ handleCardUpdate, selectedCard }) => {
           <span className='font-semibold text-xl'>Description</span>
         </div>
         <div>
-          <div
+          <p
+            role='button'
             onClick={() => setDescForm(true)}
-            className=' hover:shadow text-gray-800 bg-gray-50 cursor-pointer px-3 py-1.5 pb-8 transition-shadow 
-            duration-150 break-words'>
-            <p>{descValue || 'Add a description to this card...'}</p>
-          </div>
+            className='hover:shadow text-gray-800 bg-gray-50 cursor-pointer 
+            px-3 py-1.5 pb-8 transition-shadow duration-150 break-words'>
+            {descValue || 'Add a description to this card...'}
+          </p>
         </div>
       </div>
     );
