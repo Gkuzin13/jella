@@ -9,12 +9,13 @@ import SignupPage from './pages/SignupPage';
 import PrivateRoute from './routes/PrivateRoute';
 import PublicRoute from './routes/PublicRoute';
 import NotFound from './pages/NotFound';
+import Loader from './components/Loader';
 
 function App() {
   const { user, isLoading } = useContext(AuthContext);
 
   if (isLoading) {
-    return <div></div>;
+    return <Loader />;
   }
 
   return (

@@ -8,13 +8,13 @@ describe('Card Description', () => {
     render(<CardDescription selectedCard={{ description: '' }} />);
 
     expect(
-      screen.getByText('Add a description to this card...')
+      screen.getByText(/Add a description to this card.../)
     ).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button'));
 
     await expect(
-      screen.getByPlaceholderText('Add a description to this card...')
+      screen.getByPlaceholderText(/Add a description to this card.../)
     ).toBeInTheDocument();
   });
 
@@ -23,7 +23,7 @@ describe('Card Description', () => {
 
     fireEvent.click(screen.getByRole('button'));
 
-    await expect(screen.getByDisplayValue('Description')).toBeInTheDocument();
+    await expect(screen.getByDisplayValue(/Description/)).toBeInTheDocument();
   });
 
   test('Submits description form', async () => {
@@ -38,18 +38,18 @@ describe('Card Description', () => {
     fireEvent.click(screen.getByRole('button'));
 
     fireEvent.change(
-      screen.getByPlaceholderText('Add a description to this card...'),
+      screen.getByPlaceholderText(/Add a description to this card.../),
       {
         target: { value: 'Hello' },
       }
     );
 
-    await expect(screen.getByDisplayValue('Hello')).toBeInTheDocument();
+    await expect(screen.getByDisplayValue(/Hello/)).toBeInTheDocument();
 
-    fireEvent.click(screen.getByText('Save'));
+    fireEvent.click(screen.getByText(/Save/).closest('button'));
 
-    expect(screen.getByText('Hello')).toBeInTheDocument();
-    expect(screen.queryByText('Save')).toBeNull();
+    expect(screen.getByText(/Hello/)).toBeInTheDocument();
+    expect(screen.queryByText(/Save/)).toBeNull();
     expect(handleCardUpdate).toBeCalledTimes(1);
   });
 });

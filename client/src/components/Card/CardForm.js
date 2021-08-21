@@ -14,9 +14,23 @@ const CardForm = ({ handleNewCard }) => {
     setCardTitle('');
   };
 
+  const handleOnChange = (e) => {
+    setCardTitle(e.target.value);
+  };
+
+  const handleFormClose = () => {
+    setCardForm(false);
+    setCardTitle('');
+  };
+
   if (!cardForm) {
     return (
-      <div className='text-gray-600 bg-gray-200 rounded-sm mx-2.5 mt-2.5 mb-1'>
+      <motion.div
+        key='button'
+        transition={{ duration: 0.1 }}
+        initial={{ y: -3, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className='text-gray-600 bg-gray-200 rounded-sm mx-2.5 mt-2.5 mb-1'>
         <button
           onClick={() => setCardForm(true)}
           className='flex items-center w-full font-medium hover:bg-gray-200 
@@ -24,14 +38,14 @@ const CardForm = ({ handleNewCard }) => {
           <span className='material-icons mr-1'>add</span>
           <span>Add a card</span>
         </button>
-      </div>
+      </motion.div>
     );
   }
 
   return (
     <motion.div
-      key={cardTitle}
-      transition={{ duration: 0.075 }}
+      key='form'
+      transition={{ duration: 0.1 }}
       initial={{ y: -3, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       className='p-1 text-gray-500 rounded-sm mx-2.5 mt-1'>
@@ -39,12 +53,12 @@ const CardForm = ({ handleNewCard }) => {
         onSubmit={(e) => handleOnSubmit(e)}
         className='w-full transition-opacity duration-75'>
         <textarea
-          name='cardTitle'
           value={cardTitle}
-          onChange={(e) => setCardTitle(e.target.value)}
+          onChange={(e) => handleOnChange(e)}
           autoFocus
           placeholder='Enter a title for this card...'
           className='resize-none p-1.5 w-full rounded-sm shadow focus:outline-blue'
+          required
         />
         <div className='flex items-center mt-1'>
           <button
@@ -56,7 +70,7 @@ const CardForm = ({ handleNewCard }) => {
           <button
             type='button'
             className='flex items-center ml-1'
-            onClick={() => setCardForm(false)}>
+            onClick={() => handleFormClose()}>
             <span
               className='material-icons-outlined text-2xl text-gray-500 
             cursor-pointer ml-2 hover:text-gray-700'>

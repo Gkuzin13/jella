@@ -82,7 +82,6 @@ const Home = ({ user }) => {
         {confirmBox.isOpen && (
           <ConfirmBox
             handleFunc={handleDelBoard}
-            id={confirmBox.id}
             setConfirmBox={setConfirmBox}
             confirmBox={confirmBox}
           />

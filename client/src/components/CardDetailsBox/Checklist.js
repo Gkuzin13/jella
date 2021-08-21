@@ -119,11 +119,10 @@ const Checklist = ({ dispatchCards, selectedCard }) => {
                   <Subtask
                     key={subtask._id}
                     index={index}
-                    snapshot={snapshot}
+                    draggingWith={snapshot.draggingFromThisWith}
                     handleSubtaskUpdate={handleSubtaskUpdate}
                     handleSubtaskDelete={handleSubtaskDelete}
                     subtask={subtask}
-                    cardId={selectedCard._id}
                   />
                 );
               })}

@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import MiniLoader from '../components/MiniLoader';
 
-const ConfirmBox = ({ handleFunc, id, setConfirmBox, confirmBox }) => {
+const ConfirmBox = ({ handleFunc, setConfirmBox, confirmBox }) => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const { id, isOpen } = confirmBox;
 
   const handleConfirm = async () => {
     setIsLoading(true);
@@ -34,8 +36,10 @@ const ConfirmBox = ({ handleFunc, id, setConfirmBox, confirmBox }) => {
             <div className='flex items-center flex-row pb-4 relative px-2'>
               <span className='text-lg text-gray-500'>Delete this board?</span>
               <button
+                type='button'
                 onClick={() => setConfirmBox({ id: '', isOpen: false })}
-                className='flex text-gray-500 hover:text-gray-700 absolute -right-24 transition-colors duration-150'>
+                className='flex text-gray-500 hover:text-gray-700 absolute -right-24 
+                transition-colors duration-150'>
                 <span className='material-icons'>close</span>
               </button>
             </div>

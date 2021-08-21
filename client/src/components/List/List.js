@@ -38,7 +38,7 @@ const List = ({
 
   return (
     <Draggable draggableId={listData._id} index={index}>
-      {(provided) => (
+      {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
@@ -60,8 +60,8 @@ const List = ({
                 <span className='material-icons text-white'>more_horiz</span>
               </button>
 
-              <AnimatePresence>
-                {!listActionsBox ? null : (
+              {listActionsBox && !snapshot.isDragging && (
+                <AnimatePresence>
                   <ListActionsBox
                     toggleActionsBox={toggleActionsBox}
                     boxRef={boxRef}
@@ -69,8 +69,8 @@ const List = ({
                     handleListUpdate={handleListUpdate}
                     listData={listData}
                   />
-                )}
-              </AnimatePresence>
+                </AnimatePresence>
+              )}
             </div>
           </div>
 

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const bgMotion = {
   rest: {
     opacity: 0,
-    x: -5,
+    x: 5,
     transition: {
       duration: 0.05,
     },

@@ -21,7 +21,7 @@ const CardDetailsBox = ({
 
   const boxRef = useRef();
 
-  useClickOutside(boxRef, cardBox, () => {
+  useClickOutside(boxRef, cardBox.isOpen, () => {
     toggleCardBox('', false);
   });
 

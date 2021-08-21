@@ -5,10 +5,9 @@ const SubTask = ({
   handleSubtaskDelete,
   subtask,
   index,
-  snapshot,
+  draggingWith,
 }) => {
-  const draggingStyle =
-    snapshot.draggingFromThisWith === subtask._id ? 'shadow-md' : '';
+  const draggingStyle = draggingWith === subtask._id ? 'shadow-md' : '';
 
   const onSubtaskToggle = () => {
     handleSubtaskUpdate(subtask);
@@ -29,13 +28,14 @@ const SubTask = ({
           key={subtask._id}>
           <div className='flex items-center '>
             <input
-              name='isDone'
+              id='isDone'
               type='checkbox'
               className='form-checkbox h-5 w-5 text-red-600 mr-2 cursor-pointer'
               defaultChecked={subtask.isDone}
               onChange={() => onSubtaskToggle()}
             />
             <label
+              htmlFor='isDone'
               className={`ml-2 ${
                 subtask.isDone && 'line-through opacity-50'
               } `}>

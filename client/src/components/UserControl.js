@@ -5,7 +5,7 @@ import { AuthContext } from '../config/Auth';
 import api from '../config/axiosConfig';
 import useClickOutside from '../hooks/useClickOutside';
 
-const UserControl = ({ user }) => {
+const UserControl = () => {
   const [dropdown, setDropdown] = useState(false);
 
   const history = useHistory();
@@ -62,13 +62,13 @@ const UserControl = ({ user }) => {
         className='absolute right-0 mt-1 flex items-center flex-col
         bg-white py-3 px-4 shadow-xl w-64'>
         <div className='flex items-center flex-row pb-4 relative px-2'>
-          <span className='font-medium text-gray-500'>Account</span>
+          <span className='font-medium text-gray-500 mt-0.5'>Account</span>
           <button
             onClick={() => setDropdown(false)}
-            className='flex text-gray-500 hover:text-gray-700 absolute -right-16 transition-colors 
+            className='flex text-gray-500 hover:text-gray-800 absolute left-28 p-2 transition-colors 
             duration-150'
             type='button'>
-            <span className='material-icons cursor-pointer ml-1'>close</span>
+            <span className='material-icons'>close</span>
           </button>
         </div>
         <div className='w-full border mb-3'></div>
@@ -77,8 +77,8 @@ const UserControl = ({ user }) => {
           onClick={() => {
             handleLogout();
           }}
-          className='flex items-center w-full hover:bg-red-50 hover:text-red-600 p-1.5 transition-opacity 
-          duration-150 rounded-sm'>
+          className='flex items-center w-full font-medium text-gray-500 bg-gray-100 hover:bg-red-600 hover:text-white 
+          px-2.5 py-1.5 transition-colors duration-150 rounded-sm'>
           <span>Log Out</span>
         </button>
       </motion.div>
