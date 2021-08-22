@@ -13,7 +13,7 @@ describe('ListForm', () => {
       screen.getByPlaceholderText('Enter a title for this list...')
     ).toBeInTheDocument();
 
-    fireEvent.click(screen.getByText('close'));
+    fireEvent.click(screen.getByText('close').closest('button'));
 
     await expect(
       screen.queryByPlaceholderText('Enter a title for this list...')
