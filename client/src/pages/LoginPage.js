@@ -40,8 +40,8 @@ const LoginPage = () => {
     <div>
       <div className='bg-main w-full h-full -z-10 fixed'></div>
       <div className='flex justify-center flex-col items-center'>
-        <Link to='/' className='text-4xl font-bold my-10'>
-          LOGO
+        <Link to='/' className='font-bold text-4xl text-gray-700 my-10'>
+          Jella
         </Link>
         <div className='bg-white p-12 shadow-lg rounded-sm '>
           <form
@@ -53,15 +53,20 @@ const LoginPage = () => {
             <input
               type='email'
               name='email'
+              title='Enter email'
               placeholder='Enter email'
+              minLength='1'
+              aria-required='true'
               required
               className=' border-2 shadow-sm p-2 bg-gray-50 mb-4 '
             />
             <input
               type='password'
               name='password'
+              title='Enter password'
               placeholder='Enter password'
               minLength='8'
+              aria-required='true'
               required
               className=' border-2 shadow-sm p-2 bg-gray-50 mb-4'
             />
@@ -71,8 +76,8 @@ const LoginPage = () => {
 
             <button
               type='submit'
-              className='bg-gray-50 text-blue-700 font-medium text-md py-2 shadow mb-5 
-              hover:bg-gray-100 transition-colors duration-150'>
+              className='bg-gray-50 border border-blue-600 text-blue-600 font-medium text-md py-2 shadow mb-5 
+              hover:bg-white transition-colors duration-150'>
               {loading ? <MiniLoader color={true} /> : 'Log In'}
             </button>
           </form>

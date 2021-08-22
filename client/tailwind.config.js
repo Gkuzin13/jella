@@ -7,9 +7,9 @@ module.exports = {
         'open-sans': ['"Open Sans"', 'sans-serif'],
       },
       backgroundImage: (theme) => ({
-        main: 'linear-gradient(90deg, rgba(29,78,216,0.12) 0%, rgba(255,255,255,0.35) 74%, rgba(201,143,60,0.10) 100%)',
+        main: 'linear-gradient(90deg, rgba(29,78,216,0.12) 0%, rgba(255,255,255,0.35) 74%, rgba(201,143,60,0.05) 100%)',
         board:
-          'linear-gradient( 109.6deg,  rgba(120,212,234,0.2) 11.2%, rgba(216,226,253,0.2) 72.1% )',
+          'radial-gradient( circle 343px at 46.3% 47.5%,  rgba(242,242,242,1) 0%, rgba(241,241,241,1) 72.9% )',
       }),
       zIndex: {
         '-10': '-10',

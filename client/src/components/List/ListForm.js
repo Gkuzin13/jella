@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const ListForm = ({ lists, handleNewList }) => {
   const [listForm, setListForm] = useState(false);
@@ -57,7 +57,7 @@ const ListForm = ({ lists, handleNewList }) => {
         <input
           value={listTitle}
           onChange={(e) => handleOnChange(e)}
-          maxLength='32'
+          maxLength='40'
           autoFocus
           autoComplete='off'
           required

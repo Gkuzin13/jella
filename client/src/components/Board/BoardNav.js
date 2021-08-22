@@ -17,21 +17,23 @@ const BoardNav = ({ boardData, user, setBoardData }) => {
 
   const titleStyle = {
     style:
-      'font-medium bg-transparent w-full px-1 mx-1 focus:outline-blue text-2xl cursor-pointer',
+      'font-bold text-gray-800 bg-transparent w-full px-0.5 mx-1.5 focus:outline-blue text-xl cursor-pointer',
   };
 
   return (
-    <div className='flex justify-between items-center px-6 pb-4'>
-      <div className='flex items-center text-2xl font-medium my-4'>
+    <div className='flex justify-between items-center px-6 pb-4 mt-4 mb-2'>
+      <div className='flex items-center text-xl font-bold'>
         <Link
           to={`/${user.username}/boards`}
           aria-label='Back to home'
-          className='flex items-center  px-1 mr-1 text-blue-600 hover:text-blue-700 
-          rounded-sm transition-colors duration-150'>
-          <span className='material-icons-outlined mr-1.5 text-3xl'>home</span>
-          <span>Boards</span>
+          className='flex items-center opacity-90 px-1 py-0.5 mr-0.5 text-gray-500 hover:text-gray-600 transition-colors 
+          duration-100'>
+          <span className='material-icons-outlined mr-1'>home</span>
+          Boards
         </Link>
-        <span className='text-2xl font-medium'> / </span>
+
+        <span className='text-gray-500'> / </span>
+
         <EditableText
           style={titleStyle.style}
           dataText={boardData.title}

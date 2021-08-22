@@ -56,6 +56,7 @@ const CardForm = ({ handleNewCard }) => {
           value={cardTitle}
           onChange={(e) => handleOnChange(e)}
           autoFocus
+          maxLength='40'
           placeholder='Enter a title for this card...'
           className='resize-none p-1.5 w-full rounded-sm shadow focus:outline-blue'
           required

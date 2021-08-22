@@ -34,8 +34,8 @@ const UserControl = () => {
       <div>
         <button
           onClick={() => setDropdown(!dropdown)}
-          className='w-10 h-10 ml-2 flex items-center justify-center rounded-full text-white bg-blue-600 
-          transition-all duration-75 hover:bg-blue-700 '>
+          className='w-10 h-10 ml-2 flex items-center justify-center rounded-full text-white bg-blue-900 
+          transition-all duration-75 hover:bg-blue-900 '>
           <span className='material-icons-outlined mb-0.5 ml-0.5'>
             manage_accounts
           </span>
@@ -46,14 +46,17 @@ const UserControl = () => {
 
   return (
     <div className='relative'>
-      <button
+      <motion.button
+        transition={{ duration: 0.1 }}
+        initial={{ scale: 0.9 }}
+        animate={{ scale: 1 }}
         onClick={() => setDropdown(!dropdown)}
-        className='w-10 h-10 flex items-center justify-center rounded-full text-white bg-blue-600 
+        className='w-10 h-10 flex items-center justify-center rounded-full text-white bg-blue-700 
           transition-all duration-75 focus:bg-blue-700 '>
         <span className='material-icons-outlined mb-0.5 ml-0.5'>
           manage_accounts
         </span>
-      </button>
+      </motion.button>
       <motion.div
         transition={{ duration: 0.075 }}
         initial={{ y: 2, opacity: 0 }}

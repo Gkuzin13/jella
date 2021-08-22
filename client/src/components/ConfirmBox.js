@@ -1,11 +1,18 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import MiniLoader from '../components/MiniLoader';
+import useClickOutside from '..//hooks/useClickOutside';
 
 const ConfirmBox = ({ handleFunc, setConfirmBox, confirmBox }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { id, isOpen } = confirmBox;
+
+  const boxRef = useRef();
+
+  useClickOutside(boxRef, isOpen, () => {
+    setConfirmBox({ id: '', isOpen: false });
+  });
 
   const handleConfirm = async () => {
     setIsLoading(true);
@@ -31,6 +38,7 @@ const ConfirmBox = ({ handleFunc, setConfirmBox, confirmBox }) => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}>
           <div
+            ref={boxRef}
             className='flex items-center flex-col
              bg-white p-4 shadow-xl w-96'>
             <div className='flex items-center flex-row pb-4 relative px-2'>

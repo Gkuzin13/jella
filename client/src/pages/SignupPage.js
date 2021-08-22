@@ -61,22 +61,29 @@ const SignupPage = () => {
             <input
               type='email'
               name='email'
+              title='Enter email'
               placeholder='Enter email'
+              minLength='1'
+              aria-required='true'
               required
               className=' border-2 shadow-sm p-2 bg-gray-50 mb-4 '
             />
             <input
               type='text'
               name='username'
+              title='Enter username'
               placeholder='Enter Username'
+              aria-required='true'
               required
               className=' border-2 shadow-sm p-2 bg-gray-50 mb-4'
             />
             <input
               type='password'
               name='password'
+              title='Enter password'
               placeholder='Enter password'
               minLength='8'
+              aria-required='true'
               required
               className=' border-2 shadow-sm p-2 bg-gray-50 mb-4'
             />

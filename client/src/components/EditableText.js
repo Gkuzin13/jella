@@ -56,7 +56,7 @@ const EditableText = ({ style, dataText, dataUpdateFunc }) => {
         value={textValue}
         name='title'
         autoComplete='off'
-        maxLength='64'
+        maxLength='40'
       />
     </div>
   );

@@ -72,6 +72,7 @@ const CardDetailsBox = ({
         exit={{ scale: 0.95, opacity: 0 }}
         className='grid place-items-center py-20'>
         <div
+          ref={boxRef}
           className='flex flex-col justify-between relative p-6 w-11/12 lg:w-2/4 lg:px-10 
         bg-white shadow-2xl'>
           <button

@@ -30,13 +30,7 @@ const icoMotion = {
 const HomeBoards = ({ boards, setConfirmBox }) => {
   if (!boards.length) {
     return (
-      <div className='flex flex-col items-start'>
-        <div className='flex items-center mb-3 text-gray-600'>
-          <span className='material-icons-outlined text-3xl mr-2'>
-            space_dashboard
-          </span>
-          <h2 className='text-2xl font-medium'>Your Boards</h2>
-        </div>
+      <div className='flex flex-col items-start px-4 py-8'>
         <p className='font-medium text-md text-gray-500'>
           Create a board to begin.
         </p>
@@ -45,26 +39,19 @@ const HomeBoards = ({ boards, setConfirmBox }) => {
   }
 
   return (
-    <div className='flex flex-col items-start px-4'>
-      <div className='flex items-center mb-4 '>
-        <span className='material-icons-outlined text-3xl mr-2'>
-          space_dashboard
-        </span>
-        <h2 className='text-2xl font-medium'>Your Boards</h2>
-      </div>
+    <div className='flex flex-col items-start px-4 py-8 w-full'>
       {boards.map((board) => {
         return (
           <div
             key={board._id}
-            className='bg-board  flex cursor-pointer mb-5 hover:text-blue-600 hover:shadow-lg 
-            hover:border-blue-600  transform-gpu  rounded-sm transition-all duration-150 shadow'>
+            className='bg-board flex justify-between w-full cursor-pointer mb-5 hover:shadow-md
+            transform-gpu rounded-sm transition-all duration-150 shadow'>
             <Link
               to={`/b/${board._id}/${board.boardTitle}`}
-              className='text-gray-900 py-3 px-4 mr-1 font-medium  
-              '
+              className='py-3 px-4 mr-1 font-medium w-full'
               aria-label='Go to selected board'>
-              <div className='flex flex-col justify-center '>
-                <span className='text-2xl break-words pb-2'>
+              <div className='flex flex-col justify-center max-w-max'>
+                <span className='text-xl break-words pb-2'>
                   {board.boardTitle}
                 </span>
                 <span className='text-sm text-gray-600'>

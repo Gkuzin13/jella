@@ -76,7 +76,7 @@ const Home = ({ user }) => {
 
   return (
     <div>
-      <div className='bg-main absolute w-full h-screen -z-10'></div>
+      <div className='bg-board opacity-30 absolute w-full h-screen -z-10'></div>
 
       <AnimatePresence>
         {confirmBox.isOpen && (
@@ -87,16 +87,16 @@ const Home = ({ user }) => {
           />
         )}
       </AnimatePresence>
-      <div className='flex items-center justify-between mb-10 px-4 py-1 lg:px-12'>
-        <h1 className='my-4 text-2xl text-blue-600 font-medium'>
-          Welcome, {user.username}
-        </h1>
+
+      <div className='flex items-center bg-white justify-between mb-10 px-6 py-4 lg:px-12 shadow-sm'>
+        <h1 className='font-bold text-3xl text-blue-900'>Jella</h1>
         <UserControl user={user} />
       </div>
 
-      <BoardForm userId={user.id} handleNewBoard={handleNewBoard} />
-
-      <HomeBoards boards={userBoards} setConfirmBox={setConfirmBox} />
+      <div className='flex flex-col justify-center items-center'>
+        <BoardForm userId={user.id} handleNewBoard={handleNewBoard} />
+        <HomeBoards boards={userBoards} setConfirmBox={setConfirmBox} />
+      </div>
     </div>
   );
 };
