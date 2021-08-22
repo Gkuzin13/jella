@@ -3,7 +3,10 @@ const { body, validationResult } = require('express-validator');
 const recalcItemsPos = require('../utils/recalcPos');
 
 exports.create_subtask_post = [
-  body('taskName', 'Sub task name must not be empty').isLength({ min: 1 }),
+  body('taskName', 'Subtask name must not be empty.').isLength({
+    min: 1,
+    max: 40,
+  }),
 
   async (req, res) => {
     const errors = validationResult(req);

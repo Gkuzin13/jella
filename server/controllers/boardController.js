@@ -68,7 +68,7 @@ exports.board_get = async (req, res) => {
 // Create board on POST
 exports.create_board_post = [
   // Validate form fields
-  body('boardTitle', 'Title must not be empty.').isLength({ min: 1 }),
+  body('boardTitle', 'Title must not be empty.').isLength({ min: 1, max: 40 }),
 
   async (req, res) => {
     const errors = validationResult(req);
@@ -108,7 +108,7 @@ exports.board_delete = async (req, res) => {
 // Handle board upadate on PATCH
 exports.update_board_patch = [
   // Validate form fields
-  body('boardTitle', 'Title must not be empty.').isLength({ min: 1 }),
+  body('boardTitle', 'Title must not be empty.').isLength({ min: 1, max: 40 }),
 
   async (req, res) => {
     const errors = validationResult(req);

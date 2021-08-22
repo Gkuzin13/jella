@@ -18,7 +18,7 @@ exports.list_get = async (req, res) => {
 // Handle create new list on POST
 exports.create_list_post = [
   // Validate form field
-  body('listTitle', 'Title must not be empty.').isLength({ min: 1 }),
+  body('listTitle', 'Title must not be empty.').isLength({ min: 1, max: 40 }),
 
   async (req, res) => {
     const errors = validationResult(req);
@@ -46,7 +46,7 @@ exports.create_list_post = [
 // Handle list update on PUT
 exports.update_list_put = [
   // Validate form fields
-  body('listTitle', 'Title must not be empty.').isLength({ min: 1 }),
+  body('listTitle', 'Title must not be empty.').isLength({ min: 1, max: 40 }),
 
   async (req, res) => {
     const errors = validationResult(req);
