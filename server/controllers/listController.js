@@ -22,8 +22,9 @@ exports.create_list_post = [
 
   async (req, res) => {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
-      return res.status(400).send({ errorMsg: errors.array() });
+      return res.send({ error: errors.array({ onlyFirstError: true })[0] });
     }
 
     try {
@@ -49,8 +50,9 @@ exports.update_list_put = [
 
   async (req, res) => {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
-      return res.send(errors.array());
+      return res.send({ error: errors.array({ onlyFirstError: true })[0] });
     }
 
     try {

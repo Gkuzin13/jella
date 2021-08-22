@@ -36,7 +36,7 @@ exports.edit_subtask_put = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.sendStatus(401);
+      return res.send({ error: errors.array({ onlyFirstError: true })[0] });
     }
 
     try {

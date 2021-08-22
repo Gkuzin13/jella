@@ -74,7 +74,7 @@ exports.create_board_post = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.send(errors.array());
+      return res.send({ error: errors.array({ onlyFirstError: true })[0] });
     }
 
     // Save new board to db
@@ -114,7 +114,7 @@ exports.update_board_patch = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.send({ errorMsg: errors.array() });
+      return res.send({ error: errors.array({ onlyFirstError: true })[0] });
     }
 
     // Save updated board to db

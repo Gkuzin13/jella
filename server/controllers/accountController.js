@@ -106,7 +106,7 @@ exports.account_login_post = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.send({ error: errors.array() });
+      return res.send({ error: errors.array({ onlyFirstError: true })[0] });
     }
 
     // Login account

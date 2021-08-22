@@ -51,7 +51,7 @@ exports.update_card_put = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.send(errors.array());
+      return res.send({ error: errors.array({ onlyFirstError: true })[0] });
     }
 
     try {
