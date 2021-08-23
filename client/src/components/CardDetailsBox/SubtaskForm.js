@@ -50,6 +50,8 @@ const SubTaskForm = ({ handleNewSubtask }) => {
           name='taskName'
           placeholder='Add an item'
           maxLength='64'
+          minLength='1'
+          required
           autoFocus
           className='w-full resize-none py-1 p-2 rounded-sm border-2 focus:outline-blue'></textarea>
         <div className='flex items-center py-1'>
