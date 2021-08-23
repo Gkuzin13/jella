@@ -1,5 +1,11 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 
 import BoardForm from '../BoardForm';
 
@@ -34,6 +40,8 @@ describe('BoardForm', () => {
 
     fireEvent.click(screen.getByText(/Create board/));
 
-    expect(handleNewBoard).toBeCalledTimes(1);
+    await waitFor(() => {
+      expect(handleNewBoard).toBeCalledTimes(1);
+    });
   });
 });
