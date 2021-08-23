@@ -5,7 +5,7 @@ import UserControl from '../components/UserControl';
 import ConfirmBox from '../components/ConfirmBox';
 import Loader from '../components/Loader';
 import BoardForm from '../components/Board/BoardForm';
-import HomeBoards from '../components/HomeBoards';
+import HomeBoards from '../components/Board/HomeBoards';
 import { AnimatePresence } from 'framer-motion';
 
 const Home = ({ user }) => {
@@ -76,8 +76,7 @@ const Home = ({ user }) => {
 
   return (
     <div>
-      <div className='bg-board opacity-30 absolute w-full h-screen -z-10'></div>
-
+      <div className='bg-main absolute h-full w-full -z-10'></div>
       <AnimatePresence>
         {confirmBox.isOpen && (
           <ConfirmBox
@@ -88,14 +87,16 @@ const Home = ({ user }) => {
         )}
       </AnimatePresence>
 
-      <div className='flex items-center bg-white justify-between mb-10 px-6 py-4 lg:px-12 shadow-sm'>
+      <div className='flex items-center bg-white justify-between mb-8 px-6 py-3 lg:px-12 shadow-sm'>
         <h1 className='font-bold text-3xl text-blue-900'>Jella</h1>
         <UserControl user={user} />
       </div>
 
-      <div className='flex flex-col justify-center items-center'>
-        <BoardForm userId={user.id} handleNewBoard={handleNewBoard} />
-        <HomeBoards boards={userBoards} setConfirmBox={setConfirmBox} />
+      <div className='flex justify-center items-center'>
+        <div className='flex flex-col md:flex-row-reverse justify-around gap-x-24 w-full mt-2'>
+          <BoardForm userId={user.id} handleNewBoard={handleNewBoard} />
+          <HomeBoards boards={userBoards} setConfirmBox={setConfirmBox} />
+        </div>
       </div>
     </div>
   );

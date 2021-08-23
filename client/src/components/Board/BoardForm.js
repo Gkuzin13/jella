@@ -33,15 +33,13 @@ const BoardForm = ({ handleNewBoard }) => {
     setBoardTitle(e.target.value);
   };
 
-  console.log(boardForm);
-
   return (
-    <div className='pb-4'>
-      <div className='flex flex-col '>
+    <div className='whitespace-nowrap pb-8 px-4'>
+      <div className='flex flex-col leading-relaxed text-center'>
         <button
           onClick={() => setBoardForm(true)}
           className='flex items-center justify-center text-2xl border bg-white text-green-600 
-          border-green-600 shadow-sm px-4 py-2 mb-1 hover:bg-gray-50 
+          border-green-600 shadow px-4 py-2 mb-1 hover:bg-gray-50 
           transition-colors duration-100'>
           <span
             aria-label='Create new board'

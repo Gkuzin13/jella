@@ -1,6 +1,4 @@
-import { useRef } from 'react';
 import { motion } from 'framer-motion';
-import useClickOutside from '../../hooks/useClickOutside';
 import ACTIONS from '../../reducers/actions';
 import Checklist from '../CardDetailsBox/Checklist';
 import CardPriority from '../CardDetailsBox/CardPriority';
@@ -18,12 +16,6 @@ const CardDetailsBox = ({
 }) => {
   const selectedCard = cards.find((card) => card._id === cardBox.cardId);
   const { listTitle } = lists.find((list) => list._id === selectedCard.listId);
-
-  const boxRef = useRef();
-
-  useClickOutside(boxRef, cardBox.isOpen, () => {
-    toggleCardBox('', false);
-  });
 
   const handleCardUpdate = async (updatedCard) => {
     dispatchCards({
@@ -72,7 +64,6 @@ const CardDetailsBox = ({
         exit={{ scale: 0.95, opacity: 0 }}
         className='grid place-items-center py-20'>
         <div
-          ref={boxRef}
           className='flex flex-col justify-between relative p-6 w-11/12 lg:w-2/4 lg:px-10 
         bg-white shadow-2xl'>
           <button

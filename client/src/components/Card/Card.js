@@ -25,6 +25,7 @@ const Card = ({ cardData, toggleCardBox, index }) => {
             <div className='flex items-center justify-start w-full pt-2'>
               {total === 0 ? null : (
                 <div
+                  title='Checklist items'
                   className={`${progressColor} flex items-center justify-center rounded px-1.5 ml-3 mb-2.5 `}>
                   <span className='material-icons-outlined text-lg pl-0 pr-0.5 py-0'>
                     check_box
@@ -37,12 +38,15 @@ const Card = ({ cardData, toggleCardBox, index }) => {
               )}
 
               {cardData.description && (
-                <span className='material-icons-outlined text-gray-300 mb-2.5 ml-3'>
+                <span
+                  title='This card has a description.'
+                  className='material-icons-outlined text-gray-300 mb-2.5 ml-3'>
                   subject
                 </span>
               )}
 
               <span
+                title='Card priority'
                 className={`material-icons mb-2.5 mr-3 ml-auto text-${priorityIcon.color}-500`}>
                 {priorityIcon.icon}
               </span>
