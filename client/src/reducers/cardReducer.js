@@ -39,7 +39,7 @@ const cardReducer = (cards, action) => {
     case ACTIONS.CREATE_SUBTASK:
       const updatedCard = [...cards].map((card) => {
         return card._id === data.id
-          ? { ...card, subtasks: card.subtasks.concat(data.newSubtask) }
+          ? { ...card, subtasks: [...(card.subtasks || []), data.newSubtask] }
           : card;
       });
 

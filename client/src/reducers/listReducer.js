@@ -6,9 +6,9 @@ const listReducer = (lists, action) => {
   switch (action.type) {
     case ACTIONS.SET_LISTS:
       return data.sort((a, b) => a.position - b.position);
+
     case ACTIONS.CREATE_LIST:
-      const listsCopy = [...lists];
-      return listsCopy.concat(data);
+      return [...lists, data];
 
     case ACTIONS.EDIT_LIST:
       const updatedLists = lists.map((list) => {
