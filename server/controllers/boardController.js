@@ -93,11 +93,12 @@ exports.create_board_post = [
 
 // Handle board delete on DELETE
 exports.board_delete = async (req, res) => {
+  const boardId = req.params.id;
   try {
-    await Board.findByIdAndDelete(req.params.id);
-    await List.deleteMany({ boardId: req.params.id });
-    await Card.deleteMany({ boardId: req.params.id });
-    await Subtask.deleteMany({ boardId: req.params.id });
+    await Board.findByIdAndDelete(boardId);
+    await List.deleteMany({ boardId });
+    await Card.deleteMany({ boardId });
+    await Subtask.deleteMany({ boardId });
 
     res.sendStatus(200);
   } catch (error) {

@@ -1,6 +1,7 @@
 const SubTask = require('../models/subtask');
 const { body, validationResult } = require('express-validator');
-const recalcItemsPos = require('../utils/recalcPos');
+const recalcItemsPos = require('../utils/recalcItemsPos');
+const isTooClose = require('../utils/isTooClose');
 
 exports.create_subtask_post = [
   body('taskName', 'Subtask name must not be empty.').isLength({
@@ -56,10 +57,11 @@ exports.edit_subtask_put = [
         { new: true }
       );
 
-      // Check if subtask pos is less than 0.1
-      if (!Number.isInteger(newPos) && newPos % 1 < 0.1) {
+      // Sets new positions if the new pos of the subtask is too close to neighbouring subtasks
+      if (isTooClose(newPos)) {
         const cardId = req.body.cardId;
         await recalcItemsPos({ cardId }, Subtask);
+
         return;
       }
 

@@ -74,7 +74,6 @@ exports.create_guest_account = [
     }
 
     try {
-      // Save new accont to db
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
       // Save new accont to db
@@ -83,13 +82,12 @@ exports.create_guest_account = [
         username: 'Guest',
         password: hashedPassword,
       }).save();
-      console.log(account._id);
 
       await populate.populateGuestBoard(account._id);
 
       next();
     } catch (err) {
-      return res.send(err);
+      res.send(err);
     }
   },
 ];

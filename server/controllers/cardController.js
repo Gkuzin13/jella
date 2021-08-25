@@ -1,6 +1,7 @@
 const Card = require('../models/card');
 const { body, validationResult } = require('express-validator');
-const recalcItemsPos = require('../utils/recalcPos');
+const isTooClose = require('../utils/isTooClose');
+const recalcItemsPos = require('../utils/recalcItemsPos');
 
 // Handle current card GET
 exports.card_get = async (req, res) => {
@@ -71,10 +72,11 @@ exports.update_card_put = [
         }
       );
 
-      // Check if card pos is less than 0.1
-      if (!Number.isInteger(newPos) && newPos % 1 < 0.1) {
+      // Sets new positions if the new pos of the card is too close to neighbouring cards
+      if (isTooClose(newPos)) {
         const listId = req.body.listId;
         const cards = await recalcItemsPos({ listId }, Card);
+
         return res.send(cards);
       }
 
