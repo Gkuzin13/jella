@@ -29,7 +29,7 @@ const ListForm = ({ lists, handleNewList }) => {
         transition={{ duration: 0.2 }}
         initial={{ y: 5, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className='cursor-pointer flex flex-shrink-0 bg-gray-200 bg-opacity-80
+        className='cursor-pointer flex flex-shrink-0 bg-gray-100 
         shadow-md w-72 p-1.5 mx-1.5 rounded-sm text-gray-600 hover:bg-opacity-100 
         transition-colors duration-150'>
         <button

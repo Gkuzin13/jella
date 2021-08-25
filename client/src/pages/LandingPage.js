@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Types } from 'mongoose';
 import MiniLoader from '../components/MiniLoader';
 import { AuthContext } from '../config/Auth';
@@ -8,7 +8,11 @@ import { ReactComponent as BoardImg } from '../assets/boardplanner.svg';
 
 const LandingPage = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
   const { setUser } = useContext(AuthContext);
+
+  const history = useHistory();
 
   const handleGuestLogin = async () => {
     setIsLoading(true);
@@ -20,19 +24,26 @@ const LandingPage = () => {
       });
       console.log(data);
 
-      if (data.error) {
+      if (!data) {
         setIsLoading(false);
+        setErrorMsg('Oops, something went wrong...');
         return;
       }
-      setIsLoading(false);
 
       if (data.username) {
+        setIsLoading(false);
         setUser(() => data);
+
+        history.push(`/${data.username}/boards`);
+
+        return;
       }
     } catch (error) {
       console.log(error);
+      setErrorMsg('Oops, something went wrong...');
     }
   };
+
   return (
     <div>
       <div className='bg-main w-full h-full -z-10 fixed top-0'></div>
@@ -57,8 +68,8 @@ const LandingPage = () => {
       </div>
 
       <div className='flex flex-col items-center justify-center lg:my-10 mx-auto w-11/12 lg:w-4/5 lg:flex-row'>
-        <div className=' lg:w-11/12 h- pt-12'>
-          <h1 className='text-4xl lg:text-5xl lg:mb-8 text-gray-800 font-bold h-full leading-tight text-center lg:text-left'>
+        <div className='md:w-11/12 pt-12'>
+          <h1 className='text-4xl lg:text-5xl lg:mb-6 text-gray-800 font-bold h-full leading-tight text-center lg:text-left'>
             Easily build your <strong className='text-gray-900'>Kanban</strong>{' '}
             board within minutes.
           </h1>
@@ -67,7 +78,7 @@ const LandingPage = () => {
             rises to the home office, the way you work is unique—accomplish it
             all with Jella.
           </p>
-          <div className='mt-12 text-xl flex items-center text-center mb-10'>
+          <div className='mt-12 mb-2 text-xl flex items-center text-center'>
             <button
               onClick={() => handleGuestLogin()}
               aria-label='Continue as a guest user button'
@@ -76,9 +87,10 @@ const LandingPage = () => {
               {isLoading ? <MiniLoader color={true} /> : 'Continue as Guest'}
             </button>
           </div>
+          {errorMsg && <p className='text-red-600'>{errorMsg}</p>}
         </div>
 
-        <div className='w-full h-full min-w-max pb-12 lg:pl-32'>
+        <div className='w-full h-full pb-12 md:pl-32'>
           <BoardImg alt='People plan on board' width='100%' height='100%' />
         </div>
       </div>

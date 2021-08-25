@@ -3,7 +3,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { AnimatePresence } from 'framer-motion';
 import useClickOutside from '../../hooks/useClickOutside';
 import CardsContainer from '../Card/CardsContainer';
-import ListActionsBox from '../List/ListActionsBox';
+import ListOptionsBox from '../List/ListOptionsBox';
 import EditableText from '../EditableText';
 
 const List = ({
@@ -15,16 +15,16 @@ const List = ({
   toggleCardBox,
   index,
 }) => {
-  const [listActionsBox, setListActionsBox] = useState(false);
+  const [listOptionsBox, setlistOptionsBox] = useState(false);
 
   const boxRef = useRef();
 
-  useClickOutside(boxRef, listActionsBox, () => {
-    toggleActionsBox(!listActionsBox);
+  useClickOutside(boxRef, listOptionsBox, () => {
+    toggleOptionsBox(!listOptionsBox);
   });
 
-  const toggleActionsBox = () => {
-    setListActionsBox(!listActionsBox);
+  const toggleOptionsBox = () => {
+    setlistOptionsBox(!listOptionsBox);
   };
 
   const handleTitleUpdate = (updatedTitle) => {
@@ -55,15 +55,16 @@ const List = ({
             />
             <div>
               <button
-                onClick={() => setListActionsBox(!listActionsBox)}
+                aria-label='Open list options'
+                onClick={() => setlistOptionsBox(!listOptionsBox)}
                 className='flex justify-center p-1 hover:bg-gray-50 hover:bg-opacity-20'>
                 <span className='material-icons text-white'>more_horiz</span>
               </button>
 
-              {listActionsBox && !snapshot.isDragging && (
+              {listOptionsBox && !snapshot.isDragging && (
                 <AnimatePresence>
-                  <ListActionsBox
-                    toggleActionsBox={toggleActionsBox}
+                  <ListOptionsBox
+                    toggleOptionsBox={toggleOptionsBox}
                     boxRef={boxRef}
                     handleListDelete={handleListDelete}
                     handleListUpdate={handleListUpdate}
