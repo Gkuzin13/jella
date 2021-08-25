@@ -123,15 +123,9 @@ exports.populateGuestBoard = async (userId) => {
   try {
     await new Board(guestBoard).save();
 
-    await List.insertMany(guestLists, (err, docs) => {
-      if (err) return console.log(err);
-      console.log(docs);
-    });
+    await List.insertMany(guestLists);
 
-    await Card.insertMany(guestCards, (err, docs) => {
-      if (err) return console.log(err);
-      console.log(docs);
-    });
+    await Card.insertMany(guestCards);
   } catch (error) {
     return error;
   }
