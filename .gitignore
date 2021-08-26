@@ -8,6 +8,7 @@ node_modules
 
 # testing
 /coverage
+.globalConfig.json
 
 # production
 /build

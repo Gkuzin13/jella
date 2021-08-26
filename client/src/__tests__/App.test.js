@@ -10,7 +10,7 @@ import { AuthContext } from '../config/Auth';
 export const renderWithRouter = (user, history) => {
   const userProps = {
     isLoading: false,
-    user,
+    user: user,
   };
   return render(
     <AuthContext.Provider value={{ ...userProps }}>

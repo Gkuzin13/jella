@@ -5,23 +5,26 @@
   "proxy": "http://localhost:5000/",
   "dependencies": {
     "@craco/craco": "^6.2.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.1",
     "framer-motion": "^4.1.17",
-    "mongoose": "^5.13.5",
+    "mongoose": "^5.13.8",
     "postcss": "^7.0.36",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.4",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.7",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "react-scripts test",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -43,12 +46,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^12.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "babel-jest": "^26.6.3",
     "jest-svg-transformer": "^1.0.0"
   }
 }
