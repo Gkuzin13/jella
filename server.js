@@ -4,7 +4,8 @@ const flash = require('express-flash');
 const helmet = require('helmet');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
+const session = require('cookie-session');
+const path = require('path');
 
 if (process.env.NODE_ENV === 'development') {
   require('dotenv').config();
