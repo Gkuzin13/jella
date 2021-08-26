@@ -1,3 +1,4 @@
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Types } from 'mongoose';
 import ACTIONS from '../../reducers/actions';
 import Subtask from './Subtask';
@@ -5,7 +6,6 @@ import SubtaskForm from './SubtaskForm';
 import ProgressBar from './ProgressBar';
 import { appendItem, setNewPos } from '../../utils/setNewPos';
 import cardApi from '../../api/cardApi';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const Checklist = ({ dispatchCards, selectedCard }) => {
   const subtasks = (selectedCard.subtasks || []).sort(
