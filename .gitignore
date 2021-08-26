@@ -5,10 +5,11 @@
 node_modules
 /.pnp
 .pnp.js
+globalConfig.json
 
 # testing
 /coverage
-.globalConfig.json
+
 
 # production
 /build

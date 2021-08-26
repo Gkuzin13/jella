@@ -5,8 +5,10 @@ const helmet = require('helmet');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-require('dotenv').config();
 
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
+}
 // Use passport config
 const initialize = require('./config/passportConfig');
 initialize(passport);
