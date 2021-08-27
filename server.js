@@ -1,15 +1,16 @@
 const express = require('express');
-const cors = require('cors');
 const flash = require('express-flash');
 const helmet = require('helmet');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
-const session = require('cookie-session');
+const Keygrip = require('keygrip');
+const cookieSession = require('cookie-session');
 const path = require('path');
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
+
 // Use passport config
 const initialize = require('./config/passportConfig');
 initialize(passport);
@@ -24,22 +25,12 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(helmet());
-app.use(
-  cors({
-    // allow to server to accept request from different origin
-    origin: 'http://localhost:3000',
-    methods: 'GET,PUT,PATCH,POST,DELETE',
-    // allow session cookie from browser to pass through
-    credentials: true,
-  })
-);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
-  session({
+  cookieSession({
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
+    keys: new Keygrip(['key1', 'key2'], 'SHA384', 'base64'),
   })
 );
 app.use(passport.initialize());
