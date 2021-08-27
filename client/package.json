@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build INLINE_RUNTIME_CHUNK=false",
+    "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
