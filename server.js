@@ -1,10 +1,10 @@
 const express = require('express');
+const cors = require('cors');
 const flash = require('express-flash');
 const helmet = require('helmet');
 const passport = require('passport');
-const cookieParser = require('cookie-parser');
-const Keygrip = require('keygrip');
 const cookieSession = require('cookie-session');
+const Keygrip = require('keygrip');
 const path = require('path');
 
 if (process.env.NODE_ENV !== 'production') {
@@ -25,6 +25,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(helmet());
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -35,7 +36,6 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(flash());
 
 app.use(homeRouter);
@@ -44,11 +44,11 @@ app.use(listRouter);
 app.use(cardRouter);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, './client/build')));
+  app.use(express.static(path.join(__dirname, 'client/build')));
 
   // Handle React routing, return all requests to React app
   app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, './client/build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 }
 
