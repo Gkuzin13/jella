@@ -26,11 +26,11 @@ const ListForm = ({ lists, handleNewList }) => {
     return (
       <motion.div
         key='button'
-        transition={{ duration: 0.2 }}
-        initial={{ y: 5, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className='cursor-pointer flex flex-shrink-0 bg-gray-100 
-        shadow-md w-72 p-1.5 mx-1.5 rounded-sm text-gray-600 hover:bg-opacity-100 
+        transition={{ duration: 0.3 }}
+        initial={{ scale: 0.98, opacity: 0.9 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className='cursor-pointer flex flex-shrink-0 bg-gray-50 
+        shadow-md w-72 p-1.5 mx-1.5 rounded-sm text-gray-600 hover:bg-gray-100
         transition-colors duration-150'>
         <button
           onClick={() => setListForm(true)}
@@ -46,8 +46,8 @@ const ListForm = ({ lists, handleNewList }) => {
   return (
     <motion.div
       key='form'
-      transition={{ duration: 0.2 }}
-      initial={{ y: -5, opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      initial={{ y: -5, opacity: 0.8 }}
       animate={{ y: 0, opacity: 1 }}
       className='cursor-pointer flex flex-col flex-shrink-0 bg-gray-100
       shadow-md w-72 p-1.5 mx-1.5 rounded-sm '>

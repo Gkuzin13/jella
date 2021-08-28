@@ -73,8 +73,8 @@ const Home = ({ user }) => {
   }
 
   return (
-    <div>
-      <div className='bg-main absolute h-full w-full -z-10'></div>
+    <div className='overflow-hidden'>
+      <div className='bg-homePage absolute h-full w-full -z-10'></div>
       <AnimatePresence>
         {confirmBox.isOpen && (
           <ConfirmBox

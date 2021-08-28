@@ -45,7 +45,7 @@ const List = ({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className='flex flex-col flex-shrink-0 bg-gray-100 bg-opacity-90 shadow-md 
+          className='flex flex-col flex-shrink-0 bg-gray-100 bg-opacity-90 shadow-lg 
           w-72 mr-4 rounded-sm'>
           <div
             className={`flex justify-between items-center py-1 px-2 
