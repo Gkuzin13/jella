@@ -11,14 +11,12 @@ import { AnimatePresence } from 'framer-motion';
 const Home = ({ user }) => {
   const [userBoards, setUserBoards] = useState([]);
   const [confirmBox, setConfirmBox] = useState({ id: null, isOpen: false });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const history = useHistory();
 
   useEffect(() => {
     (async () => {
-      setIsLoading(true);
-
       try {
         const { data } = await boardApi.getAll(user.id);
 

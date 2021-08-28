@@ -17,22 +17,22 @@ const BoardNav = ({ boardData, user, setBoardData }) => {
 
   const titleStyle = {
     style:
-      'font-bold text-gray-800 bg-transparent w-full px-0.5 mx-1.5 focus:outline-blue text-xl cursor-pointer',
+      'font-bold text-white bg-transparent w-full px-0.5 mx-1.5 focus:outline-blue text-xl cursor-pointer',
   };
 
   return (
-    <div className='bg-white bg-opacity-90 flex justify-between items-center py-3.5 px-6 mb-4 shadow'>
+    <div className='bg-gray-500 flex justify-between items-center py-3 px-6 mb-4 shadow'>
       <div className='flex items-center text-xl font-bold'>
         <Link
           to={`/${user.username}/boards`}
           aria-label='Back to home'
-          className='flex items-center opacity-90 px-1 py-0.5 mr-0.5 text-gray-400 hover:text-gray-600 transition-colors 
+          className='flex items-center opacity-90 px-1 py-0.5 mr-0.5 text-gray-200 hover:text-gray-50 transition-colors 
           duration-100'>
           <span className='material-icons-outlined mr-1'>home</span>
           Boards
         </Link>
 
-        <span className='text-gray-400'> / </span>
+        <span className='text-gray-200'> / </span>
 
         <EditableText
           style={titleStyle.style}
