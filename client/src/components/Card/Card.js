@@ -7,6 +7,8 @@ const Card = ({ cardData, toggleCardBox, index }) => {
   const priorityIcon = getPriorityIcon(cardData.priority);
   const progressColor = getProgressColor(total, done);
 
+  const priorityColor = `text-${priorityIcon.color}-500`;
+
   return (
     <Draggable draggableId={cardData._id} index={index}>
       {(provided) => (
@@ -47,7 +49,7 @@ const Card = ({ cardData, toggleCardBox, index }) => {
 
               <span
                 title='Card priority'
-                className={`material-icons mb-2.5 mr-3 ml-auto text-${priorityIcon.color}-500`}>
+                className={`material-icons mb-2.5 mr-3 ml-auto ${priorityColor}`}>
                 {priorityIcon.icon}
               </span>
             </div>

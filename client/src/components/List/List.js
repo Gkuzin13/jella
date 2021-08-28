@@ -36,6 +36,8 @@ const List = ({
       'font-medium bg-transparent focus:bg-white focus:text-black text-white p-1 px-2 focus:outline-none break-words',
   };
 
+  const coverColor = `bg-${listData.coverColor}-600`;
+
   return (
     <Draggable draggableId={listData?._id} index={index}>
       {(provided, snapshot) => (
@@ -47,7 +49,7 @@ const List = ({
           w-72 mr-4 rounded-sm'>
           <div
             className={`flex justify-between items-center py-1 px-2 
-            bg-${listData.coverColor}-600 rounded-t-sm rounded-b-none`}>
+            rounded-t-sm rounded-b-none ${coverColor}`}>
             <EditableText
               style={titleStyle.style}
               dataText={listData.listTitle}

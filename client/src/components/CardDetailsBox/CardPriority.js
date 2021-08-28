@@ -5,6 +5,7 @@ const CardPriority = ({ handleCardUpdate, selectedCard }) => {
   const [priority, setPriority] = useState(selectedCard.priority);
 
   const priorityIcon = getPriorityIcon(priority);
+  const priorityColor = `text-${priorityIcon.color}-500`;
 
   const handleValueChange = async (e) => {
     const newPriority = e.target.value;
@@ -38,8 +39,7 @@ const CardPriority = ({ handleCardUpdate, selectedCard }) => {
           </option>
         </select>
         <div className='flex items-center'>
-          <span
-            className={`material-icons ml-5 text-${priorityIcon.color}-500`}>
+          <span className={`material-icons ml-5 ${priorityColor}`}>
             {priorityIcon.icon}
           </span>
         </div>
