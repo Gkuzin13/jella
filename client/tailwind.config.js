@@ -1,10 +1,10 @@
 module.exports = {
-  purge: [
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-    './utils/**/*.{js,ts,jsx,tsx}',
-    './build/index.html',
-  ],
+  purge: {
+    content: ['./src/**/*.{js,jsx}', './public/**/*.html'],
+    options: {
+      safelist: [/^bg-/, /^text-/],
+    },
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
