@@ -16,7 +16,7 @@ exports.card_get = async (req, res) => {
 
 // Handle create card on post
 exports.create_card_post = [
-  body('cardTitle', 'Title must not be empty').isLength({ min: 1, max: 40 }),
+  body('cardTitle', 'Title must not be empty').isLength({ min: 1 }),
   body('position', 'Card position must be a number').isNumeric(),
 
   async (req, res) => {
@@ -44,11 +44,12 @@ exports.create_card_post = [
 
 // Handle card update on PUT
 exports.update_card_put = [
-  body('cardTitle', 'Title must not be empty').isLength({ min: 1, max: 40 }),
+  body('cardTitle', 'Title must not be empty').isLength({ min: 1 }),
   body('position', 'Card position must be a number').isNumeric(),
   body('priority', 'Title must not be empty').isString(),
 
   async (req, res) => {
+    console.log(req.body.cardTitle);
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -57,6 +58,7 @@ exports.update_card_put = [
 
     try {
       const newPos = req.body.position;
+
       const updatedCard = await Card.findByIdAndUpdate(
         req.params.id,
         {
@@ -90,7 +92,7 @@ exports.update_card_put = [
 // Handle card delete on DELETE
 exports.card_delete = async (req, res) => {
   try {
-    await Card.findByIdAndRemove(req.params.id);
+    await Card.findByIdAndDelete(req.params.id);
 
     res.sendStatus(200);
   } catch (error) {

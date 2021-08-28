@@ -6,7 +6,7 @@ const isTooClose = require('../utils/isTooClose');
 exports.create_subtask_post = [
   body('taskName', 'Subtask name must not be empty.').isLength({
     min: 1,
-    max: 40,
+    max: 64,
   }),
 
   async (req, res) => {
