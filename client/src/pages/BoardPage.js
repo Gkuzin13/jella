@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { AnimatePresence } from 'framer-motion';
 import listReducer from '../reducers/listReducer';
@@ -21,6 +21,7 @@ const BoardPage = ({ user }) => {
   const [cards, dispatchCards] = useReducer(cardReducer, []);
   const [cardBox, setCardBox] = useState({ cardId: null, isOpen: false });
 
+  const history = useHistory();
   const { id } = useParams();
 
   useEffect(() => {
@@ -37,8 +38,13 @@ const BoardPage = ({ user }) => {
           type: ACTIONS.SET_CARDS,
           payload: data.cards,
         });
+
+        if (!data._id) {
+          history.push('/notfound');
+        }
       } catch (error) {
         console.log(error);
+        history.push('/notfound');
       }
     })();
 
@@ -53,7 +59,7 @@ const BoardPage = ({ user }) => {
         payload: [],
       });
     };
-  }, [id]);
+  }, [id, history]);
 
   const toggleCardBox = (cardId, isOpen) => {
     setCardBox({ cardId, isOpen });

@@ -37,7 +37,7 @@ const List = ({
   };
 
   return (
-    <Draggable draggableId={listData._id} index={index}>
+    <Draggable draggableId={listData?._id} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}

@@ -25,19 +25,19 @@ function App() {
           <LandingPage />
         </PublicRoute>
 
-        <PublicRoute path='/login'>
+        <PublicRoute exact path='/login'>
           <LoginPage />
         </PublicRoute>
 
-        <PublicRoute path='/signup'>
+        <PublicRoute exact path='/signup'>
           <SignupPage />
         </PublicRoute>
 
-        <PrivateRoute path='/:username/boards'>
+        <PrivateRoute exact path='/:username/boards'>
           <Home user={user} />
         </PrivateRoute>
 
-        <PrivateRoute path='/b/:id/:boardTitle'>
+        <PrivateRoute exact path='/b/:id/:boardTitle'>
           <BoardPage user={user} />
         </PrivateRoute>
 
