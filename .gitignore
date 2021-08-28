@@ -6,7 +6,7 @@ build
 node_modules
 /.pnp
 .pnp.js
-globalConfig.json
+globalconfig
 
 # testing
 /coverage
