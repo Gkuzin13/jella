@@ -22,7 +22,6 @@ const LandingPage = () => {
         email: `${Types.ObjectId().toHexString()}@mail.com`,
         password: '123456781',
       });
-      console.log(data);
 
       if (!data) {
         setIsLoading(false);
