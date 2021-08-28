@@ -43,13 +43,14 @@ const ListOptionsBox = ({
         <span className='self-start text text-gray-500'>Cover Color:</span>
         <ul className='flex items-center justify-between w-full mt-1 mb-5'>
           {colors.map((col) => {
+            const colorStyle = `bg-${col}-600`;
             return (
               <li
                 key={col}
                 role='button'
                 aria-label={`Select ${col} list cover color`}
                 onClick={() => onListColorChange(col)}
-                className={`w-9 h-7 text-center rounded-sm bg-${col}-600 bg-opacity-90 hover:bg-opacity-100 
+                className={`${colorStyle} w-9 h-7 text-center rounded-sm  bg-opacity-90 hover:bg-opacity-100 
                transition-colors transform duration-75 ease-linear`}>
                 {col === coverColor && (
                   <span className='material-icons-outlined text-xl text-white'>

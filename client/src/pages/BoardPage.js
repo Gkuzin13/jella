@@ -133,7 +133,7 @@ const BoardPage = ({ user }) => {
           />
         )}
       </AnimatePresence>
-      <div className='bg-main absolute w-full h-screen -z-10'></div>
+      <div className='bg-boardPage absolute w-full h-screen -z-10'></div>
 
       <BoardNav user={user} boardData={boardData} setBoardData={setBoardData} />
 

@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './src/**/*.html'],
+  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -8,6 +8,8 @@ module.exports = {
       },
       backgroundImage: (theme) => ({
         main: 'linear-gradient( 75.2deg, rgb(25, 87 ,232 , 0.15) -2.5%, rgb(222, 100, 29 , 0.025) 55%, rgb(0 ,90 ,255 , 0.05) 102.3% )',
+        boardPage:
+          'linear-gradient( 75.2deg, rgb(137,154,193, 50%) -2.5%, rgb(107,120,150, 30%) 55%, rgb(131,142,173, 50%) 102.3% )',
         board:
           'radial-gradient( circle farthest-corner at 7.5% 24%,  rgba(237,161,193,0.075) 0%, rgba(250,178,172,0.075) 25.5%, rgba(190,228,210,0.075) 62.3%, rgba(215,248,247,0.075) 93.8% )',
       }),
