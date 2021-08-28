@@ -2,30 +2,29 @@ const Board = require('../models/board');
 const List = require('../models/list');
 const Card = require('../models/card');
 const Subtask = require('../models/subtask');
-const mongoose = require('mongoose');
+const { Types } = require('mongoose');
 const { body, validationResult } = require('express-validator');
 
 // Get all user's boards
 exports.get_user_boards = async (req, res) => {
   try {
-    await Board.find({ creatorId: req.params.userId }, (err, data) => {
-      if (err) {
-        return res.send(err);
-      }
-      res.send(data);
-    });
+    const userId = Types.ObjectId(req.user.id);
+    const boards = await Board.find({ creatorId: userId });
+
+    res.send(boards);
   } catch (error) {
-    res.send(error);
+    res.sendStatus(404);
   }
 };
 
 // Get selected board lists, cards and subtasks on GET
 exports.board_get = async (req, res) => {
   try {
-    const boardId = mongoose.Types.ObjectId(req.params.id);
+    const boardId = Types.ObjectId(req.params.id);
+
     const board = await Board.aggregate([
       {
-        $match: { _id: boardId },
+        $match: { _id: boardId, creatorId: req.user.id },
       },
       {
         $lookup: {
@@ -59,9 +58,13 @@ exports.board_get = async (req, res) => {
       },
     ]);
 
+    if (!board.length) {
+      return res.sendStatus(404);
+    }
+
     res.send(...board);
   } catch (error) {
-    res.send(error);
+    res.sendStatus(404);
   }
 };
 
@@ -93,16 +96,25 @@ exports.create_board_post = [
 
 // Handle board delete on DELETE
 exports.board_delete = async (req, res) => {
-  const boardId = req.params.id;
   try {
-    await Board.findByIdAndDelete(boardId);
+    const boardId = req.params.id;
+
+    const deletedBoard = await Board.findOneAndDelete({
+      _id: boardId,
+      creatorId: req.user.id,
+    });
+
+    if (!deletedBoard) {
+      return res.sendStatus(404);
+    }
+
     await List.deleteMany({ boardId });
     await Card.deleteMany({ boardId });
     await Subtask.deleteMany({ boardId });
 
     res.sendStatus(200);
   } catch (error) {
-    res.send(error);
+    console.log(error);
   }
 };
 
@@ -120,8 +132,9 @@ exports.update_board_patch = [
 
     // Save updated board to db
     try {
-      const updatedBoard = await Board.findByIdAndUpdate(
-        req.params.id,
+      const boardId = req.params.id;
+      const updatedBoard = await Board.findOneAndUpdate(
+        { _id: boardId, creatorId: req.user.id },
         {
           boardTitle: req.body.boardTitle,
         },
@@ -129,6 +142,10 @@ exports.update_board_patch = [
           new: true,
         }
       );
+
+      if (!updatedBoard) {
+        return res.sendStatus(404);
+      }
 
       res.send(updatedBoard);
     } catch (error) {
