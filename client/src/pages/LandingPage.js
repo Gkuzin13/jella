@@ -44,9 +44,9 @@ const LandingPage = () => {
   };
 
   return (
-    <div className='max-h-screen'>
+    <div>
       <div className='bg-main w-full h-full -z-10 fixed top-0'></div>
-      <div className='flex justify-between items-center lg:pb-16 pt-4 px-8 lg:px-24'>
+      <div className='flex justify-between items-center lg:pb-16 md:pt-6 pt-4 px-8 lg:px-24'>
         <a href='/' className='font-bold text-4xl text-blue-900'>
           Jella
         </a>
@@ -66,30 +66,37 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <div className='flex flex-col items-center justify-center md:my-10 mx-auto w-11/12 md:w-4/5 md:flex-row'>
-        <div className='md:w-11/12 pt-12 pb-8'>
+      <div className='flex flex-col items-center justify-center my-0 mx-auto w-11/12 px-2 md:flex-row'>
+        <div className='md:w-11/12 pt-12 pb-8 md:px-16'>
           <h1 className='text-4xl lg:text-5xl md:mb-6 text-gray-800 font-bold h-full leading-tight text-center lg:text-left'>
             Easily build your <strong className='text-gray-900'>Kanban </strong>
             board within minutes.
           </h1>
           <p className='text-2xl mt-2 text-center text-gray-900 md:text-left'>
-            Track your projects, and reach new productivity peaks. From high
-            rises to the home office, the way you work is unique—accomplish it
-            all with Jella.
+            Complete your tasks, track your projects. From high rises to the
+            home office, the way you work is unique—accomplish it all with
+            Jella.
           </p>
           <div className='mt-8 mb-2 flex items-center text-center text-xl'>
             <button
               onClick={() => handleGuestLogin()}
               aria-label='Continue as a guest user button'
-              className='bg-blue-600 text-white py-3 px-8 shadow font-medium
-              rounded-sm hover:bg-blue-700 transition-colors duration-150 w-full h-14 lg:w-1/2 whitespace-nowrap'>
-              {isLoading ? <MiniLoader color={true} /> : 'Continue as Guest'}
+              className='bg-white bg-opacity-70 text-green-600 border border-green-600 py-3 px-8 shadow font-medium
+              rounded-sm hover:bg-opacity-90 transition-colors duration-150 w-full h-14 lg:w-1/2 whitespace-nowrap'>
+              {isLoading ? (
+                <MiniLoader />
+              ) : (
+                <div className='flex items-center justify-center'>
+                  <span>Try it out</span>
+                  <span className='material-icons-outlined ml-2'>forward</span>
+                </div>
+              )}
             </button>
           </div>
           {errorMsg && <p className='text-red-600'>{errorMsg}</p>}
         </div>
 
-        <div className='w-full h-full md:min-w-max md:pb-12 md:pl-16 lg:pl-32'>
+        <div className='w-full h-full md:ml-4'>
           <BoardImg alt='People plan on board' width='100%' height='100%' />
         </div>
       </div>

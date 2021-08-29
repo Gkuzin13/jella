@@ -121,7 +121,7 @@ const BoardPage = ({ user }) => {
   }
 
   return (
-    <div className=' h-screen flex flex-col'>
+    <div className='h-screen flex flex-col'>
       <AnimatePresence>
         {!cardBox.isOpen ? null : (
           <CardDetailsBox
