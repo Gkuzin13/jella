@@ -48,7 +48,7 @@ const BoardForm = ({ handleNewBoard }) => {
           </span>
           Create new board
         </button>
-        <p>Visually manage and organize your work.</p>
+        <p className='text-gray-600'>Visually manage and organize your work.</p>
       </div>
 
       <AnimatePresence>

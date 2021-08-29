@@ -85,7 +85,7 @@ const Home = ({ user }) => {
         )}
       </AnimatePresence>
 
-      <div className='flex items-center bg-white justify-between mb-8 px-6 py-3 lg:px-12 shadow-sm'>
+      <div className='flex items-center bg-white justify-between mb-8 px-6 py-3 md:px-16 shadow-sm'>
         <h1 className='font-bold text-3xl text-blue-900'>Jella</h1>
         <UserControl user={user} />
       </div>
