@@ -39,7 +39,7 @@ describe('App', () => {
 
     renderWithRouter(null, history);
 
-    expect(screen.getByText(/Continue as Guest/)).toBeInTheDocument();
+    expect(screen.getByText(/Try It Out/)).toBeInTheDocument();
 
     userEvent.click(screen.getByText(/Log In/));
 
@@ -51,7 +51,7 @@ describe('App', () => {
 
     renderWithRouter(null, history);
 
-    expect(screen.getByText(/Continue as Guest/)).toBeInTheDocument();
+    expect(screen.getByText(/Try It Out/)).toBeInTheDocument();
 
     userEvent.click(screen.getByText(/Sign Up/));
 
