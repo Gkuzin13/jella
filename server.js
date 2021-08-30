@@ -38,10 +38,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.use(homeRouter);
-app.use(boardRouter);
-app.use(listRouter);
-app.use(cardRouter);
+app.use('/api/auth', homeRouter);
+app.use('/api', boardRouter);
+app.use('/api', listRouter);
+app.use('/api', cardRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
