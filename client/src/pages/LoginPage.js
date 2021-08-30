@@ -19,7 +19,7 @@ const LoginPage = () => {
       setError(null);
       setLoading(true);
 
-      const { data } = await api.post('/login', {
+      const { data } = await api.post('auth/login', {
         email: email.value,
         password: password.value,
       });

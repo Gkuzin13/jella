@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await api.get('/user');
+        const { data } = await api.get('auth/user');
 
         setUser(() => data);
 

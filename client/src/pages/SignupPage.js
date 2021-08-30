@@ -22,7 +22,7 @@ const SignupPage = () => {
       setLoading(true);
       setError(null);
 
-      const { data } = await api.post('/signup', {
+      const { data } = await api.post('auth/signup', {
         email: email.value,
         username: username.value,
         password: password.value,

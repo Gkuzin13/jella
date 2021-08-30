@@ -18,7 +18,7 @@ const LandingPage = () => {
     setIsLoading(true);
 
     try {
-      const { data } = await api.post('/login/guest', {
+      const { data } = await api.post('auth/login/guest', {
         email: `${Types.ObjectId().toHexString()}@mail.com`,
         password: '123456781',
       });
@@ -68,12 +68,12 @@ const LandingPage = () => {
 
       <div className='flex flex-col items-center justify-center my-0 mx-auto w-11/12 px-2 md:flex-row'>
         <div className='md:w-11/12 pt-12 pb-8 md:px-16'>
-          <h1 className='text-5xl lg:text-6xl md:mb-6 text-gray-800 font-bold h-full leading-tight text-center lg:text-left'>
+          <h1 className='text-5xl lg:text-6xl md:mb-2 text-gray-800 font-bold h-full text-center lg:text-left'>
             Easily build your <strong className='text-gray-900'>Kanban </strong>
             board within minutes.
           </h1>
-          <p className='text-2xl mt-2 text-center text-gray-600 md:text-left'>
-            Plan, organize and track your dream projects and everyday tasks.
+          <p className='text-2xl mt-1 text-center text-gray-600 md:text-left'>
+            Plan, track and organize your dream projects or everyday tasks.
           </p>
           <div className='mt-8 mb-2 flex items-center text-center text-xl'>
             <button
