@@ -63,7 +63,7 @@ html {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: rgb(180, 180, 180);
+  background-color: rgb(143, 150, 165);
   border-radius: 2px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
