@@ -45,8 +45,7 @@ const CardDetailsBox = ({
   };
 
   const titleStyle = {
-    style:
-      'font-medium bg-transparent w-full px-2 resize-none focus:outline-blue text-xl cursor-text',
+    style: 'font-medium px-2 focus:outline-blue text-xl',
   };
 
   return (

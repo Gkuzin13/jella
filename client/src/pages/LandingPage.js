@@ -66,13 +66,13 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <div className='flex flex-col items-center justify-center my-0 mx-auto w-11/12 px-2 md:flex-row'>
-        <div className='md:w-11/12 pt-12 pb-8 md:px-16'>
+      <div className='flex flex-col items-center justify-center my-0 mx-auto w-11/12 px-2 lg:flex-row'>
+        <div className='md:w-11/12 pt-12 pb-8 md:px-16  '>
           <h1 className='text-5xl lg:text-6xl md:mb-2 text-gray-800 font-bold h-full text-center lg:text-left'>
             Easily build your <strong className='text-gray-900'>Kanban </strong>
             board within minutes.
           </h1>
-          <p className='text-2xl mt-1 text-center text-gray-600 md:text-left'>
+          <p className='text-2xl mt-1 text-center text-gray-600 lg:text-left'>
             Plan, track and organize your dream projects or everyday tasks.
           </p>
           <div className='mt-8 mb-2 flex items-center text-center text-xl'>
@@ -94,7 +94,7 @@ const LandingPage = () => {
           {errorMsg && <p className='text-red-600'>{errorMsg}</p>}
         </div>
 
-        <div className='w-full h-full md:ml-4'>
+        <div className='w-full h-full lg:ml-4 '>
           <BoardImg alt='People plan on board' width='100%' height='100%' />
         </div>
       </div>

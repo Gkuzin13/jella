@@ -16,8 +16,7 @@ const BoardNav = ({ boardData, user, setBoardData }) => {
   };
 
   const titleStyle = {
-    style:
-      'font-bold text-gray-800 bg-transparent w-full px-0.5 mx-1.5 focus:outline-blue text-xl cursor-pointer',
+    style: 'font-bold text-gray-800 px-0.5 mx-1.5 focus:outline-blue text-xl',
   };
 
   return (

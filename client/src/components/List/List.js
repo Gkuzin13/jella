@@ -33,7 +33,7 @@ const List = ({
 
   const titleStyle = {
     style:
-      'font-medium bg-transparent focus:bg-white focus:text-black text-white p-1 px-2 focus:outline-none break-words',
+      'font-medium focus:bg-white focus:text-black text-white p-0.5 mx-0.5 focus:outline-none',
   };
 
   const coverColor = `bg-${listData.coverColor}-600`;
@@ -48,14 +48,14 @@ const List = ({
           className='flex flex-col flex-shrink-0 bg-gray-100 bg-opacity-90 shadow-lg 
           w-72 mr-4 rounded-sm'>
           <div
-            className={`flex justify-between items-center py-1 px-2 
-            rounded-t-sm rounded-b-none ${coverColor}`}>
+            className={`flex justify-between items-center py-1.5 px-2 rounded-t-sm 
+            rounded-b-none ${coverColor}`}>
             <EditableText
               style={titleStyle.style}
               dataText={listData.listTitle}
               dataUpdateFunc={handleTitleUpdate}
             />
-            <div>
+            <div className='self-start'>
               <button
                 aria-label='Open list options'
                 onClick={() => setlistOptionsBox(!listOptionsBox)}
