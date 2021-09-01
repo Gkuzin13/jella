@@ -13,7 +13,7 @@
   </p>
 </p>
 
-<img src="https://github.com/Halmesn/Hotflix/blob/main/public/images/readme/hotflix.gif" alt="Hotflix main page">
+<img src="" alt="">
 
 <h2 style="display: inline-block">Table of Contents</h2>
 <ol>
