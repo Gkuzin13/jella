@@ -13,7 +13,7 @@
   </p>
 </p>
 
-<img src="../assets/jella-main.gif" alt="Board in action GIF" width="500" height="600">
+<img src="../assets/jella-main.gif" alt="Board in action GIF">
 
 <h2 style="display: inline-block">Table of Contents</h2>
 <ol>
