@@ -11,7 +11,7 @@ const bgMotion = {
   },
   hover: {
     transition: {
-      duration: 0.1,
+      duration: 0.2,
     },
     opacity: 0.9,
     x: 0,
@@ -45,8 +45,8 @@ const HomeBoards = ({ boards, setConfirmBox }) => {
           return (
             <div
               key={board._id}
-              className='bg-white flex justify-between w-full cursor-pointer text-gray-800 mb-5 hover:shadow-md hover:text-black
-            transform-gpu rounded-sm transition-all duration-150 shadow'>
+              className='bg-white flex justify-between w-full cursor-pointer text-gray-800 mb-5 hover:shadow-lg hover:text-black
+            transform-gpu rounded-sm transition-all duration-200 shadow'>
               <Link
                 to={`/b/${board._id}/${board.boardTitle}`}
                 className='py-2.5 px-4 mr-1 font-medium w-full'
