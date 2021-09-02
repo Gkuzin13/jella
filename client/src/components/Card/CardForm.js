@@ -8,10 +8,18 @@ const CardForm = ({ handleNewCard }) => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
+    if (!cardTitle.length) return;
+
     handleNewCard(cardTitle);
 
     setCardForm(false);
     setCardTitle('');
+  };
+
+  const handleEnterKey = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      handleOnSubmit(e);
+    }
   };
 
   const handleOnChange = (e) => {
@@ -30,11 +38,11 @@ const CardForm = ({ handleNewCard }) => {
         transition={{ duration: 0.1 }}
         initial={{ y: -3, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className='text-gray-600 bg-gray-200 rounded-sm mx-2.5 mt-2.5 mb-1'>
+        className='text-gray-600  rounded-sm mx-2.5 mt-2.5 mb-1'>
         <button
           onClick={() => setCardForm(true)}
-          className='flex items-center w-full font-medium hover:bg-gray-200 
-          hover:text-gray-700 p-1.5 px-2 transition-colors duration-150'>
+          className='flex items-center w-full font-medium bg-gray-300 bg-opacity-60 hover:bg-opacity-100 
+          p-1.5 px-2 transition-colors duration-150'>
           <span className='material-icons mr-1'>add</span>
           <span>Add a card</span>
         </button>
@@ -55,11 +63,11 @@ const CardForm = ({ handleNewCard }) => {
         <textarea
           value={cardTitle}
           onChange={(e) => handleOnChange(e)}
+          onKeyPress={handleEnterKey}
           autoFocus
           maxLength='40'
           placeholder='Enter a title for this card...'
           className='resize-none p-1.5 w-full rounded-sm shadow focus:outline-blue'
-          required
         />
         <div className='flex items-center mt-1'>
           <button
@@ -68,16 +76,14 @@ const CardForm = ({ handleNewCard }) => {
             font-medium shadow-sm transition-colors duration-150'>
             Add card
           </button>
-          <button
-            type='button'
-            className='flex items-center ml-1'
-            onClick={() => handleFormClose()}>
-            <span
-              className='material-icons-outlined text-2xl text-gray-500 
-            cursor-pointer ml-2 hover:text-gray-700'>
-              close
-            </span>
-          </button>
+
+          <span
+            role='button'
+            onClick={() => handleFormClose()}
+            className='material-icons-outlined text-2xl text-gray-500 
+            cursor-pointer ml-2.5 hover:text-gray-700'>
+            close
+          </span>
         </div>
       </form>
     </motion.div>
