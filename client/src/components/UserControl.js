@@ -56,13 +56,13 @@ const UserControl = () => {
               <span className=' text-blue-600 mt-0.5 text-lg'>
                 Hello, {user.username}
               </span>
-              <button
+              <span
+                role='button'
                 onClick={() => setDropdown(false)}
-                className='flex text-gray-500 hover:text-gray-800 absolute left-32 px-4 p-2 transition-colors 
-                duration-150'
-                type='button'>
-                <span className='material-icons'>close</span>
-              </button>
+                className='material-icons text-gray-500 hover:text-gray-800 absolute left-32 pl-6 p-2 transition-colors 
+                duration-150'>
+                close
+              </span>
             </div>
             <div className='w-full h-0.5 bg-gray-100 mb-3'></div>
 
@@ -70,8 +70,8 @@ const UserControl = () => {
               onClick={() => {
                 handleLogout();
               }}
-              className='flex items-center w-full font-medium bg-gray-50 text-gray-400 hover:text-blue-600 
-              px-2.5 py-1.5 transition-colors duration-150 rounded-sm'>
+              className='flex items-center w-full font-medium bg-gray-100 text-gray-500 
+              hover:bg-gray-200 px-2.5 py-1.5 transition-colors duration-150 rounded-sm'>
               <span>Log Out</span>
             </button>
           </motion.div>
