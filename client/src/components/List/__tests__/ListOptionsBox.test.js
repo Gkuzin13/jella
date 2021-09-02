@@ -16,7 +16,7 @@ describe('ListActionsBox', () => {
     const toggleOptionsBox = jest.fn();
     render(<ListOptionsBox {...props} toggleOptionsBox={toggleOptionsBox} />);
 
-    fireEvent.click(screen.getByText(/close/).closest('button'));
+    fireEvent.click(screen.getByRole('button', { name: 'close' }));
 
     expect(toggleOptionsBox).toBeCalledTimes(1);
   });
