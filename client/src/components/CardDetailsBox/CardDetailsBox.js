@@ -65,14 +65,13 @@ const CardDetailsBox = ({
         <div
           className='flex flex-col justify-between relative p-6 w-11/12 lg:w-2/4 lg:px-10 
         bg-white shadow-2xl'>
-          <button
-            className='flex items-center absolute right-0 top-0 m-4 hover:bg-gray-100 group 
-            transition-colors duration-150 p-1.5 mb-2'
-            onClick={() => toggleCardBox()}>
-            <span className='material-icons text-gray-500 group-hover:text-gray-600'>
-              close
-            </span>
-          </button>
+          <span
+            role='button'
+            onClick={() => toggleCardBox()}
+            className='material-icons text-gray-500 absolute right-0 top-0 m-4 hover:bg-gray-100 
+            transition-colors duration-150 p-1.5 mb-2'>
+            close
+          </span>
 
           <div className='flex items-start w-full mb-6 mt-8'>
             <span className='material-icons-outlined mr-1'>video_label</span>
@@ -102,11 +101,11 @@ const CardDetailsBox = ({
           />
           <CardDate selectedCard={selectedCard} />
 
-          <div className='self-end py-2 mt-6'>
+          <div className='self-end py-3 mt-6'>
             <button
               onClick={() => handleCardDelete()}
               className='bg-gray-100 text-gray-500 hover:text-red-600 
-              font-medium px-3 py-1 shadow rounded-sm transition-colors duration-75'>
+              font-medium px-3 py-1 shadow-sm rounded-sm transition-colors duration-150'>
               Delete Card
             </button>
           </div>
