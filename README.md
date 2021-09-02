@@ -5,7 +5,7 @@
     <strong>A Kanban board project management tool</strong>
       <br />
       <br />
-    <a href="https://jella-app.herokuapp.com/"><strong>View Demo</strong></a>
+    <a href="https://jella-app.herokuapp.com/"><strong>🚀  View Demo</strong></a>
     ·
     <a href="https://github.com/Gkuzin13/jella/issues">Report Bug</a>
     ·
@@ -31,7 +31,6 @@
       <li><a href="#installation">Installation</a></li>
     </ul>
   </li>
-  <li><a href="#usage">Usage</a></li>
 </ol>
 
 ## About The Project
