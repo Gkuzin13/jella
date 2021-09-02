@@ -13,7 +13,7 @@
   </p>
 </p>
 
-<img src="../assets/jella-main.gif" alt="Board in action GIF">
+<img src="https://github.com/Gkuzin13/jella/blob/assets/jella-main.gif" alt="Jella board page">
 
 <h2 style="display: inline-block">Table of Contents</h2>
 <ol>
@@ -69,7 +69,7 @@ npm install npm@latest -g
    ```sh
    git clone https://github.com/Gkuzin13/jella.git
    ```
-2. Install Dependencies (Client & Server)
+2. Install Dependencies (client & server)
    ```sh
    npm install
    cd client
@@ -77,6 +77,7 @@ npm install npm@latest -g
    ```
 3. Set Env Variables
    ```sh
+   # Create a .env file in root folder and add the following
    MONGODB_URI=mongodb://127.0.0.1:27017/localjella
    SESSION_SECRET=abc123
    ```
@@ -84,15 +85,9 @@ npm install npm@latest -g
 ### Run
 
 ```sh
-node server
-cd client
+# Run client (:3000)
 npm start
+
+# Run server (:5000)
+node server
 ```
-
-<!-- USAGE EXAMPLES -->
-
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
