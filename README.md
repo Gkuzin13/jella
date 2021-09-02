@@ -2,7 +2,7 @@
 <p align="center">
   <h1 align="center">Jella</h1>
   <p align="center">
-    <strong>A Kanban Board Planner</strong>
+    <strong>A Kanban board project management tool</strong>
       <br />
       <br />
     <a href="https://jella-app.herokuapp.com/"><strong>View Demo</strong></a>
