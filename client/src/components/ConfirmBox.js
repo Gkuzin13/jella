@@ -60,7 +60,7 @@ const ConfirmBox = ({ handleFunc, setConfirmBox, confirmBox }) => {
             <button
               onClick={() => handleConfirm()}
               type='button'
-              className='bg-gray-100 hover:bg-red-100 text-red-600 px-4 py-2 mt-5 font-medium 
+              className='bg-gray-100 hover:bg-red-600 hover:text-white text-red-600 px-4 py-2 mt-5 font-medium 
                 w-full shadow-sm transition-colors duration-150'>
               {isLoading ? <MiniLoader /> : "Yes, i'm sure"}
             </button>

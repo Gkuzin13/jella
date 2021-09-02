@@ -34,21 +34,23 @@ const BoardForm = ({ handleNewBoard }) => {
   };
 
   return (
-    <div className='whitespace-nowrap pb-8 px-4'>
+    <div className='whitespace-nowrap pb-16 md:pl-24 mx-4'>
       <div className='flex flex-col leading-relaxed text-center'>
         <button
           onClick={() => setBoardForm(true)}
-          className='flex items-center justify-center text-2xl border bg-white text-green-600 
-          border-green-600 shadow px-4 py-2 mb-1 hover:bg-gray-50 
-          transition-colors duration-100'>
+          className='flex items-center justify-center text-2xl bg-green-600 text-white 
+          shadow px-6 py-3 mb-2 bg-opacity-90 hover:bg-opacity-100 hover:shadow-md
+          transition-all duration-300'>
           <span
             aria-label='Create new board'
-            className='material-icons-outlined mr-2'>
+            className='material-icons-outlined mr-3'>
             dashboard_customize
           </span>
           Create new board
         </button>
-        <p className='text-gray-600'>Visually manage and organize your work.</p>
+        <p className='text-gray-500 text-center'>
+          Visually manage and organize your work.
+        </p>
       </div>
 
       <AnimatePresence>

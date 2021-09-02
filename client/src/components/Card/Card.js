@@ -24,7 +24,7 @@ const Card = ({ cardData, toggleCardBox, index }) => {
             <span className='font-medium text-gray-900 break-words px-3 pt-2.5'>
               {cardData.cardTitle}
             </span>
-            <div className='flex items-center justify-start w-full pt-2'>
+            <div className='flex items-center justify-start w-full mt-2'>
               {total === 0 ? null : (
                 <div
                   title='Checklist items'
