@@ -15,7 +15,7 @@ describe('CardDetailsBox', () => {
 
     render(<CardDetailsBox {...props} toggleCardBox={toggleCardBox} />);
 
-    fireEvent.click(screen.getByText(/close/).closest('button'));
+    fireEvent.click(screen.getByRole('button', { name: 'close' }));
 
     expect(toggleCardBox).toBeCalledTimes(1);
   });
