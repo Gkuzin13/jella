@@ -6,10 +6,10 @@ import { AuthContext } from '../config/Auth';
 import api from '../config/axiosConfig';
 
 const SignupPage = () => {
-  const { setUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState(null);
+
+  const { setUser } = useContext(AuthContext);
 
   const history = useHistory();
 
@@ -37,8 +37,6 @@ const SignupPage = () => {
       setLoading(false);
       setUser(() => data);
       history.push(`/${data.username}/boards`);
-
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
