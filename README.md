@@ -2,11 +2,12 @@
 <p align="center">
   <h1 align="center">Jella</h1>
   <p align="center">
-    <strong>A Kanban board project management tool</strong>
+    <strong>A Kanban board web app that allows users to visually plan, track and organize projects they are working on.</strong>
       <br />
       <br />
     <a href="https://jella-app.herokuapp.com/"><strong>🚀  View Demo</strong></a>
-    ·
+    <br/>
+    <br/>
     <a href="https://github.com/Gkuzin13/jella/issues">Report Bug</a>
     ·
     <a href="https://github.com/Gkuzin13/jella/issues">Request Feature</a>
@@ -42,6 +43,9 @@
 - [ExpressJS](https://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
+
+
+Drag and drop functionality for lists, cards and subtasks implemented using [React Beautiful DnD](https://github.com/atlassian/react-beautiful-dnd).
 
 <!-- GETTING STARTED -->
 
@@ -90,3 +94,4 @@ npm start
 # Run server (:5000)
 node server
 ```
+<br />
