@@ -31,7 +31,7 @@ const ConfirmBox = ({ handleFunc, setConfirmBox, confirmBox }) => {
       exit={{ opacity: 0 }}
       className='flex items-center justify-center bg-black bg-opacity-40 
         w-full h-screen z-10 fixed top-0 left-0'>
-      {confirmBox && (
+      {isOpen && (
         <motion.div
           transition={{ duration: 0.075 }}
           initial={{ opacity: 0, scale: 0.9 }}
