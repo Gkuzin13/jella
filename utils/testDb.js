@@ -24,10 +24,12 @@ module.exports.closeDatabase = async () => {
 
 // Clear the db and remove all data
 module.exports.clearDatabase = async () => {
+  await mongoose.connection.dropDatabase();
+
   const collections = mongoose.connection.collections;
 
   for (const key in collections) {
     const collection = collections[key];
-    await collection.deleteMany();
+    await collection.deleteMany({});
   }
 };
