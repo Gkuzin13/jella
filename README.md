@@ -84,14 +84,24 @@ npm install npm@latest -g
    MONGODB_URI=mongodb://127.0.0.1:27017/localjella
    SESSION_SECRET=abc123
    ```
-
 ### Run
-
 ```sh
-# Run client (:3000)
-npm start
-
 # Run server (:5000)
 node server
+
+# Run client (:3000)
+cd client
+npm start
 ```
+
+### Testing
+```sh
+# Run in root folder to test the server
+npm test
+```
+```sh
+# Run in client folder to test react
+npm test
+```
+
 <br />
