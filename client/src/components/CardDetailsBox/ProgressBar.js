@@ -1,7 +1,7 @@
 import { calcPercentage, calcTasksStats } from '../../utils/getProgress';
 
-const ProgressBar = ({ subtasks, cardId }) => {
-  const { total, done } = calcTasksStats(subtasks, cardId);
+const ProgressBar = ({ subtasks }) => {
+  const { total, done } = calcTasksStats(subtasks);
   const completed = calcPercentage(done, total);
 
   if (!total) {
