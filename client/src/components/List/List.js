@@ -20,7 +20,7 @@ const List = ({
   const boxRef = useRef();
 
   useClickOutside(boxRef, listOptionsBox, () => {
-    toggleOptionsBox(!listOptionsBox);
+    toggleOptionsBox();
   });
 
   const toggleOptionsBox = () => {
@@ -39,7 +39,7 @@ const List = ({
   const coverColor = `bg-${listData.coverColor}-600`;
 
   return (
-    <Draggable draggableId={listData?._id} index={index}>
+    <Draggable draggableId={listData._id} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
