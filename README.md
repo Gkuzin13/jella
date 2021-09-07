@@ -40,7 +40,7 @@
 
 - [React](https://reactjs.org/)
 - [Node.js](https://nodejs.dev/)
-- [ExpressJS](https://expressjs.com/)
+- [Express](https://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
 
