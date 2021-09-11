@@ -31,11 +31,13 @@ let sess = {
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false },
+  cookie: { secure: false, httpOnly: false },
 };
 
 if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1); // trust first proxy
   sess.cookie.secure = true; // serve secure cookies
+
   app.use(express.static(path.join(__dirname, 'client/build')));
 
   // Handle React routing, return all requests to React app
