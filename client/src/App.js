@@ -42,7 +42,7 @@ function App() {
         </PrivateRoute>
 
         <Route path='*'>
-          <NotFound user={user} />
+          <NotFound />
         </Route>
       </Switch>
     </>

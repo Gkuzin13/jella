@@ -1,6 +1,10 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../config/Auth';
 
-const NotFound = ({ user }) => {
+const NotFound = () => {
+  const { user } = useContext(AuthContext);
+
   if (user) {
     return (
       <div className='text-center text-gray-500 absolute top-1/3 bottom-1/3 left-0 right-0'>
