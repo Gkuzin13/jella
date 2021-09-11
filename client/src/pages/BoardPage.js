@@ -29,7 +29,10 @@ const BoardPage = ({ user }) => {
       try {
         const { data } = await boardApi.get(id);
 
-        setBoardData({ title: data.boardTitle, id: data._id });
+        if (!data) {
+          history.push('/notfound');
+        }
+
         dispatchLists({
           type: ACTIONS.SET_LISTS,
           payload: data.lists,
@@ -39,9 +42,7 @@ const BoardPage = ({ user }) => {
           payload: data.cards,
         });
 
-        if (!data._id) {
-          history.push('/notfound');
-        }
+        setBoardData({ title: data.boardTitle, id: data._id });
       } catch (error) {
         console.log(error);
         history.push('/notfound');
