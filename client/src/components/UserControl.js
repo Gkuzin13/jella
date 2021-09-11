@@ -2,11 +2,13 @@ import { useState, useRef, useContext } from 'react';
 import { useHistory } from 'react-router';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AuthContext } from '../config/Auth';
+import MiniLoader from '../components/MiniLoader';
 import api from '../config/axiosConfig';
 import useClickOutside from '../hooks/useClickOutside';
 
 const UserControl = () => {
   const [dropdown, setDropdown] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const history = useHistory();
   const dropdownRef = useRef();
@@ -17,11 +19,14 @@ const UserControl = () => {
   });
 
   const handleLogout = async () => {
+    setIsLoading(true);
     try {
       const { status } = await api.post('auth/logout');
 
       if (status === 200) {
         setUser(null);
+        setIsLoading(false);
+
         history.push('/');
       }
     } catch (error) {
@@ -72,7 +77,7 @@ const UserControl = () => {
               }}
               className='flex items-center w-full font-medium bg-gray-100 text-gray-500 
               hover:bg-gray-200 px-2.5 py-1.5 transition-colors duration-150 rounded-sm'>
-              <span>Log Out</span>
+              {isLoading ? <MiniLoader /> : <span>Log Out</span>}
             </button>
           </motion.div>
         )}
