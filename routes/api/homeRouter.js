@@ -4,7 +4,6 @@ const auth = require('../../middleware/auth');
 
 router.post(
   '/signup',
-  auth.checkNotAuthenticated,
   accountController.create_account_post,
   accountController.account_login_post
 );
