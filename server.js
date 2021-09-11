@@ -24,26 +24,31 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(helmet());
-app.use(cors());
+app.use(cors({ credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 let sess = {
-  proxy: true,
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false },
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+  },
   store: MongoStore.create({
     mongoUrl: process.env.MONGODB_URI,
     dbName: 'sessions',
   }),
 };
-
 app.use(session(sess));
-
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/api/auth', homeRouter);
+app.use('/api', boardRouter);
+app.use('/api', listRouter);
+app.use('/api', cardRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1); // trust first proxy
@@ -55,11 +60,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 }
-
-app.use('/api/auth', homeRouter);
-app.use('/api', boardRouter);
-app.use('/api', listRouter);
-app.use('/api', cardRouter);
 
 app.listen(port, () => {
   // Get db connection
