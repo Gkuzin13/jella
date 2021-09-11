@@ -24,9 +24,8 @@ const UserControl = () => {
       const { status } = await api.post('auth/logout');
 
       if (status === 200) {
-        setUser(null);
         setIsLoading(false);
-
+        setUser(null);
         history.push('/');
       }
     } catch (error) {
@@ -55,16 +54,15 @@ const UserControl = () => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -5, opacity: 0 }}
             ref={dropdownRef}
-            className='absolute right-0 mt-1 flex items-center flex-col
-          bg-white py-3 px-4 shadow-xl rounded-sm w-72'>
-            <div className='flex items-center flex-row pb-4 relative px-2'>
-              <span className=' text-blue-600 mt-0.5 text-lg'>
+            className='absolute right-0 mt-1 bg-white py-3 px-4 shadow-xl rounded-sm w-56 md:w-72'>
+            <div className='flex items-start justify-center pb-2 px-1 overflow-hidden'>
+              <span className=' text-blue-600 mt-0.5 text-lg flex-grow break-all'>
                 Hello, {user.username}
               </span>
               <span
                 role='button'
                 onClick={() => setDropdown(false)}
-                className='material-icons text-gray-500 hover:text-gray-800 absolute left-32 pl-6 p-2 transition-colors 
+                className='material-icons text-gray-500 pt-1 pl-0.5 hover:text-gray-800 transition-colors 
                 duration-150'>
                 close
               </span>
