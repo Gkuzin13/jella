@@ -15,6 +15,8 @@ const Home = ({ user }) => {
 
   const history = useHistory();
 
+  console.log(userBoards);
+
   useEffect(() => {
     (async () => {
       try {
