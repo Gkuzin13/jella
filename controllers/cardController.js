@@ -27,13 +27,13 @@ exports.create_card_post = [
     }
 
     try {
-      const newCard = await new Card({
+      const newCard = await Card.create({
         _id: req.body._id,
         cardTitle: req.body.cardTitle,
         position: req.body.position,
         listId: req.body.listId,
         boardId: req.body.boardId,
-      }).save();
+      });
 
       res.send(newCard);
     } catch (error) {

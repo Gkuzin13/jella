@@ -21,36 +21,27 @@ exports.create_account_post = [
       return res.send({ error: errors.array({ onlyFirstError: true })[0] });
     }
 
-    // Check if account exists
+    // Check if user exists in db
     try {
-      await Account.findOne({ email: req.body.email }, async (err, account) => {
-        if (err) {
-          return res.send(err);
-        }
+      const user = await Account.findOne({ email: req.body.email });
 
-        if (account) {
-          return res.send({
-            error:
-              'An account with this username or email address already exists.',
-          });
-        }
+      if (user) {
+        return res.send({
+          error:
+            'An account with this username or email address already exists.',
+        });
+      }
 
-        try {
-          const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-          // Save new accont to db
-          await new Account({
-            email: req.body.email,
-            username: req.body.username,
-            password: hashedPassword,
-          }).save();
-
-          // Run next function to login the registered account
-          next();
-        } catch (err) {
-          return res.send(err);
-        }
+      // Save new accont to db
+      await Account.create({
+        email: req.body.email,
+        username: req.body.username,
+        password: hashedPassword,
       });
+
+      next();
     } catch (error) {
       res.send(error);
     }
@@ -77,11 +68,11 @@ exports.create_guest_account = [
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
       // Save new accont to db
-      const account = await new Account({
+      const account = await Account.create({
         email: req.body.email,
         username: 'Guest',
         password: hashedPassword,
-      }).save();
+      });
 
       await populate.populateGuestBoard(account._id);
 
@@ -135,15 +126,12 @@ exports.user_get = (req, res, next) => {
   }
 
   res.send(null);
-
-  next();
 };
 
-// Logout account
+// Logout account and clear cookies
 exports.account_logout = (req, res, next) => {
   req.logout();
 
-  res.sendStatus(200);
-
-  next();
+  res.clearCookie('connect.sid');
+  return res.sendStatus(200);
 };

@@ -82,10 +82,10 @@ exports.create_board_post = [
 
     // Save new board to db
     try {
-      const board = await new Board({
+      const board = await Board.create({
         creatorId: req.user.id,
         boardTitle: req.body.boardTitle,
-      }).save();
+      });
 
       res.send(board);
     } catch (error) {
