@@ -8,7 +8,7 @@ const passport = require('passport');
 exports.create_account_post = [
   // Validate form fields
   body('email', 'Must be a valid email address,').isEmail(),
-  body('username', 'Username must not be empty.').isLength({ min: 1, max: 16 }),
+  body('username', 'Username must not be empty.').isLength({ min: 1, max: 64 }),
   body('password', 'Password must be at least 8 characters long.').isLength({
     min: 8,
     max: 32,
@@ -18,7 +18,7 @@ exports.create_account_post = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.send({ error: errors.array({ onlyFirstError: true })[0] });
+      return res.send({ error: errors.array({ onlyFirstError: true })[0].msg });
     }
 
     // Check if user exists in db

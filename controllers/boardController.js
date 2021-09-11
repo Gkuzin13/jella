@@ -71,13 +71,13 @@ exports.board_get = async (req, res) => {
 // Create board on POST
 exports.create_board_post = [
   // Validate form fields
-  body('boardTitle', 'Title must not be empty.').isLength({ min: 1, max: 40 }),
+  body('boardTitle', 'Title must not be empty.').isLength({ min: 1, max: 64 }),
 
   async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.send({ error: errors.array({ onlyFirstError: true })[0] });
+      return res.send({ error: errors.array({ onlyFirstError: true })[0].msg });
     }
 
     // Save new board to db
@@ -121,13 +121,13 @@ exports.board_delete = async (req, res) => {
 // Handle board upadate on PATCH
 exports.update_board_patch = [
   // Validate form fields
-  body('boardTitle', 'Title must not be empty.').isLength({ min: 1, max: 40 }),
+  body('boardTitle', 'Title must not be empty.').isLength({ min: 1, max: 64 }),
 
   async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.send({ error: errors.array({ onlyFirstError: true })[0] });
+      return res.send({ error: errors.array({ onlyFirstError: true })[0].msg });
     }
 
     // Save updated board to db
