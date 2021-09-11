@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const passport = require('passport');
 const session = require('express-session');
 const path = require('path');
+const MongoStore = require('connect-mongo');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
@@ -28,11 +29,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 let sess = {
+  proxy: true,
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false, httpOnly: false },
+  saveUninitialized: false,
+  cookie: { secure: false, httpOnly: true },
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI,
+    dbName: 'sessions',
+  }),
 };
+
+app.use(session(sess));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1); // trust first proxy
@@ -45,11 +56,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 }
-
-app.use(session(sess));
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use('/api/auth', homeRouter);
 app.use('/api', boardRouter);

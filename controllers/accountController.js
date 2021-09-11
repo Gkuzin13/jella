@@ -121,7 +121,7 @@ exports.account_login_post = [
 
 // Check if user is authenticated
 exports.user_get = (req, res, next) => {
-  if (req.user) {
+  if (req.isAuthenticated()) {
     return res.send(req.user);
   }
 
@@ -131,7 +131,8 @@ exports.user_get = (req, res, next) => {
 // Logout account and clear cookies
 exports.account_logout = (req, res, next) => {
   req.logout();
-
-  res.clearCookie('connect.sid');
-  return res.sendStatus(200);
+  req.session.destroy((err) => {
+    if (err) return res.sendStatus(403);
+    return res.sendStatus(200);
+  });
 };
