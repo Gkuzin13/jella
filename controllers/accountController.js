@@ -105,15 +105,13 @@ exports.account_login_post = [
       }
 
       if (!user) {
-        res.send(info);
-
-        return;
+        return res.send(info);
       }
 
       req.login(user, (err) => {
         if (err) return res.send(err);
 
-        res.send({ ...user });
+        res.send(user);
       });
     })(req, res, next);
   },
