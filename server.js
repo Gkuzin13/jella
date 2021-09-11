@@ -1,10 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const flash = require('express-flash');
 const helmet = require('helmet');
 const passport = require('passport');
-const cookieSession = require('cookie-session');
-const Keygrip = require('keygrip');
+const session = require('express-session');
 const path = require('path');
 
 if (process.env.NODE_ENV !== 'production') {
@@ -28,22 +26,16 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  cookieSession({
-    secret: process.env.SESSION_SECRET,
-    keys: new Keygrip(['key1', 'key2'], 'SHA384', 'base64'),
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
 
-app.use('/api/auth', homeRouter);
-app.use('/api', boardRouter);
-app.use('/api', listRouter);
-app.use('/api', cardRouter);
+let sess = {
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false },
+};
 
 if (process.env.NODE_ENV === 'production') {
+  sess.cookie.secure = true; // serve secure cookies
   app.use(express.static(path.join(__dirname, 'client/build')));
 
   // Handle React routing, return all requests to React app
@@ -51,6 +43,16 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 }
+
+app.use(session(sess));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/api/auth', homeRouter);
+app.use('/api', boardRouter);
+app.use('/api', listRouter);
+app.use('/api', cardRouter);
 
 app.listen(port, () => {
   // Get db connection
