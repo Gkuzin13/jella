@@ -6,9 +6,8 @@ const session = require('express-session');
 const path = require('path');
 const MongoStore = require('connect-mongo');
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+// process.env.NODE_ENV = 'production';
+require('dotenv').config();
 
 // Use passport config
 const initialize = require('./config/passportConfig');
@@ -28,7 +27,7 @@ app.use(cors({ credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-let sess = {
+const sessionConfig = {
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
@@ -41,7 +40,7 @@ let sess = {
     dbName: 'sessions',
   }),
 };
-app.use(session(sess));
+app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 
