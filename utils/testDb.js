@@ -5,11 +5,11 @@ const mongod = new MongoMemoryServer();
 
 // Connect to memory db
 module.exports.connect = async () => {
-  const uri = await mongod.getUri();
+  await mongod.start();
+  const uri = mongod.getUri();
   const mongooseOpts = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    poolSize: 10,
   };
 
   await mongoose.connect(uri, mongooseOpts);

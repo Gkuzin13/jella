@@ -228,7 +228,7 @@ exports.populateGuestBoard = async (userId) => {
   ];
 
   try {
-    await new Board(guestBoard).save();
+    await Board.create(guestBoard);
 
     await List.insertMany(guestLists);
 
@@ -236,6 +236,6 @@ exports.populateGuestBoard = async (userId) => {
 
     await Subtask.insertMany(guestSubtasks);
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
