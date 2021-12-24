@@ -20,27 +20,22 @@ exports.create_account_post = [
     if (!errors.isEmpty()) {
       return res.send({ error: errors.array({ onlyFirstError: true })[0].msg });
     }
-
     // Check if user exists in db
     try {
       const user = await Account.findOne({ email: req.body.email });
-
       if (user) {
         return res.send({
           error:
             'An account with this username or email address already exists.',
         });
       }
-
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-      // Save new accont to db
       await Account.create({
         email: req.body.email,
         username: req.body.username,
         password: hashedPassword,
       });
-
       next();
     } catch (error) {
       res.send(error);
@@ -59,7 +54,6 @@ exports.create_guest_account = [
 
   async (req, res, next) => {
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
       return res.send({ error: errors.array({ onlyFirstError: true })[0] });
     }
@@ -67,15 +61,12 @@ exports.create_guest_account = [
     try {
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-      // Save new accont to db
       const account = await Account.create({
         email: req.body.email,
         username: 'Guest',
         password: hashedPassword,
       });
-
       await populate.populateGuestBoard(account._id);
-
       next();
     } catch (err) {
       res.send(err);
@@ -93,21 +84,17 @@ exports.account_login_post = [
   }),
   (req, res, next) => {
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
       return res.send({ error: errors.array({ onlyFirstError: true })[0] });
     }
-
     // Login account
     passport.authenticate('local', (err, user, info) => {
       if (err) {
         return res.send(err);
       }
-
       if (!user) {
         return res.send(info);
       }
-
       req.login(user, (err) => {
         if (err) return res.send(err);
 
