@@ -8,7 +8,11 @@ router.post(
   accountController.account_login_post
 );
 
-router.post('/login', accountController.account_login_post);
+router.post(
+  '/login',
+  auth.checkNotAuthenticated,
+  accountController.account_login_post
+);
 
 router.post(
   '/login/guest',
@@ -18,6 +22,10 @@ router.post(
 
 router.get('/user', accountController.user_get);
 
-router.post('/logout', accountController.account_logout);
+router.post(
+  '/logout',
+  auth.checkAuthenticated,
+  accountController.account_logout
+);
 
 module.exports = router;
