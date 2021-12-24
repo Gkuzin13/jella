@@ -49,7 +49,6 @@ exports.update_card_put = [
   body('priority', 'Title must not be empty').isString(),
 
   async (req, res) => {
-    console.log(req.body.cardTitle);
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
