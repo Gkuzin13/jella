@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from './config/Auth';
 import LandingPage from './pages/LandingPage';
@@ -6,8 +6,7 @@ import Home from './pages/Home';
 import BoardPage from './pages/BoardPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-import PrivateRoute from './routes/PrivateRoute';
-import PublicRoute from './routes/PublicRoute';
+import RequireAuth from './routes/RequireAuth';
 import NotFound from './pages/NotFound';
 import Loader from './components/Loader';
 
@@ -20,31 +19,31 @@ function App() {
 
   return (
     <>
-      <Switch>
-        <PublicRoute exact path='/'>
-          <LandingPage />
-        </PublicRoute>
+      <Routes>
+        <Route path='/' element={<LandingPage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/signup' element={<SignupPage />} />
 
-        <PublicRoute exact path='/login'>
-          <LoginPage />
-        </PublicRoute>
+        <Route
+          path={`/${user?.username}`}
+          element={
+            <RequireAuth redirectTo='/notfound'>
+              <Home />
+            </RequireAuth>
+          }
+        />
 
-        <PublicRoute exact path='/signup'>
-          <SignupPage />
-        </PublicRoute>
+        <Route
+          path='/b/:id/:boardTitle'
+          element={
+            <RequireAuth redirectTo='/notfound'>
+              <BoardPage />
+            </RequireAuth>
+          }
+        />
 
-        <PrivateRoute exact path='/:username/boards'>
-          <Home user={user} />
-        </PrivateRoute>
-
-        <PrivateRoute exact path='/b/:id/:boardTitle'>
-          <BoardPage user={user} />
-        </PrivateRoute>
-
-        <Route path='*'>
-          <NotFound />
-        </Route>
-      </Switch>
+        <Route path='*' element={<NotFound />} />
+      </Routes>
     </>
   );
 }
