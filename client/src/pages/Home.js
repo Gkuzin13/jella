@@ -24,10 +24,9 @@ const Home = () => {
         if (data.error) {
           return console.log(data.error);
         }
-        if (data) {
-          setUserBoards(() => [...data]);
-          setIsLoading(false);
-        }
+
+        setUserBoards(() => [...data]);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
         navigate('notfound');

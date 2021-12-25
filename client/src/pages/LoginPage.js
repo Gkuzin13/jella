@@ -30,7 +30,7 @@ const LoginPage = () => {
         return;
       }
 
-      if (data) {
+      if (data.id) {
         setUser(data);
         navigate(`/${data.username}`);
       }

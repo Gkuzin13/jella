@@ -30,7 +30,7 @@ const SignupPage = () => {
         setError(data.error);
         return;
       }
-      if (data) {
+      if (data.id) {
         setLoading(false);
         setUser(data);
         navigate(`/${data.username}/`);

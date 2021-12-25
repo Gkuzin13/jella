@@ -34,18 +34,16 @@ const BoardPage = () => {
           navigate('/notfound');
           return;
         }
-        if (data) {
-          dispatchLists({
-            type: ACTIONS.SET_LISTS,
-            payload: data.lists,
-          });
-          dispatchCards({
-            type: ACTIONS.SET_CARDS,
-            payload: data.cards,
-          });
-          setBoardData({ title: data.boardTitle, id: data._id });
-          navigate(`/b/${id}/${data.boardTitle}`);
-        }
+        dispatchLists({
+          type: ACTIONS.SET_LISTS,
+          payload: data.lists,
+        });
+        dispatchCards({
+          type: ACTIONS.SET_CARDS,
+          payload: data.cards,
+        });
+        setBoardData({ title: data.boardTitle, id: data._id });
+        navigate(`/b/${id}/${data.boardTitle}`);
       } catch (error) {
         console.log(error);
         navigate('/notfound');
