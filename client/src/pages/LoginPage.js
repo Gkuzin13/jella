@@ -1,15 +1,15 @@
 import { useContext, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import MiniLoader from '../components/MiniLoader';
 import { AuthContext } from '../config/Auth';
 import api from '../config/axiosConfig';
 
 const LoginPage = () => {
-  const { setUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const history = useHistory();
+  const { user, setUser } = useContext(AuthContext);
 
+  const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -30,12 +30,19 @@ const LoginPage = () => {
         return;
       }
 
-      setUser(() => data);
-      history.push(`/${data.username}/boards`);
+      if (data) {
+        setUser(data);
+        navigate(`/${data.username}`);
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (user) {
+    return <Navigate to={`/${user.username}`} />;
+  }
+
   return (
     <div>
       <div className='bg-main w-full h-full -z-10 fixed'></div>

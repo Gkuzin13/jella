@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Types } from 'mongoose';
 import MiniLoader from '../components/MiniLoader';
 import { AuthContext } from '../config/Auth';
@@ -9,10 +9,7 @@ import { ReactComponent as BoardImg } from '../assets/boardplanner.svg';
 const LandingPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-
-  const { setUser } = useContext(AuthContext);
-
-  const history = useHistory();
+  const { user, setUser } = useContext(AuthContext);
 
   const handleGuestLogin = async () => {
     setIsLoading(true);
@@ -32,16 +29,16 @@ const LandingPage = () => {
       if (data.username) {
         setIsLoading(false);
         setUser(() => data);
-
-        history.push(`/${data.username}/boards`);
-
-        return;
       }
     } catch (error) {
       console.log(error);
       setErrorMsg('Oops, something went wrong...');
     }
   };
+
+  if (user) {
+    return <Navigate to={`/${user.username}`} />;
+  }
 
   return (
     <div>
@@ -67,7 +64,7 @@ const LandingPage = () => {
       </div>
 
       <div className='flex flex-col items-center justify-center my-0 mx-auto w-11/12 px-2 lg:flex-row'>
-        <div className='md:w-11/12 pt-6 pt-16 pb-8 md:px-16'>
+        <div className='md:w-11/12 pt-16 pb-8 md:px-16'>
           <h1 className='text-5xl pb-2 lg:text-6xl md:mb-2 text-gray-800 font-bold h-full text-center lg:text-left'>
             Easily build your <strong className='text-gray-900'>Kanban </strong>
             board within minutes.

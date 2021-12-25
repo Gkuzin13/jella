@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate, Navigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import MiniLoader from '../components/MiniLoader';
 import { AuthContext } from '../config/Auth';
@@ -8,10 +8,8 @@ import api from '../config/axiosConfig';
 const SignupPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  const { setUser } = useContext(AuthContext);
-
-  const history = useHistory();
+  const { user, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -27,20 +25,24 @@ const SignupPage = () => {
         username: username.value,
         password: password.value,
       });
-
       if (data.error) {
         setLoading(false);
         setError(data.error);
         return;
       }
-
-      setLoading(false);
-      setUser(() => data);
-      history.push(`/${data.username}/boards`);
+      if (data) {
+        setLoading(false);
+        setUser(data);
+        navigate(`/${data.username}/`);
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (user) {
+    return <Navigate to={`/${user.username}`} />;
+  }
 
   return (
     <div>

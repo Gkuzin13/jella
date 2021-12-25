@@ -11,7 +11,7 @@ const NotFound = () => {
         <h1 className=' font-semibold text-4xl mb-2'>Page not found</h1>
         <p className='text-lg'>
           This page may be private. Return to
-          <Link to={`/${user.username}/boards`}>
+          <Link to={`/${user.username}`}>
             <strong className='text-blue-600'> Home</strong>
           </Link>
         </p>

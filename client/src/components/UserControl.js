@@ -1,6 +1,6 @@
 import { useState, useRef, useContext } from 'react';
-import { useHistory } from 'react-router';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../config/Auth';
 import MiniLoader from '../components/MiniLoader';
 import api from '../config/axiosConfig';
@@ -9,10 +9,9 @@ import useClickOutside from '../hooks/useClickOutside';
 const UserControl = () => {
   const [dropdown, setDropdown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const history = useHistory();
+  const { user, setUser } = useContext(AuthContext);
   const dropdownRef = useRef();
-  const { setUser, user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useClickOutside(dropdownRef, dropdown, () => {
     setDropdown(false);
@@ -24,11 +23,12 @@ const UserControl = () => {
       const { status } = await api.post('auth/logout');
 
       if (status === 200) {
-        setIsLoading(false);
+        navigate('/');
         setUser(null);
-        history.push('/');
+        navigate('/');
       }
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };

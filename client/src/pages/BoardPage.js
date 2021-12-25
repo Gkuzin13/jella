@@ -1,5 +1,5 @@
-import { useEffect, useReducer, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useContext, useEffect, useReducer, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { AnimatePresence } from 'framer-motion';
 import listReducer from '../reducers/listReducer';
@@ -14,38 +14,41 @@ import cardApi from '../api/cardApi';
 import cardReorderer from '../utils/cardReorderer';
 import listReorderer from '../utils/listReorderer';
 import CardDetailsBox from '../components/CardDetailsBox/CardDetailsBox';
+import { AuthContext } from '../config/Auth';
 
-const BoardPage = ({ user }) => {
+const BoardPage = () => {
   const [boardData, setBoardData] = useState(null);
   const [lists, dispatchLists] = useReducer(listReducer, []);
   const [cards, dispatchCards] = useReducer(cardReducer, []);
   const [cardBox, setCardBox] = useState({ cardId: null, isOpen: false });
 
-  const history = useHistory();
+  const { user } = useContext(AuthContext);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
       try {
         const { data } = await boardApi.get(id);
-
         if (!data) {
-          history.push('/notfound');
+          navigate('/notfound');
+          return;
         }
-
-        dispatchLists({
-          type: ACTIONS.SET_LISTS,
-          payload: data.lists,
-        });
-        dispatchCards({
-          type: ACTIONS.SET_CARDS,
-          payload: data.cards,
-        });
-
-        setBoardData({ title: data.boardTitle, id: data._id });
+        if (data) {
+          dispatchLists({
+            type: ACTIONS.SET_LISTS,
+            payload: data.lists,
+          });
+          dispatchCards({
+            type: ACTIONS.SET_CARDS,
+            payload: data.cards,
+          });
+          setBoardData({ title: data.boardTitle, id: data._id });
+          navigate(`/b/${id}/${data.boardTitle}`);
+        }
       } catch (error) {
         console.log(error);
-        history.push('/notfound');
+        navigate('/notfound');
       }
     })();
 
@@ -60,7 +63,7 @@ const BoardPage = ({ user }) => {
         payload: [],
       });
     };
-  }, [id, history]);
+  }, [id, navigate]);
 
   const toggleCardBox = (cardId, isOpen) => {
     setCardBox({ cardId, isOpen });

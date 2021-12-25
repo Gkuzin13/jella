@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import boardApi from '../api/boardApi';
 import UserControl from '../components/UserControl';
 import ConfirmBox from '../components/ConfirmBox';
@@ -7,13 +7,14 @@ import Loader from '../components/Loader';
 import BoardForm from '../components/Board/BoardForm';
 import HomeBoards from '../components/Board/HomeBoards';
 import { AnimatePresence } from 'framer-motion';
+import { AuthContext } from '../config/Auth';
 
-const Home = ({ user }) => {
+const Home = () => {
   const [userBoards, setUserBoards] = useState([]);
   const [confirmBox, setConfirmBox] = useState({ id: null, isOpen: false });
   const [isLoading, setIsLoading] = useState(true);
-
-  const history = useHistory();
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -23,11 +24,13 @@ const Home = ({ user }) => {
         if (data.error) {
           return console.log(data.error);
         }
-
-        setUserBoards(() => [...data]);
-        setIsLoading(false);
+        if (data) {
+          setUserBoards(() => [...data]);
+          setIsLoading(false);
+        }
       } catch (error) {
         console.log(error);
+        navigate('notfound');
       }
     })();
 
@@ -36,7 +39,7 @@ const Home = ({ user }) => {
       setIsLoading(false);
       setConfirmBox({ id: null, isOpen: false });
     };
-  }, [user]);
+  }, [user, navigate]);
 
   const handleNewBoard = async (boardTitle) => {
     const newBoard = {
@@ -48,7 +51,7 @@ const Home = ({ user }) => {
       const { data } = await boardApi.create(newBoard);
 
       if (data) {
-        history.push(`/b/${data._id}/${data.boardTitle}`);
+        navigate(`/b/${data._id}/${data.boardTitle}`);
       }
     } catch (error) {
       console.log(error);
@@ -59,9 +62,7 @@ const Home = ({ user }) => {
     try {
       await boardApi.delete(id);
 
-      const filteredBoards = [...userBoards].filter(
-        (board) => board._id !== id
-      );
+      const filteredBoards = userBoards.filter((board) => board._id !== id);
       setUserBoards(filteredBoards);
     } catch (error) {
       console.log(error);
@@ -87,7 +88,7 @@ const Home = ({ user }) => {
 
       <div className='flex items-center bg-white justify-between mb-8 px-6 py-3 md:px-16 shadow-sm'>
         <h1 className='font-bold text-3xl text-blue-900'>Jella</h1>
-        <UserControl user={user} />
+        <UserControl />
       </div>
 
       <div className='flex justify-center items-center'>
