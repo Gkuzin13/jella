@@ -1,5 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-
+import { createMemoryHistory } from 'history';
 import UserControl from '../UserControl';
 import { renderWithContext } from '../../__tests__/App.test';
 
@@ -11,7 +11,9 @@ const userProps = {
 
 describe('UserControl', () => {
   test('should open and close user control', async () => {
-    renderWithContext(userProps, UserControl);
+    const history = createMemoryHistory();
+
+    renderWithContext(userProps, UserControl, history);
 
     fireEvent.click(screen.getByRole('button'));
 

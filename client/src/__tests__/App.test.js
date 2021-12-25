@@ -1,67 +1,83 @@
-import React from 'react';
+import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
-
+import { BrowserRouter } from 'react-router-dom';
 import App from '../App';
+import BoardPage from '../pages/BoardPage';
+import Home from '../pages/Home';
+import { user, board } from '../mocks/mockData';
 import { AuthContext } from '../config/Auth';
 
 export const renderWithRouter = (user, history) => {
-  const userProps = {
-    isLoading: false,
-    user: user,
-  };
-  return render(
-    <AuthContext.Provider value={{ ...userProps }}>
-      <Router history={history}>
-        <App></App>
-      </Router>
-    </AuthContext.Provider>
-  );
-};
-
-export const renderWithContext = (user, Component) => {
   const userProps = {
     isLoading: false,
     user,
   };
   return render(
     <AuthContext.Provider value={{ ...userProps }}>
-      <Component></Component>
+      <BrowserRouter history={history}>
+        <App />
+      </BrowserRouter>
+    </AuthContext.Provider>
+  );
+};
+
+export const renderWithContext = (user, Component, history) => {
+  const userProps = {
+    isLoading: false,
+    user,
+  };
+  return render(
+    <AuthContext.Provider value={{ ...userProps }}>
+      <BrowserRouter history={history}>
+        <Component />
+      </BrowserRouter>
     </AuthContext.Provider>
   );
 };
 
 describe('App', () => {
-  test('render landing page and nav to login', () => {
-    const history = createMemoryHistory();
-
+  test('render landing page', () => {
+    const history = window.location;
     renderWithRouter(null, history);
 
     expect(screen.getByText(/Try It Out/)).toBeInTheDocument();
-
-    userEvent.click(screen.getByText(/Log In/));
+  });
+  test('render login page', () => {
+    const history = window.history.replaceState({}, '', '/login');
+    renderWithRouter(null, history);
 
     expect(screen.getByText(/Log in to your account/)).toBeInTheDocument();
   });
 
-  test('render landing page and nav to sign up', () => {
-    const history = createMemoryHistory();
-
+  test('render render signup page', () => {
+    const history = window.history.replaceState({}, '', '/signup');
     renderWithRouter(null, history);
-
-    expect(screen.getByText(/Try It Out/)).toBeInTheDocument();
-
-    userEvent.click(screen.getByText(/Sign Up/));
 
     expect(screen.getByText(/Sign up for your account/)).toBeInTheDocument();
   });
 
-  test('redirects to page not found correctly', () => {
-    const history = createMemoryHistory();
-    history.push('/non-match-route');
+  test('render home page correctly', async () => {
+    const history = window.history.replaceState({}, '', `/${user.username}/`);
+    renderWithContext(user, Home, history);
 
+    expect(await screen.findByText(/Test Board/)).toBeInTheDocument();
+  });
+
+  test('render board page correctly', async () => {
+    const history = window.history.replaceState(
+      {},
+      '',
+      `/b/${board.id}/${board.boardTitle}`
+    );
+    renderWithContext(user, BoardPage, history);
+
+    expect(await screen.findByText(/Test Board/)).toBeInTheDocument();
+    expect(await screen.findByText(/Test List/)).toBeInTheDocument();
+    expect(await screen.findByText(/Test Card/)).toBeInTheDocument();
+  });
+
+  test('redirects to page not found correctly', () => {
+    const history = window.history.replaceState({}, '', '/undefined-route');
     renderWithRouter(null, history);
 
     expect(screen.getByText(/Page not found/)).toBeInTheDocument();
