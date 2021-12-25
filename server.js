@@ -6,8 +6,9 @@ const session = require('express-session');
 const path = require('path');
 const MongoStore = require('connect-mongo');
 
-// process.env.NODE_ENV = 'production';
-require('dotenv').config();
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
+}
 
 // Use passport config
 const initialize = require('./config/passportConfig');
