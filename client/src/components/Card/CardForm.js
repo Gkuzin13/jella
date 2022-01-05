@@ -35,10 +35,10 @@ const CardForm = ({ handleNewCard }) => {
     return (
       <motion.div
         key='button'
-        transition={{ duration: 0.1 }}
+        transition={{ duration: 0.15 }}
         initial={{ y: -3, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className='text-gray-600  rounded-sm mx-2.5 mt-2.5 mb-1'>
+        className='text-gray-600  rounded-sm mx-3 mt-2.5 mb-1'>
         <button
           onClick={() => setCardForm(true)}
           className='flex items-center w-full font-medium bg-gray-300 bg-opacity-60 hover:bg-opacity-100 
