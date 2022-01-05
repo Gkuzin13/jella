@@ -7,22 +7,19 @@ const EditableText = ({ style, dataText, dataUpdateFunc }) => {
   const inputRef = useRef();
 
   useEffect(() => {
-    const handleEnterKey = () => {
-      setIsEditing(false);
-      if (textValue === dataText) {
-        return;
-      }
+    const handleEnterKey = (e) => {
+      if (e.key !== 'Enter') return;
 
+      setIsEditing(false);
+
+      if (textValue === dataText) return;
       dataUpdateFunc(textValue);
     };
+
+    document.addEventListener('keypress', handleEnterKey);
+
     if (isEditing) {
       inputRef.current.focus();
-
-      document.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          handleEnterKey();
-        }
-      });
     }
 
     return () => document.removeEventListener('keypress', handleEnterKey);
@@ -37,7 +34,6 @@ const EditableText = ({ style, dataText, dataUpdateFunc }) => {
     if (textValue === dataText) {
       return;
     }
-
     dataUpdateFunc(textValue);
   };
 
