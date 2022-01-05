@@ -21,6 +21,9 @@ module.exports = {
       zIndex: {
         '-10': '-10',
       },
+      width: {
+        76: '19rem',
+      },
       outline: {
         blue: '2px solid rgb(37, 99, 235)',
       },
