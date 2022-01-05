@@ -20,7 +20,7 @@ const BoardPage = () => {
   const [boardData, setBoardData] = useState(null);
   const [lists, dispatchLists] = useReducer(listReducer, []);
   const [cards, dispatchCards] = useReducer(cardReducer, []);
-  const [cardBox, setCardBox] = useState({ cardId: null, isOpen: false });
+  const [cardBox, setCardBox] = useState({ cardData: null, isOpen: false });
 
   const { user } = useContext(AuthContext);
   const { id } = useParams();
@@ -125,7 +125,7 @@ const BoardPage = () => {
   return (
     <div className='h-screen flex flex-col'>
       <AnimatePresence>
-        {!cardBox.isOpen ? null : (
+        {cardBox.isOpen && (
           <CardDetailsBox
             cards={cards}
             lists={lists}
@@ -136,9 +136,7 @@ const BoardPage = () => {
         )}
       </AnimatePresence>
       <div className='bg-boardPage absolute w-full h-screen -z-10'></div>
-
       <BoardNav user={user} boardData={boardData} setBoardData={setBoardData} />
-
       <main className='flex h-full overflow-x-auto'>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <BoardCanvas
