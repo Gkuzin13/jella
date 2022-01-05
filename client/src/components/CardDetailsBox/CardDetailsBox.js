@@ -6,6 +6,7 @@ import CardDescription from '../CardDetailsBox/CardDescription';
 import CardDate from './CardDate';
 import cardApi from '../../api/cardApi';
 import EditableText from '../EditableText';
+import { useEffect, useRef } from 'react';
 
 const CardDetailsBox = ({
   cards,
@@ -16,6 +17,19 @@ const CardDetailsBox = ({
 }) => {
   const selectedCard = cards.find((card) => card._id === cardBox.cardId);
   const { listTitle } = lists.find((list) => list._id === selectedCard.listId);
+
+  const wrapperRef = useRef();
+
+  useEffect(() => {
+    const closeBox = (e) => {
+      if (e.target.parentNode === wrapperRef.current) {
+        toggleCardBox('', false);
+      }
+    };
+    document.addEventListener('click', closeBox);
+
+    return () => document.removeEventListener('click', closeBox);
+  }, [toggleCardBox]);
 
   const handleCardUpdate = async (updatedCard) => {
     dispatchCards({
@@ -50,14 +64,15 @@ const CardDetailsBox = ({
 
   return (
     <motion.div
-      transition={{ duration: 0.075 }}
+      transition={{ duration: 0.15 }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      ref={wrapperRef}
       className='fixed top-0 right-0 left-0 bottom-0 overflow-auto bg-opacity-30 
     bg-black z-20'>
       <motion.div
-        transition={{ duration: 0.075 }}
+        transition={{ duration: 0.1 }}
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
@@ -72,7 +87,6 @@ const CardDetailsBox = ({
             transition-colors duration-150 p-1.5 mb-2'>
             close
           </span>
-
           <div className='flex items-start w-full mb-6 mt-8'>
             <span className='material-icons-outlined mr-1'>video_label</span>
             <div className='w-full'>
@@ -86,7 +100,6 @@ const CardDetailsBox = ({
               </p>
             </div>
           </div>
-
           <CardDescription
             handleCardUpdate={handleCardUpdate}
             selectedCard={selectedCard}
@@ -100,7 +113,6 @@ const CardDetailsBox = ({
             selectedCard={selectedCard}
           />
           <CardDate selectedCard={selectedCard} />
-
           <div className='self-end py-3 mt-6'>
             <button
               onClick={() => handleCardDelete()}
