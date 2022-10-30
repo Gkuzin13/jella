@@ -1,4 +1,5 @@
 import ObjectId from "bson-objectid";
+import { useEffect, useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import cardApi from "../../api/cardApi";
 import ACTIONS from "../../reducers/actions";
@@ -8,6 +9,16 @@ import Subtask from "./Subtask";
 import SubtaskForm from "./SubtaskForm";
 
 const Checklist = ({ dispatchCards, selectedCard }) => {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    const animation = requestAnimationFrame(() => setEnabled(true));
+
+    return () => {
+      cancelAnimationFrame(animation);
+      setEnabled(false);
+    };
+  }, []);
   const subtasks = (selectedCard.subtasks || []).sort(
     (a, b) => a.position - b.position
   );
@@ -97,40 +108,42 @@ const Checklist = ({ dispatchCards, selectedCard }) => {
   };
 
   return (
-    <div className='flex flex-col items-start mb-6'>
-      <div className='flex items-center text-gray-800 mb-4'>
-        <span className='material-icons-outlined mr-2.5'>event_available</span>
-        <span className='font-semibold text-xl'>Checklist</span>
+    <div className="flex flex-col items-start mb-6">
+      <div className="flex items-center text-gray-800 mb-4">
+        <span className="material-icons-outlined mr-2.5">event_available</span>
+        <span className="font-semibold text-xl">Checklist</span>
       </div>
 
       <ProgressBar subtasks={subtasks} cardId={selectedCard._id} />
 
       <DragDropContext onDragEnd={handleSubTaskReorder}>
-        <Droppable droppableId={selectedCard._id}>
-          {(provided, snapshot) => (
-            <div
-              className={`${
-                !subtasks.length && "hidden"
-              } w-full my-1 mb-3 bg-gray-100`}
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {subtasks.map((subtask, index) => {
-                return (
-                  <Subtask
-                    key={subtask._id}
-                    index={index}
-                    draggingWith={snapshot.draggingFromThisWith}
-                    handleSubtaskUpdate={handleSubtaskUpdate}
-                    handleSubtaskDelete={handleSubtaskDelete}
-                    subtask={subtask}
-                  />
-                );
-              })}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
+        {enabled && (
+          <Droppable droppableId={selectedCard._id}>
+            {(provided, snapshot) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className={`${
+                  !subtasks.length && "hidden"
+                } w-full my-1 mb-3 bg-gray-100`}
+              >
+                {subtasks.map((subtask, index) => {
+                  return (
+                    <Subtask
+                      key={subtask._id}
+                      index={index}
+                      draggingWith={snapshot.draggingFromThisWith}
+                      handleSubtaskUpdate={handleSubtaskUpdate}
+                      handleSubtaskDelete={handleSubtaskDelete}
+                      subtask={subtask}
+                    />
+                  );
+                })}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        )}
       </DragDropContext>
 
       <SubtaskForm handleNewSubtask={handleNewSubtask} />
