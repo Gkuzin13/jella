@@ -1,13 +1,11 @@
-import { useState, useRef } from 'react';
-import useClickOutside from '../../hooks/useClickOutside';
+import { useState } from "react";
+import useClickOutside from "../../hooks/useClickOutside";
 
 const CardDescription = ({ handleCardUpdate, selectedCard }) => {
   const [descForm, setDescForm] = useState(false);
   const [descValue, setDescValue] = useState(selectedCard.description);
 
-  const boxRef = useRef();
-
-  useClickOutside(boxRef, descForm, () => {
+  const boxRef = useClickOutside(() => {
     setDescForm(false);
   });
 
@@ -34,9 +32,10 @@ const CardDescription = ({ handleCardUpdate, selectedCard }) => {
           <p
             role='button'
             onClick={() => setDescForm(true)}
-            className='hover:shadow text-gray-800 bg-gray-50 cursor-pointer 
-            px-3 py-1.5 pb-8 transition-shadow duration-150 break-words'>
-            {descValue || 'Add a description to this card...'}
+            className='hover:shadow text-gray-800 bg-gray-50 cursor-pointer
+            px-3 py-1.5 pb-8 transition-shadow duration-150 break-words'
+          >
+            {descValue || "Add a description to this card..."}
           </p>
         </div>
       </div>
@@ -52,7 +51,7 @@ const CardDescription = ({ handleCardUpdate, selectedCard }) => {
       <div ref={boxRef}>
         <form onSubmit={(e) => handleOnSubmit(e)}>
           <textarea
-            value={descValue || ''}
+            value={descValue || ""}
             onChange={(e) => onValueChange(e)}
             name='description'
             rows='4'
@@ -63,14 +62,16 @@ const CardDescription = ({ handleCardUpdate, selectedCard }) => {
           <div className='flex items-center py-1'>
             <button
               type='submit'
-              className='bg-green-500 font-medium text-white hover:bg-green-600 
-              transition-colors duration-150 px-3 py-1 rounded-sm shadow-sm'>
+              className='bg-green-500 font-medium text-white hover:bg-green-600
+              transition-colors duration-150 px-3 py-1 rounded-sm shadow-sm'
+            >
               Save
             </button>
             <button
               type='button'
               className='flex items-center ml-2'
-              onClick={() => setDescForm(false)}>
+              onClick={() => setDescForm(false)}
+            >
               <span className='material-icons cursor-pointer ml-1 hover:text-black'>
                 close
               </span>

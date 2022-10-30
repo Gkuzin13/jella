@@ -49,13 +49,15 @@ const LoginPage = () => {
       <div className='flex justify-center flex-col items-center pt-2'>
         <Link
           to='/'
-          className='font-bold text-5xl text-gray-700  my-6 md:my-12'>
+          className='font-bold text-5xl text-gray-700  my-6 md:my-12'
+        >
           Jella
         </Link>
         <div className='md:bg-white p-12 md:shadow-lg rounded-sm'>
           <form
             onSubmit={(e) => handleLogin(e)}
-            className='flex flex-col justify-center'>
+            className='flex flex-col justify-center'
+          >
             <h2 className='text-lg text-center font-medium text-gray-600 mb-10 w-96'>
               Log in to your account
             </h2>
@@ -85,16 +87,18 @@ const LoginPage = () => {
 
             <button
               type='submit'
-              className='bg-gray-50 border border-blue-600 text-blue-600 font-medium text-md py-2 shadow mb-5 
-              hover:bg-white transition-colors duration-150'>
-              {loading ? <MiniLoader color={true} /> : 'Log In'}
+              className='bg-gray-50 border border-blue-600 text-blue-600 font-medium text-md py-2 shadow mb-5
+              hover:bg-white transition-colors duration-150'
+            >
+              {loading ? <MiniLoader color={true} /> : "Log In"}
             </button>
           </form>
           <div className='text-center mt-4'>
-            <span className=' text-gray-600'>Don't have an account? </span>
+            <span className=' text-gray-600'>Don&apos;t have an account? </span>
             <Link
               to='/signup'
-              className='font-medium text-blue-600 hover:text-blue-700 p-1 transition-colors duration-150'>
+              className='font-medium text-blue-600 hover:text-blue-700 p-1 transition-colors duration-150'
+            >
               Sign Up
             </Link>
           </div>

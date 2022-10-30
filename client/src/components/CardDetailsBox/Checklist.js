@@ -1,11 +1,11 @@
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { Types } from 'mongoose';
-import ACTIONS from '../../reducers/actions';
-import Subtask from './Subtask';
-import SubtaskForm from './SubtaskForm';
-import ProgressBar from './ProgressBar';
-import { appendItem, setNewPos } from '../../utils/setNewPos';
-import cardApi from '../../api/cardApi';
+import ObjectId from "bson-objectid";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import cardApi from "../../api/cardApi";
+import ACTIONS from "../../reducers/actions";
+import { appendItem, setNewPos } from "../../utils/setNewPos";
+import ProgressBar from "./ProgressBar";
+import Subtask from "./Subtask";
+import SubtaskForm from "./SubtaskForm";
 
 const Checklist = ({ dispatchCards, selectedCard }) => {
   const subtasks = (selectedCard.subtasks || []).sort(
@@ -14,7 +14,7 @@ const Checklist = ({ dispatchCards, selectedCard }) => {
 
   const handleNewSubtask = async (taskValue) => {
     const newSubtask = {
-      _id: Types.ObjectId().toHexString(),
+      _id: ObjectId().toHexString(),
       taskName: taskValue,
       position: appendItem(subtasks),
       boardId: selectedCard.boardId,
@@ -110,10 +110,11 @@ const Checklist = ({ dispatchCards, selectedCard }) => {
           {(provided, snapshot) => (
             <div
               className={`${
-                !subtasks.length && 'hidden'
+                !subtasks.length && "hidden"
               } w-full my-1 mb-3 bg-gray-100`}
               {...provided.droppableProps}
-              ref={provided.innerRef}>
+              ref={provided.innerRef}
+            >
               {subtasks.map((subtask, index) => {
                 return (
                   <Subtask

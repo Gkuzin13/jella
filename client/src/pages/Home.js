@@ -1,13 +1,13 @@
-import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import boardApi from '../api/boardApi';
-import UserControl from '../components/UserControl';
-import ConfirmBox from '../components/ConfirmBox';
-import Loader from '../components/Loader';
-import BoardForm from '../components/Board/BoardForm';
-import HomeBoards from '../components/Board/HomeBoards';
-import { AnimatePresence } from 'framer-motion';
-import { AuthContext } from '../config/Auth';
+import { AnimatePresence } from "framer-motion";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import boardApi from "../api/boardApi";
+import BoardForm from "../components/Board/BoardForm";
+import HomeBoards from "../components/Board/HomeBoards";
+import ConfirmBox from "../components/ConfirmBox";
+import Loader from "../components/Loader";
+import UserControl from "../components/UserControl";
+import { AuthContext } from "../config/Auth";
 
 const Home = () => {
   const [userBoards, setUserBoards] = useState([]);
@@ -29,7 +29,7 @@ const Home = () => {
         setIsLoading(false);
       } catch (error) {
         console.log(error);
-        navigate('notfound');
+        navigate("notfound");
       }
     })();
 

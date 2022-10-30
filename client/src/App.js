@@ -1,14 +1,14 @@
-import { Route, Routes } from 'react-router-dom';
-import { useContext } from 'react';
-import { AuthContext } from './config/Auth';
-import LandingPage from './pages/LandingPage';
-import Home from './pages/Home';
-import BoardPage from './pages/BoardPage';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
-import RequireAuth from './routes/RequireAuth';
-import NotFound from './pages/NotFound';
-import Loader from './components/Loader';
+import { useContext } from "react";
+import { Route, Routes } from "react-router-dom";
+import Loader from "./components/Loader";
+import { AuthContext } from "./config/Auth";
+import BoardPage from "./pages/BoardPage";
+import Home from "./pages/Home";
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import NotFound from "./pages/NotFound";
+import SignupPage from "./pages/SignupPage";
+import RequireAuth from "./routes/RequireAuth";
 
 function App() {
   const { user, isLoading } = useContext(AuthContext);

@@ -1,7 +1,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import UserControl from '../UserControl';
+import { createMemoryHistory } from "history";
 import { renderWithContext } from '../../__tests__/App.test';
+import UserControl from "../UserControl";
 
 const userProps = {
   id: '1',

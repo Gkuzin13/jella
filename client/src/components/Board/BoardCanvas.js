@@ -1,10 +1,11 @@
-import List from '../List/List';
-import ListForm from '../List/ListForm';
-import { Types } from 'mongoose';
-import { Droppable } from 'react-beautiful-dnd';
-import { appendItem } from '../../utils/setNewPos';
-import listApi from '../../api/listApi';
-import ACTIONS from '../../reducers/actions';
+import ObjectId from "bson-objectid";
+import { useEffect, useState } from "react";
+import { Droppable } from "react-beautiful-dnd";
+import listApi from "../../api/listApi";
+import ACTIONS from "../../reducers/actions";
+import { appendItem } from "../../utils/setNewPos";
+import List from "../List/List";
+import ListForm from "../List/ListForm";
 
 const BoardCanvas = ({
   boardId,
@@ -14,12 +15,23 @@ const BoardCanvas = ({
   dispatchCards,
   toggleCardBox,
 }) => {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    const animation = requestAnimationFrame(() => setEnabled(true));
+
+    return () => {
+      cancelAnimationFrame(animation);
+      setEnabled(false);
+    };
+  }, []);
+
   const handleNewList = async (title) => {
     const newList = {
-      _id: Types.ObjectId().toHexString(),
+      _id: ObjectId().toHexString(),
       listTitle: title,
       position: appendItem(lists),
-      coverColor: 'gray',
+      coverColor: "gray",
       boardId,
     };
 
@@ -61,13 +73,18 @@ const BoardCanvas = ({
     }
   };
 
+  if (!enabled) {
+    return null;
+  }
+
   return (
     <Droppable droppableId={boardId} direction='horizontal' type='LIST'>
       {(provided) => (
         <div
           {...provided.droppableProps}
           ref={provided.innerRef}
-          className='flex flex-nowrap items-start px-3'>
+          className='flex flex-nowrap items-start px-3'
+        >
           {lists.map((list, index) => {
             const listCards = cards.filter((card) => card.listId === list._id);
             return (

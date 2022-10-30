@@ -1,28 +1,28 @@
-import { useState, useContext } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import { Types } from 'mongoose';
-import MiniLoader from '../components/MiniLoader';
-import { AuthContext } from '../config/Auth';
-import api from '../config/axiosConfig';
-import { ReactComponent as BoardImg } from '../assets/boardplanner.svg';
+import ObjectId from "bson-objectid";
+import { useContext, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
+import { ReactComponent as BoardImg } from "../assets/boardplanner.svg";
+import MiniLoader from "../components/MiniLoader";
+import { AuthContext } from "../config/Auth";
+import api from "../config/axiosConfig";
 
 const LandingPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
   const { user, setUser } = useContext(AuthContext);
 
   const handleGuestLogin = async () => {
     setIsLoading(true);
 
     try {
-      const { data } = await api.post('auth/login/guest', {
-        email: `${Types.ObjectId().toHexString()}@mail.com`,
-        password: '123456781',
+      const { data } = await api.post("auth/login/guest", {
+        email: `guest-${ObjectId()}@mail.com`,
+        password: "123456781",
       });
 
       if (!data) {
         setIsLoading(false);
-        setErrorMsg('Oops, something went wrong...');
+        setErrorMsg("Oops, something went wrong...");
         return;
       }
 
@@ -32,7 +32,7 @@ const LandingPage = () => {
       }
     } catch (error) {
       console.log(error);
-      setErrorMsg('Oops, something went wrong...');
+      setErrorMsg("Oops, something went wrong...");
     }
   };
 
@@ -50,14 +50,16 @@ const LandingPage = () => {
         <div>
           <Link
             to='/login'
-            className='bg-transparent border border-blue-600 text-blue-600 py-2 px-4 shadow font-medium 
-              rounded-sm hover:bg-white hover:text-blue-700 transition-colors duration-150 mr-6 '>
+            className='bg-transparent border border-blue-600 text-blue-600 py-2 px-4 shadow font-medium
+              rounded-sm hover:bg-white hover:text-blue-700 transition-colors duration-150 mr-6 '
+          >
             Log In
           </Link>
           <Link
             to='/signup'
-            className='bg-blue-600 border border-blue-600 text-white py-2 px-4 shadow font-medium 
-              rounded-sm hover:bg-blue-700 transition-colors duration-150'>
+            className='bg-blue-600 border border-blue-600 text-white py-2 px-4 shadow font-medium
+              rounded-sm hover:bg-blue-700 transition-colors duration-150'
+          >
             Sign Up
           </Link>
         </div>
@@ -76,8 +78,9 @@ const LandingPage = () => {
             <button
               onClick={() => handleGuestLogin()}
               aria-label='Continue as a guest user button'
-              className='bg-blue-600 text-white py-3 px-8 shadow-xl font-medium rounded-sm 
-              hover:bg-blue-700 hover:shadow-xl transition-all duration-150 w-full h-14 lg:w-1/2 whitespace-nowrap'>
+              className='bg-blue-600 text-white py-3 px-8 shadow-xl font-medium rounded-sm
+              hover:bg-blue-700 hover:shadow-xl transition-all duration-150 w-full h-14 lg:w-1/2 whitespace-nowrap'
+            >
               {isLoading ? <MiniLoader /> : <span>Try It Out</span>}
             </button>
           </div>
