@@ -38,23 +38,24 @@ const EditableText = ({ style, dataText, dataUpdateFunc }) => {
   };
 
   return (
-    <div className='w-full' role='button' onClick={() => setIsEditing(true)}>
+    <div className="w-full" role="button" onClick={() => setIsEditing(true)}>
       <h2
         className={`w-full break-words ${style} ${
-          !isEditing ? 'block' : 'hidden'
-        }`}>
+          !isEditing ? "block" : "hidden"
+        }`}
+      >
         {textValue}
       </h2>
       <input
         ref={inputRef}
         onBlur={() => handleOnBlur()}
         onChange={(e) => handleOnChange(e)}
-        className={`w-full rounded-sm bg-transparent ${style} ${
-          isEditing ? 'block' : 'hidden'
+        className={`w-full rounded-md bg-transparent ${style} ${
+          isEditing ? "block" : "hidden"
         }`}
         value={textValue}
-        autoComplete='off'
-        maxLength='128'
+        autoComplete="off"
+        maxLength="128"
       />
     </div>
   );

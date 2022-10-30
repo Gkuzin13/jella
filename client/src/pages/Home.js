@@ -5,7 +5,7 @@ import boardApi from "../api/boardApi";
 import BoardForm from "../components/Board/BoardForm";
 import HomeBoards from "../components/Board/HomeBoards";
 import ConfirmBox from "../components/ConfirmBox";
-import Loader from "../components/Loader";
+import MiniLoader from "../components/MiniLoader";
 import UserControl from "../components/UserControl";
 import { AuthContext } from "../config/Auth";
 
@@ -26,7 +26,7 @@ const Home = () => {
         }
 
         setUserBoards(() => [...data]);
-        setIsLoading(false);
+        setIsLoading(() => false);
       } catch (error) {
         console.log(error);
         navigate("notfound");
@@ -35,7 +35,7 @@ const Home = () => {
 
     return () => {
       setUserBoards([]);
-      setIsLoading(false);
+      setIsLoading(() => false);
       setConfirmBox({ id: null, isOpen: false });
     };
   }, [user, navigate]);
@@ -68,13 +68,9 @@ const Home = () => {
     }
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
-    <div className='fixed w-full h-full overflow-hidden'>
-      <div className='bg-homePage absolute h-full w-full -z-10'></div>
+    <div className="fixed w-full h-full overflow-hidden">
+      <div className="bg-homePage absolute h-full w-full -z-10"></div>
       <AnimatePresence>
         {confirmBox.isOpen && (
           <ConfirmBox
@@ -85,15 +81,19 @@ const Home = () => {
         )}
       </AnimatePresence>
 
-      <div className='flex items-center bg-white justify-between mb-8 px-6 py-3 md:px-16 shadow-sm'>
-        <h1 className='font-bold text-3xl text-blue-900'>Jella</h1>
+      <div className="flex items-center bg-white justify-between mb-8 px-6 py-3 md:px-16 shadow-sm">
+        <h1 className="font-bold text-3xl text-blue-900">Jella</h1>
         <UserControl />
       </div>
 
-      <div className='flex justify-center items-center'>
-        <div className='flex flex-col md:flex-row-reverse justify-around gap-x-24 w-full mt-2'>
+      <div className="flex justify-center items-center">
+        <div className="flex flex-col md:flex-row-reverse justify-around gap-x-24 w-full mt-2">
           <BoardForm userId={user.id} handleNewBoard={handleNewBoard} />
-          <HomeBoards boards={userBoards} setConfirmBox={setConfirmBox} />
+          {isLoading ? (
+            <MiniLoader />
+          ) : (
+            <HomeBoards boards={userBoards} setConfirmBox={setConfirmBox} />
+          )}
         </div>
       </div>
     </div>

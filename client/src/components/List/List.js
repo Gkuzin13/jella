@@ -44,10 +44,10 @@ const List = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           className="flex flex-col flex-shrink-0 bg-gray-100 bg-opacity-90 shadow-lg
-          w-76 mr-4 rounded-sm"
+          w-76 mr-4 rounded-md"
         >
           <div
-            className={`flex justify-between items-center py-1.5 px-2 rounded-t-sm
+            className={`flex justify-between items-center py-1.5 px-2 rounded-t-md
             rounded-b-none ${coverColor}`}
           >
             <EditableText

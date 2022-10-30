@@ -57,7 +57,7 @@ const ListOptionsBox = ({
                 onClick={() => handleOnColorChange(color.name)}
                 aria-label={`Select ${color.name} list cover color`}
                 role="button"
-                className={`${color.class} w-9 h-7 text-center rounded-sm bg-opacity-90 hover:bg-opacity-100
+                className={`${color.class} w-9 h-7 text-center rounded-md bg-opacity-90 hover:bg-opacity-100
                transition-colors transform duration-75 ease-linear`}
               >
                 {color.name === coverColor && (
@@ -75,7 +75,7 @@ const ListOptionsBox = ({
         type="button"
         onClick={() => handleListDelete(_id)}
         className="text-left w-full font-medium text-gray-500 bg-gray-200 bg-opacity-40 hover:bg-opacity-90
-         px-2.5 py-1.5 transition-colors duration-150 rounded-sm"
+         px-2.5 py-1.5 transition-colors duration-150 rounded-md"
       >
         Delete list
       </button>

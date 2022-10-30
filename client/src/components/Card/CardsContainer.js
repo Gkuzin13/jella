@@ -32,12 +32,12 @@ const CardsContainer = ({ listData, cards, dispatchCards, toggleCardBox }) => {
   return (
     <div>
       <CardForm handleNewCard={handleNewCard} />
-      <Droppable droppableId={listData._id} direction='vertical' type='CARD'>
+      <Droppable droppableId={listData._id} direction="vertical" type="CARD">
         {(provided, snapshot) => (
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className={`mx-2 px-1 mt-1 pt-1 mb-1.5 pb-px rounded-sm transition-colors duration-750 ${
+            className={`mx-2 px-1 mt-1 mb-2 pb-1.5 rounded-md transition-colors duration-750 ${
               snapshot.isDraggingOver && "bg-green-100"
             }`}
           >

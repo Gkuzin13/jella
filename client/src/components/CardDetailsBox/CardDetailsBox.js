@@ -121,7 +121,7 @@ const CardDetailsBox = ({
             <button
               onClick={() => handleCardDelete()}
               className="bg-gray-100 text-gray-500 hover:text-red-600
-              font-medium px-3 py-1 shadow-sm rounded-sm transition-colors duration-150"
+              font-medium px-3 py-1 shadow-sm rounded-md transition-colors duration-150"
             >
               Delete Card
             </button>

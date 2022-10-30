@@ -125,7 +125,7 @@ const Checklist = ({ dispatchCards, selectedCard }) => {
                 ref={provided.innerRef}
                 className={`${
                   !subtasks.length && "hidden"
-                } w-full my-1 mb-3 bg-gray-100`}
+                } w-full my-1 mb-3 rounded-md`}
               >
                 {subtasks.map((subtask, index) => {
                   return (

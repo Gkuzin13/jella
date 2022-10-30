@@ -25,7 +25,7 @@ const SubTask = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           className={`flex justify-between bg-white hover:bg-gray-50 items-center
-          w-full bg-opacity-95 py-2 px-1 ${draggingStyle}`}
+          w-full rounded-md bg-opacity-95 py-2 px-1 ${draggingStyle}`}
         >
           <div className="flex items-center">
             <input
