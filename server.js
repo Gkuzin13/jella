@@ -23,13 +23,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(helmet());
-
-if (process.env.NODE_ENV !== "development") {
-  app.use(
-    cors({ credentials: true, origin: "https://jella-app.onrender.com" })
-  );
-}
-
+app.use(cors({ credentials: true, origin: "https://jella-app.onrender.com" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
