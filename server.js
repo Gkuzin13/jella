@@ -1,7 +1,7 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const passport = require('passport');
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const passport = require("passport");
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
 
@@ -23,7 +23,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(helmet());
-app.use(cors({ credentials: true }));
+app.use(cors({ credentials: true, origin: "https://jella.onrender.com" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -50,6 +50,6 @@ app.use("/api", cardRouter);
 
 app.listen(port, () => {
   // Get db connection
-  require('./config/mongoConfig');
+  require("./config/mongoConfig");
   console.log(`Server is running on port: ${port}`);
 });
