@@ -78,12 +78,12 @@ const BoardCanvas = ({
   }
 
   return (
-    <Droppable droppableId={boardId} direction='horizontal' type='LIST'>
+    <Droppable droppableId={boardId} direction="horizontal" type="LIST">
       {(provided) => (
         <div
           {...provided.droppableProps}
           ref={provided.innerRef}
-          className='flex flex-nowrap items-start px-3'
+          className="flex flex-nowrap items-start px-3"
         >
           {lists.map((list, index) => {
             const listCards = cards.filter((card) => card.listId === list._id);

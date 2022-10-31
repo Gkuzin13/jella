@@ -11,7 +11,7 @@ module.exports = {
       safelist: [{ pattern: /(bg-|text-)/ }],
     },
   },
-  darkMode: false, // or 'media' or 'class'
+  darkMode: false,
   theme: {
     extend: {
       fontFamily: {

@@ -115,9 +115,11 @@ exports.user_get = (req, res, next) => {
 
 // Logout account and clear cookies
 exports.account_logout = (req, res, next) => {
-  req.logout();
-  req.session.destroy((err) => {
-    if (err) return res.sendStatus(403);
-    return res.sendStatus(200);
+  req.logout(() => {
+    req.session.destroy((err) => {
+      if (err) return res.sendStatus(403);
+      return res.sendStatus(200);
+    });
   });
+
 };

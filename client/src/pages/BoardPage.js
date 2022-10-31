@@ -1,20 +1,20 @@
-import { useContext, useEffect, useReducer, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { DragDropContext } from 'react-beautiful-dnd';
-import { AnimatePresence } from 'framer-motion';
-import listReducer from '../reducers/listReducer';
-import cardReducer from '../reducers/cardReducer';
-import ACTIONS from '../reducers/actions';
-import Loader from '../components/Loader';
-import BoardCanvas from '../components/Board/BoardCanvas';
-import BoardNav from '../components/Board/BoardNav';
-import boardApi from '../api/boardApi';
-import listApi from '../api/listApi';
-import cardApi from '../api/cardApi';
-import cardReorderer from '../utils/cardReorderer';
-import listReorderer from '../utils/listReorderer';
-import CardDetailsBox from '../components/CardDetailsBox/CardDetailsBox';
-import { AuthContext } from '../config/Auth';
+import { AnimatePresence } from "framer-motion";
+import { useContext, useEffect, useReducer, useState } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
+import { useNavigate, useParams } from "react-router-dom";
+import boardApi from "../api/boardApi";
+import cardApi from "../api/cardApi";
+import listApi from "../api/listApi";
+import BoardCanvas from "../components/Board/BoardCanvas";
+import BoardNav from "../components/Board/BoardNav";
+import CardDetailsBox from "../components/CardDetailsBox/CardDetailsBox";
+import Loader from "../components/Loader";
+import { AuthContext } from "../config/Auth";
+import ACTIONS from "../reducers/actions";
+import cardReducer from "../reducers/cardReducer";
+import listReducer from "../reducers/listReducer";
+import cardReorderer from "../utils/cardReorderer";
+import listReorderer from "../utils/listReorderer";
 
 const BoardPage = () => {
   const [boardData, setBoardData] = useState(null);
@@ -31,7 +31,7 @@ const BoardPage = () => {
       try {
         const { data } = await boardApi.get(id);
         if (!data) {
-          navigate('/notfound');
+          navigate("/notfound");
           return;
         }
         dispatchLists({
@@ -46,7 +46,7 @@ const BoardPage = () => {
         navigate(`/b/${id}/${data.boardTitle}`);
       } catch (error) {
         console.log(error);
-        navigate('/notfound');
+        navigate("/notfound");
       }
     })();
 
@@ -79,7 +79,7 @@ const BoardPage = () => {
       return;
     }
 
-    if (type === 'CARD') {
+    if (type === "CARD") {
       const { allCards, updatedCard } = cardReorderer(
         cards,
         destination,
@@ -123,7 +123,7 @@ const BoardPage = () => {
   }
 
   return (
-    <div className='h-screen flex flex-col'>
+    <div className="h-screen flex flex-col">
       <AnimatePresence>
         {cardBox.isOpen && (
           <CardDetailsBox
@@ -135,9 +135,9 @@ const BoardPage = () => {
           />
         )}
       </AnimatePresence>
-      <div className='bg-boardPage absolute w-full h-screen -z-10'></div>
+      <div className="bg-boardPage absolute w-full h-screen -z-10"></div>
       <BoardNav user={user} boardData={boardData} setBoardData={setBoardData} />
-      <main className='flex h-full overflow-x-auto'>
+      <main className="flex h-full overflow-x-auto">
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <BoardCanvas
             boardId={boardData.id}
