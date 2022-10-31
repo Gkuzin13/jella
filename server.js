@@ -5,9 +5,9 @@ const passport = require("passport");
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
 
-// if (process.env.NODE_ENV === "development") {
-require("dotenv").config();
-// }
+if (process.env.NODE_ENV === "development") {
+  require("dotenv").config();
+}
 
 // Use passport config
 const initialize = require("./config/passportConfig");
@@ -23,17 +23,18 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(helmet());
-app.use(cors({ credentials: true, origin: "https://jella-app.onrender.com" }));
+
+if (process.env.NODE_ENV !== "development") {
+  app.use(
+    cors({ credentials: true, origin: "https://jella-app.onrender.com" })
+  );
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const sessionConfig = {
   secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: false,
-  },
   store: MongoStore.create({
     mongoUrl: process.env.MONGODB_URI,
     dbName: "sessions",
