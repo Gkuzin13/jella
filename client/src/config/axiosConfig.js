@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: "https://jella.onrender.com/api",
+  baseURL: "/api",
   withCredentials: true,
   credentials: "include",
 });

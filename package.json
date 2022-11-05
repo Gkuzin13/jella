@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=development node server.js",
-    "build": "NODE_ENV=production node server.js",
+    "build": "NODE_ENV=production node server.js && cd client && npm run build",
     "test": "jest --config=jest.config.js",
     "test:watch": "jest --watch"
   },
