@@ -41,7 +41,7 @@ const SignupPage = () => {
   };
 
   if (user) {
-    return <Navigate to={`/${user.username}`} />;
+    return <Navigate to={`/u/${user.username}`} />;
   }
 
   return (

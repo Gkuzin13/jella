@@ -61,7 +61,7 @@ describe("App", () => {
   });
 
   test("render home page correctly", async () => {
-    const history = window.history.replaceState({}, "", `/${user.username}/`);
+    const history = window.history.replaceState({}, "", `/u/${user.username}/`);
     renderWithContext(user, Home, history);
 
     expect(await screen.findByText(/Test Board/)).toBeInTheDocument();
@@ -80,12 +80,10 @@ describe("App", () => {
     expect(await screen.findByText(/Test Card/)).toBeInTheDocument();
   });
 
-  test("redirects to page not found correctly", async () => {
+  test("redirects to page not found correctly", () => {
     const history = window.history.replaceState({}, "", "/undefined-route");
     renderWithRouter(null, history);
 
-    await waitFor(() =>
-      expect(screen.getByText(/Page not found/)).toBeInTheDocument()
-    );
+    expect(screen.getByText(/Page not found/)).toBeInTheDocument();
   });
 });

@@ -13,11 +13,12 @@ import { AuthContext } from "../config/Auth";
 const Home = () => {
   const [userBoards, setUserBoards] = useState([]);
   const [confirmBox, setConfirmBox] = useState({ id: null, isOpen: false });
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
+    setIsLoading(() => true);
     (async () => {
       try {
         const { data } = await boardApi.getAll(user.id);

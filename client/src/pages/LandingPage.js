@@ -2,6 +2,7 @@ import ObjectId from "bson-objectid";
 import { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { ReactComponent as BoardImg } from "../assets/boardplanner.svg";
+import Loader from "../components/Loader";
 import MiniLoader from "../components/MiniLoader";
 import { AuthContext } from "../config/Auth";
 import api from "../config/axiosConfig";
@@ -9,7 +10,7 @@ import api from "../config/axiosConfig";
 const LandingPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, isLoading: pendingUser } = useContext(AuthContext);
 
   const handleGuestLogin = async () => {
     setIsLoading(true);
@@ -36,8 +37,12 @@ const LandingPage = () => {
     }
   };
 
+  if (pendingUser) {
+    return <Loader />;
+  }
+
   if (user) {
-    return <Navigate to={`/${user.username}`} />;
+    return <Navigate to={`/u/${user.username}`} />;
   }
 
   return (
@@ -87,7 +92,7 @@ const LandingPage = () => {
           {errorMsg && <p className="text-red-600">{errorMsg}</p>}
         </div>
 
-        <div className="w-full h-full md:max-w-xl lg:max-w-full lg:ml-4">
+        <div className="w-screen h-full md:max-w-xl lg:max-w-full lg:ml-4">
           <BoardImg alt="People plan on board" width="100%" height="100%" />
         </div>
       </div>
