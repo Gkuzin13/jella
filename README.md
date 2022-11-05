@@ -5,7 +5,7 @@
     <strong>A Kanban board web app that allows users to visually plan, track and organize projects they are working on.</strong>
       <br />
       <br />
-    <a href="https://jella-app.herokuapp.com/"><strong>🚀  View Demo</strong></a>
+    <a href="https://https://jella.onrender.com/"><strong>🚀  View Demo</strong></a>
     <br/>
     <br/>
     <a href="https://github.com/Gkuzin13/jella/issues">Report Bug</a>
@@ -43,7 +43,6 @@
 - [Express](https://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
-
 
 Drag and drop functionality for lists, cards and subtasks implemented using [React Beautiful DnD](https://github.com/atlassian/react-beautiful-dnd).
 
@@ -84,7 +83,9 @@ npm install npm@latest -g
    MONGODB_URI=mongodb://127.0.0.1:27017/localjella
    SESSION_SECRET=abc123
    ```
+
 ### Run
+
 ```sh
 # Run server (:5000)
 node server
@@ -95,10 +96,12 @@ npm start
 ```
 
 ### Testing
+
 ```sh
 # Run in root folder to test the server
 npm test
 ```
+
 ```sh
 # Run in client folder to test react
 npm test
