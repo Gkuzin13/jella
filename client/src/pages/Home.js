@@ -90,10 +90,13 @@ const Home = () => {
         </div>
 
         <div className="flex justify-center items-center">
-          <div className="flex flex-col md:flex-row-reverse justify-around gap-x-24 w-full mt-2">
+          <div className="flex flex-col md:flex-row-reverse justify-between gap-x-24 w-full max-w-7xl mx-auto mt-2">
             <BoardForm userId={user.id} handleNewBoard={handleNewBoard} />
+
             {isLoading ? (
-              <MiniLoader />
+              <div className="w-full">
+                <MiniLoader />
+              </div>
             ) : (
               <HomeBoards boards={userBoards} setConfirmBox={setConfirmBox} />
             )}

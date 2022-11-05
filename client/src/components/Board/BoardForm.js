@@ -32,7 +32,7 @@ const BoardForm = ({ handleNewBoard }) => {
   };
 
   return (
-    <div className="whitespace-nowrap pb-16 md:pl-24 mx-4">
+    <div className="whitespace-nowrap pb-16 md:pl-24 mx-4 lg:mr-0">
       <div className="flex flex-col leading-relaxed text-center">
         <button
           onClick={() => setBoardForm(true)}

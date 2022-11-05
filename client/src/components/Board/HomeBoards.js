@@ -44,7 +44,7 @@ const HomeBoards = ({ boards, setConfirmBox }) => {
 
   return (
     <div className="relative">
-      <div className="fixed overflow-y-auto w-full h-3/4 md:w-2/5 md:h-5/6 flex flex-col items-start px-4 pb-6 ">
+      <div className="fixed overflow-y-auto w-full md:max-w-2xl h-3/4 flex flex-col items-start px-4 lg:pl-0 pb-6">
         {boards.map((board) => {
           return (
             <div
