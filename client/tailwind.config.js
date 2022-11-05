@@ -1,15 +1,9 @@
 /* eslint-disable no-undef */
 
 module.exports = {
-  purge: {
-    content: [
-      "./src/components/**/*.{js,jsx}",
-      "./src/pages/**/*.{js,jsx}",
-      "./build/**/*.html",
-    ],
-    options: {
-      safelist: [{ pattern: /(bg-|text-)/ }],
-    },
+  content: ["./src/**/*.{js,jsx}", "./public/**/*.html"],
+  options: {
+    safelist: [{ pattern: /(bg-|text-)/ }],
   },
   theme: {
     extend: {
@@ -68,8 +62,4 @@ module.exports = {
       },
     },
   },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
 };
