@@ -1,5 +1,5 @@
 import { AnimatePresence } from "framer-motion";
-import { useContext, useEffect, useReducer, useState } from "react";
+import { Suspense, useContext, useEffect, useReducer, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useNavigate, useParams } from "react-router-dom";
 import boardApi from "../api/boardApi";
@@ -123,33 +123,39 @@ const BoardPage = () => {
   }
 
   return (
-    <div className="h-screen flex flex-col">
-      <AnimatePresence>
-        {cardBox.isOpen && (
-          <CardDetailsBox
-            cards={cards}
-            lists={lists}
-            toggleCardBox={toggleCardBox}
-            cardBox={cardBox}
-            dispatchCards={dispatchCards}
-          />
-        )}
-      </AnimatePresence>
-      <div className="bg-boardPage absolute w-full h-screen -z-10"></div>
-      <BoardNav user={user} boardData={boardData} setBoardData={setBoardData} />
-      <main className="flex h-full overflow-x-auto">
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-          <BoardCanvas
-            boardId={boardData.id}
-            lists={lists}
-            cards={cards}
-            dispatchLists={dispatchLists}
-            dispatchCards={dispatchCards}
-            toggleCardBox={toggleCardBox}
-          />
-        </DragDropContext>
-      </main>
-    </div>
+    <Suspense fallback={<Loader />}>
+      <div className="h-screen flex flex-col">
+        <AnimatePresence>
+          {cardBox.isOpen && (
+            <CardDetailsBox
+              cards={cards}
+              lists={lists}
+              toggleCardBox={toggleCardBox}
+              cardBox={cardBox}
+              dispatchCards={dispatchCards}
+            />
+          )}
+        </AnimatePresence>
+        <div className="bg-boardPage absolute w-full h-screen -z-10"></div>
+        <BoardNav
+          user={user}
+          boardData={boardData}
+          setBoardData={setBoardData}
+        />
+        <main className="flex h-full overflow-x-auto">
+          <DragDropContext onDragEnd={handleOnDragEnd}>
+            <BoardCanvas
+              boardId={boardData.id}
+              lists={lists}
+              cards={cards}
+              dispatchLists={dispatchLists}
+              dispatchCards={dispatchCards}
+              toggleCardBox={toggleCardBox}
+            />
+          </DragDropContext>
+        </main>
+      </div>
+    </Suspense>
   );
 };
 

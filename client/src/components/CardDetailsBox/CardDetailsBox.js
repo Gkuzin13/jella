@@ -69,8 +69,7 @@ const CardDetailsBox = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       ref={wrapperRef}
-      className="fixed top-0 right-0 left-0 bottom-0 overflow-auto bg-opacity-30
-    bg-black z-20"
+      className="fixed top-0 right-0 left-0 bottom-0 overflow-auto bg-opacity-30 bg-black z-20"
     >
       <motion.div
         transition={{ duration: 0.1 }}
@@ -81,7 +80,7 @@ const CardDetailsBox = ({
       >
         <div
           className="flex flex-col justify-between relative p-6 w-11/12 lg:w-2/4 lg:px-10
-        bg-white shadow-2xl"
+        bg-white shadow-2xl rounded-md"
         >
           <span
             role="button"

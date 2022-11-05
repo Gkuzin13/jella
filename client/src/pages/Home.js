@@ -1,10 +1,11 @@
 import { AnimatePresence } from "framer-motion";
-import { useContext, useEffect, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import boardApi from "../api/boardApi";
 import BoardForm from "../components/Board/BoardForm";
 import HomeBoards from "../components/Board/HomeBoards";
 import ConfirmBox from "../components/ConfirmBox";
+import Loader from "../components/Loader";
 import MiniLoader from "../components/MiniLoader";
 import UserControl from "../components/UserControl";
 import { AuthContext } from "../config/Auth";
@@ -69,34 +70,36 @@ const Home = () => {
   };
 
   return (
-    <div className="fixed w-full h-full overflow-hidden">
-      <div className="bg-homePage absolute h-full w-full -z-10"></div>
-      <AnimatePresence>
-        {confirmBox.isOpen && (
-          <ConfirmBox
-            handleFunc={handleDelBoard}
-            setConfirmBox={setConfirmBox}
-            confirmBox={confirmBox}
-          />
-        )}
-      </AnimatePresence>
-
-      <div className="flex items-center bg-white justify-between mb-8 px-6 py-3 md:px-16 shadow-sm">
-        <h1 className="font-bold text-3xl text-blue-900">Jella</h1>
-        <UserControl />
-      </div>
-
-      <div className="flex justify-center items-center">
-        <div className="flex flex-col md:flex-row-reverse justify-around gap-x-24 w-full mt-2">
-          <BoardForm userId={user.id} handleNewBoard={handleNewBoard} />
-          {isLoading ? (
-            <MiniLoader />
-          ) : (
-            <HomeBoards boards={userBoards} setConfirmBox={setConfirmBox} />
+    <Suspense fallback={<Loader />}>
+      <div className="fixed w-full h-full overflow-hidden">
+        <div className="bg-homePage absolute h-full w-full -z-10"></div>
+        <AnimatePresence>
+          {confirmBox.isOpen && (
+            <ConfirmBox
+              handleFunc={handleDelBoard}
+              setConfirmBox={setConfirmBox}
+              confirmBox={confirmBox}
+            />
           )}
+        </AnimatePresence>
+
+        <div className="flex items-center bg-white justify-between mb-8 px-6 py-3 md:px-16 shadow-sm">
+          <h1 className="font-bold text-3xl text-blue-900">Jella</h1>
+          <UserControl />
+        </div>
+
+        <div className="flex justify-center items-center">
+          <div className="flex flex-col md:flex-row-reverse justify-around gap-x-24 w-full mt-2">
+            <BoardForm userId={user.id} handleNewBoard={handleNewBoard} />
+            {isLoading ? (
+              <MiniLoader />
+            ) : (
+              <HomeBoards boards={userBoards} setConfirmBox={setConfirmBox} />
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </Suspense>
   );
 };
 

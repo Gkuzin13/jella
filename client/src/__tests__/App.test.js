@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import App from '../App';
-import BoardPage from '../pages/BoardPage';
-import Home from '../pages/Home';
-import { user, board } from '../mocks/mockData';
-import { AuthContext } from '../config/Auth';
+import { render, screen, waitFor } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+import App from "../App";
+import { AuthContext } from "../config/Auth";
+import { board, user } from "../mocks/mockData";
+import BoardPage from "../pages/BoardPage";
+import Home from "../pages/Home";
 
 export const renderWithRouter = (user, history) => {
   const userProps = {
@@ -35,38 +34,43 @@ export const renderWithContext = (user, Component, history) => {
   );
 };
 
-describe('App', () => {
-  test('render landing page', () => {
+describe("App", () => {
+  test("render landing page", () => {
     const history = window.location;
     renderWithRouter(null, history);
 
     expect(screen.getByText(/Try It Out/)).toBeInTheDocument();
   });
-  test('render login page', () => {
-    const history = window.history.replaceState({}, '', '/login');
+
+  test("render login page", async () => {
+    const history = window.history.replaceState({}, "", "/login");
     renderWithRouter(null, history);
 
-    expect(screen.getByText(/Log in to your account/)).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getByText(/Log in to your account/)).toBeInTheDocument()
+    );
   });
 
-  test('render render signup page', () => {
-    const history = window.history.replaceState({}, '', '/signup');
+  test("render render signup page", async () => {
+    const history = window.history.replaceState({}, "", "/signup");
     renderWithRouter(null, history);
 
-    expect(screen.getByText(/Sign up for your account/)).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getByText(/Sign up for your account/)).toBeInTheDocument()
+    );
   });
 
-  test('render home page correctly', async () => {
-    const history = window.history.replaceState({}, '', `/${user.username}/`);
+  test("render home page correctly", async () => {
+    const history = window.history.replaceState({}, "", `/${user.username}/`);
     renderWithContext(user, Home, history);
 
     expect(await screen.findByText(/Test Board/)).toBeInTheDocument();
   });
 
-  test('render board page correctly', async () => {
+  test("render board page correctly", async () => {
     const history = window.history.replaceState(
       {},
-      '',
+      "",
       `/b/${board.id}/${board.boardTitle}`
     );
     renderWithContext(user, BoardPage, history);
@@ -76,10 +80,12 @@ describe('App', () => {
     expect(await screen.findByText(/Test Card/)).toBeInTheDocument();
   });
 
-  test('redirects to page not found correctly', () => {
-    const history = window.history.replaceState({}, '', '/undefined-route');
+  test("redirects to page not found correctly", async () => {
+    const history = window.history.replaceState({}, "", "/undefined-route");
     renderWithRouter(null, history);
 
-    expect(screen.getByText(/Page not found/)).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getByText(/Page not found/)).toBeInTheDocument()
+    );
   });
 });

@@ -1,49 +1,48 @@
-import { useContext } from "react";
+import { lazy, Suspense, useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import Loader from "./components/Loader";
 import { AuthContext } from "./config/Auth";
-import BoardPage from "./pages/BoardPage";
-import Home from "./pages/Home";
 import LandingPage from "./pages/LandingPage";
-import LoginPage from "./pages/LoginPage";
-import NotFound from "./pages/NotFound";
-import SignupPage from "./pages/SignupPage";
 import RequireAuth from "./routes/RequireAuth";
 
-function App() {
-  const { user, isLoading } = useContext(AuthContext);
+const Home = lazy(() => import("./pages/Home"));
+const BoardPage = lazy(() => import("./pages/BoardPage"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const SignupPage = lazy(() => import("./pages/SignupPage"));
 
-  if (isLoading) {
-    return <Loader />;
-  }
+function App() {
+  const { user } = useContext(AuthContext);
 
   return (
     <>
-      <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/signup' element={<SignupPage />} />
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
 
-        <Route
-          path={`/${user?.username}`}
-          element={
-            <RequireAuth redirectTo='/notfound'>
-              <Home />
-            </RequireAuth>
-          }
-        />
+          <Route
+            path={`/${user?.username}`}
+            element={
+              <RequireAuth redirectTo="/notfound">
+                <Home />
+              </RequireAuth>
+            }
+          />
 
-        <Route
-          path='/b/:id/:boardTitle'
-          element={
-            <RequireAuth redirectTo='/notfound'>
-              <BoardPage />
-            </RequireAuth>
-          }
-        />
+          <Route
+            path="/b/:id/:boardTitle"
+            element={
+              <RequireAuth redirectTo="/notfound">
+                <BoardPage />
+              </RequireAuth>
+            }
+          />
 
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </>
   );
 }
