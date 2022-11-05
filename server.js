@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const passport = require("passport");
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
+const path = require("path");
 
 if (process.env.NODE_ENV === "development") {
   require("dotenv").config();
