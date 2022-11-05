@@ -1,10 +1,12 @@
 /* eslint-disable no-undef */
 
 module.exports = {
-  content: ["./src/**/*.{js,jsx}", "./public/**/*.html"],
-  options: {
-    safelist: [{ pattern: /(bg-|text-)/ }],
-  },
+  content: [
+    "./src/components/**/*.{js,jsx}",
+    "./src/pages/**/*.{js,jsx}",
+    "./public/index.html",
+  ],
+  safelist: [{ pattern: /(bg|text)-./ }],
   theme: {
     extend: {
       fontFamily: {
