@@ -5,13 +5,12 @@ module.exports = {
     content: [
       "./src/components/**/*.{js,jsx}",
       "./src/pages/**/*.{js,jsx}",
-      "./public/**/*.html",
+      "./build/**/*.html",
     ],
     options: {
       safelist: [{ pattern: /(bg-|text-)/ }],
     },
   },
-  darkMode: false,
   theme: {
     extend: {
       fontFamily: {
