@@ -29,10 +29,8 @@ const List = ({
     handleListUpdate({ ...listData, listTitle: updatedTitle });
   };
 
-  const titleStyle = {
-    style:
-      "font-medium focus:bg-white focus:text-black text-white p-0.5 mx-0.5 focus:outline-none",
-  };
+  const titleStyle =
+    "font-medium focus:bg-white focus:text-black text-white p-0.5 mx-0.5 focus:outline-none";
 
   const coverColor = `bg-${listData.coverColor}-600`;
 
@@ -43,15 +41,13 @@ const List = ({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className="flex flex-col flex-shrink-0 bg-gray-100 bg-opacity-90 shadow-lg
-          w-76 mr-4 rounded-md"
+          className="flex flex-col flex-shrink-0 bg-gray-100 bg-opacity-90 shadow-lg w-76 mr-4 rounded-md"
         >
           <div
-            className={`flex justify-between items-center py-1.5 px-2 rounded-t-md
-            rounded-b-none ${coverColor}`}
+            className={`flex justify-between items-center py-1.5 px-2 rounded-t-md rounded-b-none ${coverColor}`}
           >
             <EditableText
-              style={titleStyle.style}
+              style={titleStyle}
               dataText={listData.listTitle}
               dataUpdateFunc={handleTitleUpdate}
             />
