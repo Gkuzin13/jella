@@ -5,7 +5,7 @@
     <strong>A Kanban board web app that allows users to visually plan, track and organize projects they are working on.</strong>
       <br />
       <br />
-    <a href="https://https://jella.onrender.com/"><strong>🚀  View Demo</strong></a>
+    <a href="https://jella.onrender.com/"><strong>🚀  View Demo</strong></a>
     <br/>
     <br/>
     <a href="https://github.com/Gkuzin13/jella/issues">Report Bug</a>
