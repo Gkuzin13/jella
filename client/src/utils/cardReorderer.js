@@ -1,64 +1,46 @@
 import { getNewItemPos } from "./itemPos";
+import { isTooClose, resetItemsOrder } from "./reorderer";
 
 const cardReorderer = (cards, destination, source, draggableId) => {
-  const sourceListId = source.droppableId;
   const targetListId = destination.droppableId;
+  const sourceListId = source.droppableId;
 
-  const targetCards = cards.filter((card) => card.listId === targetListId);
-  const sourceCards = cards.filter((card) => card.listId === sourceListId);
-  const restCards = cards.filter(
-    (card) => card.listId !== targetListId && card.listId !== sourceListId
-  );
+  let targetCards = cards.filter((card) => card.listId === targetListId);
+  let sourceCards = cards.filter((card) => card.listId === sourceListId);
+  const restCards = cards.filter((card) => {
+    return card.listId !== targetListId && card.listId !== sourceListId;
+  });
+
   const draggedCard = cards.find((card) => card._id === draggableId);
 
-  if (sourceListId === targetListId) {
+  const isDraggingInSameList = targetListId === sourceListId;
+
+  if (!isDraggingInSameList) {
+    sourceCards.splice(source.index, 1);
+  } else {
     targetCards.splice(source.index, 1);
-    targetCards.splice(destination.index, 0, draggedCard);
-
-    const updatedCard = {
-      ...draggedCard,
-      position: getNewItemPos(targetCards, destination),
-    };
-    targetCards.splice(destination.index, 1, updatedCard);
-
-    const newPos = updatedCard.position;
-
-    if (!Number.isInteger(newPos) && newPos % 1 < 0.1) {
-      let num = 16384;
-
-      for (let card of targetCards) {
-        card.position = num;
-        num += 16384;
-      }
-    }
-
-    return { allCards: [...restCards, ...targetCards], updatedCard };
   }
 
-  sourceCards.splice(source.index, 1);
   targetCards.splice(destination.index, 0, draggedCard);
 
   const updatedCard = {
     ...draggedCard,
-    position: getNewItemPos(targetCards, destination),
+    position: getNewItemPos(targetCards, destination.index),
     listId: targetListId,
   };
 
   targetCards.splice(destination.index, 1, updatedCard);
 
-  const newPos = updatedCard.position;
+  const processedCards = isTooClose(updatedCard.position)
+    ? resetItemsOrder(targetCards)
+    : targetCards;
 
-  if (!Number.isInteger(newPos) && newPos % 1 < 0.1) {
-    let num = 16384;
-
-    for (let card of targetCards) {
-      card.position = num;
-      num += 16384;
-    }
+  if (isDraggingInSameList) {
+    return { allCards: [...restCards, ...processedCards], updatedCard };
   }
 
   return {
-    allCards: [...restCards, ...sourceCards, ...targetCards],
+    allCards: [...restCards, ...sourceCards, ...processedCards],
     updatedCard,
   };
 };

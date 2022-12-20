@@ -1,12 +1,11 @@
-import cardReorderer from '../cardReorderer';
+import cardReorderer from "../cardReorderer";
 
-describe('Card reorderer', () => {
-  it('should reorder cards between lists correctly', () => {
+describe("Card reorderer", () => {
+  it("should reorder cards between lists correctly", () => {
     const mockCards = [
       {
         position: 16384,
         listId: 1,
-        draggableId: 123,
       },
       {
         position: 32768,
@@ -16,7 +15,6 @@ describe('Card reorderer', () => {
         position: 49152,
         listId: 1,
       },
-
       {
         position: 16384,
         listId: 2,
@@ -50,14 +48,19 @@ describe('Card reorderer', () => {
         listId: 2,
       },
     ];
-    const destination = {
-      index: 1,
-      droppableId: 2,
-    };
+
     const source = {
       index: 0,
       droppableId: 1,
     };
+
+    const destination = {
+      index: 1,
+      droppableId: 2,
+    };
+
+    console.log(cardReorderer(mockCards, destination, source, 123).allCards);
+
     expect(cardReorderer(mockCards, destination, source, 123).allCards).toEqual(
       expectedArr
     );

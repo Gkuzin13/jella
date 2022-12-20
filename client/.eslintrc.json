@@ -10,7 +10,8 @@
         "**/*.spec.js",
         "**/*.spec.jsx",
         "**/*.test.js",
-        "**/*.test.jsx"
+        "**/*.test.jsx",
+        "**/*/testUtils.js"
       ],
       "env": {
         "jest": true

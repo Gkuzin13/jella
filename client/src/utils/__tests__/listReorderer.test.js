@@ -53,6 +53,7 @@ describe('List Reorderer', () => {
         position: 65536,
       },
     ];
+
     const expectedArr = [
       {
         position: 16384,
@@ -68,9 +69,11 @@ describe('List Reorderer', () => {
     const destination = {
       index: 1,
     };
+
     const source = {
       index: 0,
     };
+
     expect(listReorderer(mockLists, destination, source).updatedLists).toEqual(
       expectedArr
     );

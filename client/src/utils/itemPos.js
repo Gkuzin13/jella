@@ -8,9 +8,9 @@ export const getPrependedItemPos = (items) => {
 
 export const getInsertedItemPos = (items, targetIndex) => {
   const leftAdjacentItemPos = items[targetIndex - 1].position;
-  const rightAdjacentItemPost = items[targetIndex + 1].position;
+  const rightAdjacentItemPos = items[targetIndex + 1].position;
 
-  return (leftAdjacentItemPos + rightAdjacentItemPost) / 2;
+  return (leftAdjacentItemPos + rightAdjacentItemPos) / 2;
 };
 
 export const getAppendedItemPos = (items) => {
@@ -19,10 +19,8 @@ export const getAppendedItemPos = (items) => {
   return Math.max(...positions) + FIRST_ITEM_POS;
 };
 
-export const getNewItemPos = (items, destination) => {
+export const getNewItemPos = (items, targetIndex) => {
   if (!items?.length || !Array.isArray(items)) return FIRST_ITEM_POS;
-
-  const targetIndex = destination.index;
 
   const isPrepended = targetIndex === 0;
   const isAppended = targetIndex === items.length - 1;

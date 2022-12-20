@@ -1,4 +1,4 @@
-const mockDnD = jest.mock('react-beautiful-dnd', () => ({
+const mockDnD = jest.mock("react-beautiful-dnd", () => ({
   Droppable: ({ children }) =>
     children(
       {

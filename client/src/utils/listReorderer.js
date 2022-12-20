@@ -1,4 +1,5 @@
 import { getNewItemPos } from "./itemPos";
+import { isTooClose, resetItemsOrder } from "./reorderer";
 
 const listReorderer = (lists, destination, source) => {
   const listsCopy = [...lists];
@@ -9,23 +10,16 @@ const listReorderer = (lists, destination, source) => {
 
   const updatedList = {
     ...draggedList,
-    position: getNewItemPos(listsCopy, destination),
+    position: getNewItemPos(listsCopy, destination.index),
   };
 
   listsCopy.splice(destination.index, 1, updatedList);
 
-  const newPos = updatedList.position;
+  const updatedLists = isTooClose(updatedList.position)
+    ? resetItemsOrder(listsCopy)
+    : listsCopy;
 
-  if (!Number.isInteger(newPos) && newPos % 1 < 0.1) {
-    let num = 16384;
-
-    for (let card of listsCopy) {
-      card.position = num;
-      num += 16384;
-    }
-  }
-
-  return { updatedLists: listsCopy, updatedList };
+  return { updatedLists, updatedList };
 };
 
 export default listReorderer;

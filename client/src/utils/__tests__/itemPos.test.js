@@ -14,42 +14,22 @@ const mockItems = [
 
 describe("Should set new position correctly", () => {
   test("Should prepend item correctly", () => {
-    const destination = {
-      index: 0,
-    };
-
-    expect(getNewItemPos(mockItems, destination)).toBe(8192);
+    expect(getNewItemPos(mockItems, 0)).toBe(8192);
   });
 
   test("Should insert item in the middle correctly", () => {
-    const destination = {
-      index: 1,
-    };
-
-    expect(getNewItemPos(mockItems, destination)).toBe(32768);
+    expect(getNewItemPos(mockItems, 1)).toBe(32768);
   });
 
   test("Should append item correctly", () => {
-    const destination = {
-      index: 2,
-    };
-
-    expect(getNewItemPos(mockItems, destination)).toBe(65536);
+    expect(getNewItemPos(mockItems, 2)).toBe(65536);
   });
 
   test("Should return default item position when items array is empty", () => {
-    const destination = {
-      index: 0,
-    };
-
-    expect(getNewItemPos([], destination)).toBe(16384);
+    expect(getNewItemPos([], 0)).toBe(16384);
   });
 
   test("Should return default item position when items is not an array", () => {
-    const destination = {
-      index: 0,
-    };
-
-    expect(getNewItemPos(undefined, destination)).toBe(16384);
+    expect(getNewItemPos(undefined, 0)).toBe(16384);
   });
 });

@@ -10,11 +10,6 @@ export const calcTasksStats = (subtasks) => {
   );
 };
 
-export const calcPercentage = (done, total) => {
-  // Calculate percentage of completed subtasks
-  return Math.round((done / total || 0) * 100);
-};
-
 export const getProgressColor = (total, done) => {
   if (total === done) return 'bg-green-100 text-green-700';
   if (done > 0 && done < total) return 'bg-blue-100 text-blue-700';
