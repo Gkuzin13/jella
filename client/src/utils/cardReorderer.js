@@ -1,4 +1,4 @@
-import { setNewPos } from './setNewPos';
+import { getNewItemPos } from "./itemPos";
 
 const cardReorderer = (cards, destination, source, draggableId) => {
   const sourceListId = source.droppableId;
@@ -17,7 +17,7 @@ const cardReorderer = (cards, destination, source, draggableId) => {
 
     const updatedCard = {
       ...draggedCard,
-      position: setNewPos(targetCards, destination),
+      position: getNewItemPos(targetCards, destination),
     };
     targetCards.splice(destination.index, 1, updatedCard);
 
@@ -40,7 +40,7 @@ const cardReorderer = (cards, destination, source, draggableId) => {
 
   const updatedCard = {
     ...draggedCard,
-    position: setNewPos(targetCards, destination),
+    position: getNewItemPos(targetCards, destination),
     listId: targetListId,
   };
 

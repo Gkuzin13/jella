@@ -2,7 +2,7 @@ import ObjectId from "bson-objectid";
 import { Droppable } from "react-beautiful-dnd";
 import cardApi from "../../api/cardApi";
 import ACTIONS from "../../reducers/actions";
-import { appendItem } from "../../utils/setNewPos";
+import { getAppendedItemPos } from "../../utils/itemPos";
 import Card from "./Card";
 import CardForm from "./CardForm";
 
@@ -11,7 +11,7 @@ const CardsContainer = ({ listData, cards, dispatchCards, toggleCardBox }) => {
     const newCard = {
       _id: ObjectId().toHexString(),
       cardTitle: title,
-      position: appendItem(cards),
+      position: getAppendedItemPos(cards),
       listId: listData._id,
       boardId: listData.boardId,
       createdAt: Date.now(),

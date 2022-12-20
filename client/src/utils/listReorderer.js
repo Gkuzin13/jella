@@ -1,4 +1,4 @@
-import { setNewPos } from './setNewPos';
+import { getNewItemPos } from "./itemPos";
 
 const listReorderer = (lists, destination, source) => {
   const listsCopy = [...lists];
@@ -9,7 +9,7 @@ const listReorderer = (lists, destination, source) => {
 
   const updatedList = {
     ...draggedList,
-    position: setNewPos(listsCopy, destination),
+    position: getNewItemPos(listsCopy, destination),
   };
 
   listsCopy.splice(destination.index, 1, updatedList);

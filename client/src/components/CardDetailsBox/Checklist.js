@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import cardApi from "../../api/cardApi";
 import ACTIONS from "../../reducers/actions";
-import { appendItem, setNewPos } from "../../utils/setNewPos";
+import { getAppendedItemPos, getNewItemPos } from "../../utils/itemPos";
 import ProgressBar from "./ProgressBar";
 import Subtask from "./Subtask";
 import SubtaskForm from "./SubtaskForm";
@@ -27,7 +27,7 @@ const Checklist = ({ dispatchCards, selectedCard }) => {
     const newSubtask = {
       _id: ObjectId().toHexString(),
       taskName: taskValue,
-      position: appendItem(subtasks),
+      position: getAppendedItemPos(subtasks),
       boardId: selectedCard.boardId,
       cardId: selectedCard._id,
       isDone: false,
@@ -91,7 +91,7 @@ const Checklist = ({ dispatchCards, selectedCard }) => {
 
     const updatedSubtask = {
       ...draggedTask,
-      position: setNewPos(subtasksCopy, destination),
+      position: getNewItemPos(subtasksCopy, destination),
     };
     subtasksCopy.splice(destination.index, 1, updatedSubtask);
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import listApi from "../../api/listApi";
 import ACTIONS from "../../reducers/actions";
-import { appendItem } from "../../utils/setNewPos";
+import { getAppendedItemPos } from "../../utils/itemPos";
 import List from "../List/List";
 import ListForm from "../List/ListForm";
 
@@ -30,7 +30,7 @@ const BoardCanvas = ({
     const newList = {
       _id: ObjectId().toHexString(),
       listTitle: title,
-      position: appendItem(lists),
+      position: getAppendedItemPos(lists),
       coverColor: "gray",
       boardId,
     };
