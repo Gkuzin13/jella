@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../config/Auth';
+import { createUserHomeUrl } from "../utils/string";
 
 const NotFound = () => {
   const { user } = useContext(AuthContext);
@@ -11,7 +12,7 @@ const NotFound = () => {
         <h1 className=" font-semibold text-4xl mb-2">Page not found</h1>
         <p className="text-lg">
           This page may be private. Return to
-          <Link to={`/u/${user.username}`}>
+          <Link to={createUserHomeUrl(user.username)}>
             <strong className="text-blue-600"> Home</strong>
           </Link>
         </p>

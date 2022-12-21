@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import MiniLoader from "../components/MiniLoader";
 import { AuthContext } from "../config/Auth";
 import api from "../config/axiosConfig";
+import { createUserHomeUrl } from "../utils/string";
 
 const SignupPage = () => {
   const [loading, setLoading] = useState(false);
@@ -16,32 +17,34 @@ const SignupPage = () => {
 
     const { email, username, password } = e.target.elements;
 
-    try {
-      setLoading(true);
-      setError(null);
+    setLoading(true);
+    setError(null);
 
+    try {
       const { data } = await api.post("auth/signup", {
         email: email.value,
         username: username.value,
         password: password.value,
       });
+
       if (data.error) {
         setLoading(false);
         setError(data.error);
         return;
       }
+
       if (data.id) {
         setLoading(false);
         setUser(data);
-        navigate(`/${data.username}/`);
+        navigate(createUserHomeUrl(data.username));
       }
     } catch (error) {
-      console.log(error);
+      setError(error);
     }
   };
 
   if (user) {
-    return <Navigate to={`/u/${user.username}`} />;
+    return <Navigate to={createUserHomeUrl(user.username)} />;
   }
 
   return (

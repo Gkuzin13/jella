@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import MiniLoader from '../components/MiniLoader';
 import { AuthContext } from '../config/Auth';
 import api from '../config/axiosConfig';
+import { createUserHomeUrl } from "../utils/string";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
@@ -10,6 +11,7 @@ const LoginPage = () => {
   const { user, setUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -19,7 +21,7 @@ const LoginPage = () => {
       setError(null);
       setLoading(true);
 
-      const { data } = await api.post('auth/login', {
+      const { data } = await api.post("auth/login", {
         email: email.value,
         password: password.value,
       });
@@ -32,7 +34,7 @@ const LoginPage = () => {
 
       if (data.id) {
         setUser(data);
-        navigate(`/${data.username}`);
+        navigate(createUserHomeUrl(data.username));
       }
     } catch (error) {
       console.log(error);
@@ -40,7 +42,7 @@ const LoginPage = () => {
   };
 
   if (user) {
-    return <Navigate to={`/u/${user.username}`} />;
+    return <Navigate to={createUserHomeUrl(user.username)} />;
   }
 
   return (

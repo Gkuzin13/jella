@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import MiniLoader from "../components/MiniLoader";
 import { AuthContext } from "../config/Auth";
 import api from "../config/axiosConfig";
+import { createUserHomeUrl } from "../utils/string";
 
 const LandingPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -42,7 +43,7 @@ const LandingPage = () => {
   }
 
   if (user) {
-    return <Navigate to={`/u/${user.username}`} />;
+    return <Navigate to={createUserHomeUrl(user.username)} />;
   }
 
   return (
