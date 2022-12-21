@@ -30,18 +30,22 @@ const BoardPage = () => {
     (async () => {
       try {
         const { data } = await boardApi.get(id);
+
         if (!data) {
           navigate("/notfound");
           return;
         }
+
         dispatchLists({
           type: ACTIONS.SET_LISTS,
           payload: data.lists,
         });
+
         dispatchCards({
           type: ACTIONS.SET_CARDS,
           payload: data.cards,
         });
+
         setBoardData({ title: data.boardTitle, id: data._id });
         navigate(`/b/${id}/${data.boardTitle}`);
       } catch (error) {
@@ -52,10 +56,12 @@ const BoardPage = () => {
 
     return () => {
       setBoardData(null);
+
       dispatchLists({
         type: ACTIONS.SET_LISTS,
         payload: [],
       });
+
       dispatchCards({
         type: ACTIONS.SET_CARDS,
         payload: [],
@@ -63,9 +69,7 @@ const BoardPage = () => {
     };
   }, [id, navigate]);
 
-  const toggleCardBox = (cardId, isOpen) => {
-    setCardBox({ cardId, isOpen });
-  };
+  const toggleCardBox = (cardId, isOpen) => setCardBox({ cardId, isOpen });
 
   const handleOnDragEnd = async (result) => {
     if (!result.destination) return;

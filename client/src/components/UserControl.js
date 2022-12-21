@@ -22,7 +22,6 @@ const UserControl = () => {
       if (status === 200) {
         navigate("/");
         setUser(null);
-        navigate("/");
       }
     } catch (error) {
       setIsLoading(false);
