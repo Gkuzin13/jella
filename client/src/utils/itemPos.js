@@ -1,12 +1,16 @@
 export const FIRST_ITEM_POS = 16384;
 
 export const getPrependedItemPos = (items) => {
+  if (!items.length) return FIRST_ITEM_POS;
+
   const positions = items.map(({ position }) => position);
 
   return Math.min(...positions) / 2;
 };
 
 export const getInsertedItemPos = (items, targetIndex) => {
+  if (!items.length) return FIRST_ITEM_POS;
+
   const leftAdjacentItemPos = items[targetIndex - 1].position;
   const rightAdjacentItemPos = items[targetIndex + 1].position;
 
@@ -14,6 +18,8 @@ export const getInsertedItemPos = (items, targetIndex) => {
 };
 
 export const getAppendedItemPos = (items) => {
+  if (!items.length) return FIRST_ITEM_POS;
+
   const positions = items.map(({ position }) => position);
 
   return Math.max(...positions) + FIRST_ITEM_POS;
