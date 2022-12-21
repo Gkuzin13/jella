@@ -27,7 +27,6 @@ const BoardCanvas = ({
   }, []);
 
   const handleNewList = async (title) => {
-    console.log(getAppendedItemPos(lists));
     const newList = {
       _id: ObjectId().toHexString(),
       listTitle: title,
