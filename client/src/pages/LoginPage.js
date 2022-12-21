@@ -37,7 +37,7 @@ const LoginPage = () => {
         navigate(createUserHomeUrl(data.username));
       }
     } catch (error) {
-      console.log(error);
+      setError(error);
     }
   };
 
@@ -71,7 +71,7 @@ const LoginPage = () => {
               minLength="1"
               aria-required="true"
               required
-              className="border shadow-sm p-2 bg-white mb-4"
+              className="border rounded-md shadow-sm p-2 bg-white mb-4"
             />
             <input
               type="password"
@@ -81,7 +81,7 @@ const LoginPage = () => {
               minLength="8"
               aria-required="true"
               required
-              className="border shadow-sm p-2 bg-white mb-4"
+              className="border rounded-md shadow-sm p-2 bg-white mb-4"
             />
             <div className="mb-4 text-red-600 rounded-md w-0 min-w-full">
               <span>{error ? error : null}</span>
@@ -90,7 +90,7 @@ const LoginPage = () => {
             <button
               type="submit"
               className="bg-gray-50 border border-blue-600 text-blue-600 font-medium text-md py-2 shadow mb-5
-              hover:bg-white transition-colors duration-150"
+              hover:bg-white rounded-md transition-colors duration-150"
             >
               {loading ? <MiniLoader color={true} /> : "Log In"}
             </button>

@@ -70,7 +70,7 @@ const SignupPage = () => {
               name="email"
               placeholder="Enter email"
               required
-              className="border shadow-sm p-2 bg-white mb-4"
+              className="border rounded-md shadow-sm p-2 bg-white mb-4"
             />
             <input
               type="text"
@@ -78,7 +78,7 @@ const SignupPage = () => {
               placeholder="Enter Username"
               maxLength="64"
               required
-              className="border shadow-sm p-2 bg-white mb-4"
+              className="border rounded-md shadow-sm p-2 bg-white mb-4"
             />
             <input
               type="password"
@@ -86,7 +86,7 @@ const SignupPage = () => {
               placeholder="Enter password"
               minLength="8"
               required
-              className="border shadow-sm p-2 bg-white mb-4"
+              className="border rounded-md shadow-sm p-2 bg-white mb-4"
             />
 
             <div className="mb-4 text-red-600 rounded-md w-0 min-w-full">
@@ -96,7 +96,7 @@ const SignupPage = () => {
             <button
               type="submit"
               className="bg-blue-600 text-white font-medium text-md py-2 shadow mb-5
-              hover:bg-blue-700 transition-colors duration-150"
+              hover:bg-blue-700 rounded-md transition-colors duration-150"
             >
               {loading ? <MiniLoader color={true} /> : "Sign Up"}
             </button>
