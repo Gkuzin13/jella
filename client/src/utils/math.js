@@ -1,5 +1,6 @@
-export const calcPercentage = (done, total) => {
-  return Math.round((done / total || 0) * 100);
-};
+export const calcPercentage = (value, max) => {
+  if (value < 0) return 0;
+  if (value > max) return 100;
 
-export const isFloat = (number) => number % 1 !== 0;
+  return Math.round((value / max || 0) * 100);
+};

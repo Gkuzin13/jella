@@ -1,6 +1,6 @@
-import { isFloat } from "./math";
-
-export const isTooClose = (number) => isFloat(number) && number % 1 < 0.1;
+export const isTooClose = (number) => {
+  return !Number.isInteger(number) && number % 1 < 0.1;
+};
 
 export const resetItemsOrder = (items) => {
   let sortedItems = items.sort((a, b) => a.position - b.position);
