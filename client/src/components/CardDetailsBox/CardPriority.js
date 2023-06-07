@@ -1,11 +1,8 @@
 import { useState } from 'react';
-import { getPriorityIcon } from '../../utils/getPriorityIcon';
+import PriorityIcon from '../icons/PriorityIcon';
 
 const CardPriority = ({ handleCardUpdate, selectedCard }) => {
   const [priority, setPriority] = useState(selectedCard.priority);
-
-  const priorityIcon = getPriorityIcon(priority);
-  const priorityColor = `text-${priorityIcon.color}-500`;
 
   const handleValueChange = async (e) => {
     const newPriority = e.target.value;
@@ -26,8 +23,9 @@ const CardPriority = ({ handleCardUpdate, selectedCard }) => {
         <select
           value={priority}
           onChange={(e) => handleValueChange(e)}
-          className='p-1.5 my-2 bg-gray-50 shadow cursor-pointer font-medium 
-          focus:outline-blue'>
+          className='p-1.5 my-2 bg-gray-50 shadow cursor-pointer font-medium
+          focus:outline-blue'
+        >
           <option value='low' className='font-medium'>
             Low
           </option>
@@ -39,9 +37,7 @@ const CardPriority = ({ handleCardUpdate, selectedCard }) => {
           </option>
         </select>
         <div className='flex items-center'>
-          <span className={`material-icons ml-5 ${priorityColor}`}>
-            {priorityIcon.icon}
-          </span>
+          <PriorityIcon priority={priority} className='ml-5' />
         </div>
       </div>
     </div>

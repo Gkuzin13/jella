@@ -1,12 +1,10 @@
 import { Draggable } from 'react-beautiful-dnd';
-import { getPriorityIcon } from '../../utils/getPriorityIcon';
 import { calcTasksStats, getProgressColor } from '../../utils/getProgress';
+import PriorityIcon from '../icons/PriorityIcon';
 
 const Card = ({ cardData, toggleCardBox, index }) => {
   const { total, done } = calcTasksStats(cardData.subtasks || []);
-  const priorityIcon = getPriorityIcon(cardData.priority);
   const progressColor = getProgressColor(total, done);
-  const priorityColor = `text-${priorityIcon.color}-500`;
 
   return (
     <Draggable draggableId={cardData._id} index={index}>
@@ -17,41 +15,39 @@ const Card = ({ cardData, toggleCardBox, index }) => {
           {...provided.dragHandleProps}
           className={`bg-white cursor-pointer rounded-md hover:shadow-lg
           transition-shadow duration-150 py-2 px-2.5 mt-3 ${
-            snapshot.isDragging ? "shadow-lg" : "shadow"
+            snapshot.isDragging ? 'shadow-lg' : 'shadow'
           }`}
           onClick={() => toggleCardBox(cardData._id, true)}
         >
-          <span className="font-medium text-gray-900 pb-2 block">
+          <span className='font-medium text-gray-900 pb-2 block'>
             {cardData.cardTitle}
           </span>
-          <div className="flex items-start mt-0.5">
+          <div className='flex items-start mt-0.5'>
             {total === 0 ? null : (
               <div
-                title="Checklist items"
+                title='Checklist items'
                 className={`${progressColor} flex items-center justify-center rounded px-1.5 mr-3`}
               >
-                <span className="material-icons-outlined text-xl">
+                <span className='material-icons-outlined text-xl'>
                   check_box
                 </span>
-                <span className="ml-1 text-sm">
+                <span className='ml-1 text-sm'>
                   {done}/{total}
                 </span>
               </div>
             )}
             {cardData.description && (
               <span
-                title="This card has a description."
-                className="material-icons-outlined text-gray-300"
+                title='This card has a description.'
+                className='material-icons-outlined text-gray-300'
               >
                 subject
               </span>
             )}
-            <span
-              title="Card priority"
-              className={`material-icons mb-2.5 mr-1 ml-auto ${priorityColor}`}
-            >
-              {priorityIcon.icon}
-            </span>
+            <PriorityIcon
+              priority={cardData.priority}
+              className='mb-2.5 mr-1 ml-auto'
+            />
           </div>
         </div>
       )}
