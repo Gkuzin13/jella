@@ -1,10 +1,10 @@
 import { Draggable } from 'react-beautiful-dnd';
-import { calcTasksStats } from '../../utils/getProgress';
+import { countSubtasksDone } from '../../utils/math';
 import PriorityIcon from '../icons/PriorityIcon';
 import TaskCount from '../TaskCount';
 
 const Card = ({ cardData, toggleCardBox, index }) => {
-  const { total, done } = calcTasksStats(cardData.subtasks || []);
+  const { total, done } = countSubtasksDone(cardData.subtasks || []);
   const hasTasks = total > 0;
 
   return (
