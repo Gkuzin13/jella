@@ -1,12 +1,12 @@
 import { Draggable } from 'react-beautiful-dnd';
-import { getPriorityIcon } from '../../utils/getPriorityIcon';
-import { calcTasksStats, getProgressColor } from '../../utils/getProgress';
+import { countSubtasksDone } from '../../utils/math';
+import PriorityIcon from '../icons/PriorityIcon';
+import DescriptionIcon from '../icons/DescriptionIcon';
+import TaskCount from '../TaskCount';
 
 const Card = ({ cardData, toggleCardBox, index }) => {
-  const { total, done } = calcTasksStats(cardData.subtasks || []);
-  const priorityIcon = getPriorityIcon(cardData.priority);
-  const progressColor = getProgressColor(total, done);
-  const priorityColor = `text-${priorityIcon.color}-500`;
+  const { total, done } = countSubtasksDone(cardData.subtasks || []);
+  const hasTasks = total > 0;
 
   return (
     <Draggable draggableId={cardData._id} index={index}>
@@ -17,41 +17,22 @@ const Card = ({ cardData, toggleCardBox, index }) => {
           {...provided.dragHandleProps}
           className={`bg-white cursor-pointer rounded-md hover:shadow-lg
           transition-shadow duration-150 py-2 px-2.5 mt-3 ${
-            snapshot.isDragging ? "shadow-lg" : "shadow"
+            snapshot.isDragging ? 'shadow-lg' : 'shadow'
           }`}
           onClick={() => toggleCardBox(cardData._id, true)}
         >
-          <span className="font-medium text-gray-900 pb-2 block">
+          <span className='font-medium text-gray-900 pb-2 block'>
             {cardData.cardTitle}
           </span>
-          <div className="flex items-start mt-0.5">
-            {total === 0 ? null : (
-              <div
-                title="Checklist items"
-                className={`${progressColor} flex items-center justify-center rounded px-1.5 mr-3`}
-              >
-                <span className="material-icons-outlined text-xl">
-                  check_box
-                </span>
-                <span className="ml-1 text-sm">
-                  {done}/{total}
-                </span>
-              </div>
+          <div className='flex items-start mt-0.5'>
+            {hasTasks && (
+              <TaskCount done={done} total={total} title='Checklist items' />
             )}
-            {cardData.description && (
-              <span
-                title="This card has a description."
-                className="material-icons-outlined text-gray-300"
-              >
-                subject
-              </span>
-            )}
-            <span
-              title="Card priority"
-              className={`material-icons mb-2.5 mr-1 ml-auto ${priorityColor}`}
-            >
-              {priorityIcon.icon}
-            </span>
+            {cardData.description && <DescriptionIcon />}
+            <PriorityIcon
+              priority={cardData.priority}
+              className='mb-2.5 mr-1 ml-auto'
+            />
           </div>
         </div>
       )}

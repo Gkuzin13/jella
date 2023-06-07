@@ -1,8 +1,9 @@
-import { useState } from "react";
-import useClickOutside from "../../hooks/useClickOutside";
+import { useState } from 'react';
+import useClickOutside from '../../hooks/useClickOutside';
+import CloseIcon from '../icons/CloseIcon';
 
 const SubTaskForm = ({ handleNewSubtask }) => {
-  const [taskValue, setTaskValue] = useState("");
+  const [taskValue, setTaskValue] = useState('');
   const [taskForm, setTaskForm] = useState(false);
 
   const boxRef = useClickOutside(() => setTaskForm(false));
@@ -17,7 +18,7 @@ const SubTaskForm = ({ handleNewSubtask }) => {
     handleNewSubtask(taskValue);
 
     setTaskForm(false);
-    setTaskValue("");
+    setTaskValue('');
   };
 
   if (!taskForm) {
@@ -38,33 +39,33 @@ const SubTaskForm = ({ handleNewSubtask }) => {
   }
 
   return (
-    <div ref={boxRef} className="w-full">
+    <div ref={boxRef} className='w-full'>
       <form onSubmit={(e) => handleOnSubmit(e)}>
         <textarea
           value={taskValue}
           onChange={(e) => onTaskValChange(e)}
-          name="taskName"
-          placeholder="Add an item"
-          maxLength="64"
-          minLength="1"
+          name='taskName'
+          placeholder='Add an item'
+          maxLength='64'
+          minLength='1'
           required
           autoFocus
-          className="w-full resize-none py-1 p-2 rounded-md border-2 focus:outline-blue"
+          className='w-full resize-none py-1 p-2 rounded-md border-2 focus:outline-blue'
         ></textarea>
-        <div className="flex items-center py-1">
+        <div className='flex items-center py-1'>
           <button
-            type="submit"
-            className="bg-blue-600 text-white hover:bg-blue-700 transition-colors
-            duration-150 px-3 py-1 rounded-md shadow-md"
+            type='submit'
+            className='bg-blue-600 text-white hover:bg-blue-700 transition-colors
+            duration-150 px-3 py-1 rounded-md shadow-md'
           >
             Add
           </button>
           <button
-            type="button"
-            className="flex items-center ml-2 hover:text-gray-700 transition-colors duration-150"
+            type='button'
+            className='flex items-center ml-2.5 opacity-70 hover:opacity-90 transition-colors duration-150'
             onClick={() => setTaskForm(false)}
           >
-            <span className="material-icons cursor-pointer ml-1">close</span>
+            <CloseIcon />
           </button>
         </div>
       </form>
