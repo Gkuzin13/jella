@@ -1,4 +1,3 @@
-import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import mockDnD from '../../../utils/testUtils';
 
@@ -34,7 +33,7 @@ describe('Subtask', () => {
     const handleSubtaskDelete = jest.fn();
     render(<Subtask handleSubtaskDelete={handleSubtaskDelete} {...props} />);
 
-    fireEvent.click(screen.getByText(/clear/));
+    fireEvent.click(screen.getByText(/close/));
 
     expect(handleSubtaskDelete).toBeCalledTimes(1);
   });
