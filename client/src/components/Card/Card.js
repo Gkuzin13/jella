@@ -1,10 +1,11 @@
 import { Draggable } from 'react-beautiful-dnd';
-import { calcTasksStats, getProgressColor } from '../../utils/getProgress';
+import { calcTasksStats } from '../../utils/getProgress';
 import PriorityIcon from '../icons/PriorityIcon';
+import TaskCount from '../TaskCount';
 
 const Card = ({ cardData, toggleCardBox, index }) => {
   const { total, done } = calcTasksStats(cardData.subtasks || []);
-  const progressColor = getProgressColor(total, done);
+  const hasTasks = total > 0;
 
   return (
     <Draggable draggableId={cardData._id} index={index}>
@@ -23,18 +24,8 @@ const Card = ({ cardData, toggleCardBox, index }) => {
             {cardData.cardTitle}
           </span>
           <div className='flex items-start mt-0.5'>
-            {total === 0 ? null : (
-              <div
-                title='Checklist items'
-                className={`${progressColor} flex items-center justify-center rounded px-1.5 mr-3`}
-              >
-                <span className='material-icons-outlined text-xl'>
-                  check_box
-                </span>
-                <span className='ml-1 text-sm'>
-                  {done}/{total}
-                </span>
-              </div>
+            {hasTasks && (
+              <TaskCount done={done} total={total} title='Checklist items' />
             )}
             {cardData.description && (
               <span
