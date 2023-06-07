@@ -10,7 +10,7 @@ const PriorityIcon = ({ priority, className, ...restProps }) => {
   return (
     <span
       title='Priority'
-      className={`material-icons text-${color}-500 ${className}`}
+      className={`material-icons text-${color}-500 ${className ?? ''}`}
       {...restProps}
     >
       {icon}
