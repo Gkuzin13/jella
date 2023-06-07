@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
-import { useEffect, useRef } from "react";
-import cardApi from "../../api/cardApi";
-import ACTIONS from "../../reducers/actions";
+import { useEffect, useRef } from 'react';
+import cardApi from '../../api/cardApi';
+import ACTIONS from '../../reducers/actions';
 import CardDescription from '../CardDetailsBox/CardDescription';
-import CardPriority from "../CardDetailsBox/CardPriority";
-import Checklist from "../CardDetailsBox/Checklist";
+import CardPriority from '../CardDetailsBox/CardPriority';
+import Checklist from '../CardDetailsBox/Checklist';
 import EditableText from '../EditableText';
-import CardDate from "./CardDate";
+import CardDate from './CardDate';
+import CloseIcon from '../icons/CloseIcon';
 
 const CardDetailsBox = ({
   cards,
@@ -69,36 +70,36 @@ const CardDetailsBox = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       ref={wrapperRef}
-      className="fixed top-0 right-0 left-0 bottom-0 overflow-auto bg-opacity-30 bg-black z-20"
+      className='fixed top-0 right-0 left-0 bottom-0 overflow-auto bg-opacity-30 bg-black z-20'
     >
       <motion.div
         transition={{ duration: 0.1 }}
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
-        className="grid place-items-center py-20"
+        className='grid place-items-center py-20'
       >
         <div
-          className="flex flex-col justify-between relative p-6 w-11/12 lg:w-2/4 lg:px-10
-        bg-white shadow-2xl rounded-md"
+          className='flex flex-col justify-between relative p-6 w-11/12 lg:w-2/4 lg:px-10
+        bg-white shadow-2xl rounded-md'
         >
-          <span
-            role="button"
+          <button
+            type='button'
             onClick={() => toggleCardBox()}
-            className="material-icons text-gray-500 absolute right-0 top-0 m-4 hover:bg-gray-100
-            transition-colors duration-150 p-1.5 mb-2"
+            className='flex items-center text-gray-500 absolute right-0 top-0 m-4 hover:bg-gray-100
+            transition-colors duration-150 p-1 mb-2 rounded-md'
           >
-            close
-          </span>
-          <div className="flex items-start w-full mb-6 mt-8">
-            <span className="material-icons-outlined mr-1">video_label</span>
-            <div className="w-full">
+            <CloseIcon />
+          </button>
+          <div className='flex items-start w-full mb-6 mt-8'>
+            <span className='material-icons-outlined mr-1'>video_label</span>
+            <div className='w-full'>
               <EditableText
                 style={titleStyle.style}
                 dataText={selectedCard.cardTitle}
                 dataUpdateFunc={handleTitleUpdate}
               />
-              <p className="text-gray-600 pl-2 leading-loose">
+              <p className='text-gray-600 pl-2 leading-loose'>
                 <strong>{listTitle}</strong> list
               </p>
             </div>
@@ -116,11 +117,11 @@ const CardDetailsBox = ({
             selectedCard={selectedCard}
           />
           <CardDate selectedCard={selectedCard} />
-          <div className="self-end py-3 mt-6">
+          <div className='self-end py-3 mt-6'>
             <button
               onClick={() => handleCardDelete()}
-              className="bg-gray-100 text-gray-500 hover:text-red-600
-              font-medium px-3 py-1 shadow-sm rounded-md transition-colors duration-150"
+              className='bg-gray-100 text-gray-500 hover:text-red-600
+              font-medium px-3 py-1 shadow-sm rounded-md transition-colors duration-150'
             >
               Delete Card
             </button>

@@ -1,7 +1,8 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
-import useClickOutside from "..//hooks/useClickOutside";
-import MiniLoader from "../components/MiniLoader";
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import useClickOutside from '..//hooks/useClickOutside';
+import MiniLoader from '../components/MiniLoader';
+import CloseIcon from './icons/CloseIcon';
 
 const ConfirmBox = ({ handleFunc, setConfirmBox, confirmBox }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -9,7 +10,7 @@ const ConfirmBox = ({ handleFunc, setConfirmBox, confirmBox }) => {
   const { id, isOpen } = confirmBox;
 
   const boxRef = useClickOutside(() =>
-    setConfirmBox({ id: "", isOpen: false })
+    setConfirmBox({ id: '', isOpen: false })
   );
 
   const handleConfirm = async () => {
@@ -18,7 +19,7 @@ const ConfirmBox = ({ handleFunc, setConfirmBox, confirmBox }) => {
     await handleFunc(id);
 
     setIsLoading(false);
-    setConfirmBox({ id: "", isOpen: false });
+    setConfirmBox({ id: '', isOpen: false });
   };
 
   return (
@@ -40,17 +41,17 @@ const ConfirmBox = ({ handleFunc, setConfirmBox, confirmBox }) => {
           <div
             ref={boxRef}
             className='flex items-center flex-col
-             bg-white p-4 shadow-xl w-96'
+             bg-white p-4 shadow-xl w-96 rounded-md'
           >
-            <div className='flex items-center flex-row pb-4 relative px-2'>
+            <div className='flex items-center justify-center w-full flex-row pb-2 relative'>
               <span className='text-lg text-gray-500'>Delete this board?</span>
               <button
                 type='button'
-                onClick={() => setConfirmBox({ id: "", isOpen: false })}
-                className='flex text-gray-500 hover:text-gray-700 absolute -right-24
-                transition-colors duration-150'
+                onClick={() => setConfirmBox({ id: '', isOpen: false })}
+                className='flex items-center justify-center text-gray-500 hover:text-gray-700 absolute right-0
+                transition-colors duration-100'
               >
-                <span className='material-icons'>close</span>
+                <CloseIcon />
               </button>
             </div>
             <div className='w-full border mb-3'></div>

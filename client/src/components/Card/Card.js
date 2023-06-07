@@ -1,6 +1,7 @@
 import { Draggable } from 'react-beautiful-dnd';
 import { countSubtasksDone } from '../../utils/math';
 import PriorityIcon from '../icons/PriorityIcon';
+import DescriptionIcon from '../icons/DescriptionIcon';
 import TaskCount from '../TaskCount';
 
 const Card = ({ cardData, toggleCardBox, index }) => {
@@ -27,14 +28,7 @@ const Card = ({ cardData, toggleCardBox, index }) => {
             {hasTasks && (
               <TaskCount done={done} total={total} title='Checklist items' />
             )}
-            {cardData.description && (
-              <span
-                title='This card has a description.'
-                className='material-icons-outlined text-gray-300'
-              >
-                subject
-              </span>
-            )}
+            {cardData.description && <DescriptionIcon />}
             <PriorityIcon
               priority={cardData.priority}
               className='mb-2.5 mr-1 ml-auto'
