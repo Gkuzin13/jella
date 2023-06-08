@@ -1,9 +1,9 @@
-import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { Draggable } from "react-beautiful-dnd";
-import CardsContainer from "../Card/CardsContainer";
-import EditableText from "../EditableText";
-import ListOptionsBox from "./ListOptionsBox";
+import { AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
+import CardsContainer from '../Card/CardsContainer';
+import EditableText from '../EditableText';
+import ListOptionsBox from './ListOptionsBox';
 
 const List = ({
   listData,
@@ -30,7 +30,7 @@ const List = ({
   };
 
   const titleStyle =
-    "font-medium focus:bg-white focus:text-black text-white p-0.5 mx-0.5 focus:outline-none";
+    'font-medium focus:bg-white focus:text-black text-white p-0.5 mx-0.5 focus:outline-none';
 
   const coverColor = `bg-${listData.coverColor}-600`;
 
@@ -41,7 +41,7 @@ const List = ({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className="flex flex-col flex-shrink-0 bg-gray-100 bg-opacity-90 shadow-lg w-76 mr-4 rounded-md"
+          className='flex flex-col flex-shrink-0 bg-gray-100 bg-opacity-90 shadow-lg w-76 mr-4 rounded-md'
         >
           <div
             className={`flex justify-between items-center py-1.5 px-2 rounded-t-md rounded-b-none ${coverColor}`}
@@ -51,13 +51,13 @@ const List = ({
               dataText={listData.listTitle}
               dataUpdateFunc={handleTitleUpdate}
             />
-            <div className="relative self-start">
+            <div className='relative self-start'>
               <button
-                aria-label="Open list options"
+                aria-label='Open list options'
                 onClick={(e) => handleListOptionsClick(e)}
-                className="flex justify-center p-1 hover:bg-gray-50 hover:bg-opacity-20"
+                className='flex justify-center p-1 hover:bg-gray-50 hover:bg-opacity-20'
               >
-                <span className="material-icons text-white">more_horiz</span>
+                <span className='material-icons text-white'>more_horiz</span>
               </button>
 
               {listOptionsBox && (

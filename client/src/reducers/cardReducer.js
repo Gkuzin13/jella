@@ -1,4 +1,4 @@
-import ACTIONS from "./actions";
+import ACTIONS from './actions';
 
 const cardReducer = (cards, action) => {
   const { payload: data } = action;
@@ -78,7 +78,7 @@ const cardReducer = (cards, action) => {
     case ACTIONS.REORDER_SUBTASK: {
       const updatedSubtasks = cards.map((card) => {
         return card._id === data.cardId
-          ? { ...card, subtasks: data.subtasksCopy }
+          ? { ...card, subtasks: data.subtasks }
           : card;
       });
 

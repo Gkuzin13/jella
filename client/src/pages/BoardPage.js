@@ -1,30 +1,30 @@
-import { AnimatePresence } from "framer-motion";
-import { Suspense, useContext, useEffect, useReducer, useState } from "react";
-import { DragDropContext } from "react-beautiful-dnd";
-import { useNavigate, useParams } from "react-router-dom";
-import boardApi from "../api/boardApi";
-import cardApi from "../api/cardApi";
-import listApi from "../api/listApi";
-import BoardCanvas from "../components/Board/BoardCanvas";
-import BoardNav from "../components/Board/BoardNav";
-import CardDetailsBox from "../components/CardDetailsBox/CardDetailsBox";
-import Loader from "../components/Loader";
-import { AuthContext } from "../config/Auth";
-import ACTIONS from "../reducers/actions";
-import cardReducer from "../reducers/cardReducer";
-import listReducer from "../reducers/listReducer";
-import cardReorderer from "../utils/cardReorderer";
-import listReorderer from "../utils/listReorderer";
+import { Suspense, useContext, useEffect, useReducer, useState } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
+import { useNavigate, useParams } from 'react-router-dom';
+import boardApi from '../api/boardApi';
+import cardApi from '../api/cardApi';
+import listApi from '../api/listApi';
+import BoardCanvas from '../components/Board/BoardCanvas';
+import BoardNav from '../components/Board/BoardNav';
+import CardDetailsBox from '../components/CardDetailsBox/CardDetailsBox';
+import Loader from '../components/Loader';
+import { AuthContext } from '../config/Auth';
+import ACTIONS from '../reducers/actions';
+import cardReducer from '../reducers/cardReducer';
+import listReducer from '../reducers/listReducer';
+import { reorderItems, reorderItemsBetweenLists } from '../utils/reorder';
 
 const BoardPage = () => {
   const [boardData, setBoardData] = useState(null);
   const [lists, dispatchLists] = useReducer(listReducer, []);
   const [cards, dispatchCards] = useReducer(cardReducer, []);
-  const [cardBox, setCardBox] = useState({ cardData: null, isOpen: false });
+  const [selectedCardId, setSelectedCardId] = useState(null);
 
   const { user } = useContext(AuthContext);
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const selectedCard = getSelectedCard(selectedCardId);
 
   useEffect(() => {
     (async () => {
@@ -32,7 +32,7 @@ const BoardPage = () => {
         const { data } = await boardApi.get(id);
 
         if (!data) {
-          navigate("/notfound");
+          navigate('/notfound');
           return;
         }
 
@@ -50,7 +50,7 @@ const BoardPage = () => {
         navigate(`/b/${id}/${data.boardTitle}`);
       } catch (error) {
         console.log(error);
-        navigate("/notfound");
+        navigate('/notfound');
       }
     })();
 
@@ -69,12 +69,14 @@ const BoardPage = () => {
     };
   }, [id, navigate]);
 
-  const toggleCardBox = (cardId, isOpen) => setCardBox({ cardId, isOpen });
+  const toggleCardBox = (cardId) => {
+    setSelectedCardId(cardId);
+  };
 
   const handleOnDragEnd = async (result) => {
     if (!result.destination) return;
 
-    const { destination, type, draggableId, source } = result;
+    const { destination, type, source, draggableId } = result;
 
     if (
       destination.droppableId === source.droppableId &&
@@ -83,8 +85,8 @@ const BoardPage = () => {
       return;
     }
 
-    if (type === "CARD") {
-      const { allCards, updatedCard } = cardReorderer(
+    if (type === 'CARD') {
+      const updatedCards = reorderItemsBetweenLists(
         cards,
         destination,
         source,
@@ -93,34 +95,55 @@ const BoardPage = () => {
 
       dispatchCards({
         type: ACTIONS.REORDER_CARD,
-        payload: allCards,
+        payload: updatedCards,
       });
 
+      const updatedItem = updatedCards.find((card) => card._id === draggableId);
+
       try {
-        await cardApi.update(updatedCard);
+        updatedItem && (await cardApi.update(updatedItem));
       } catch (error) {
         console.log(error);
       }
-      return;
     }
 
-    const { updatedLists, updatedList } = listReorderer(
-      lists,
-      destination,
-      source
-    );
+    if (type === 'LIST') {
+      const updatedLists = reorderItems(
+        lists,
+        destination,
+        source,
+        draggableId
+      );
 
-    dispatchLists({
-      type: ACTIONS.REORDER_LIST,
-      payload: updatedLists,
-    });
+      dispatchLists({
+        type: ACTIONS.REORDER_LIST,
+        payload: updatedLists,
+      });
 
-    try {
-      await listApi.update(updatedList);
-    } catch (error) {
-      console.log(error);
+      const updatedList = updatedLists.find((card) => card._id === draggableId);
+
+      try {
+        updatedList && (await listApi.update(updatedList));
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
+
+  function getSelectedCard(id) {
+    if (!id) {
+      return null;
+    }
+
+    const card = cards.find((card) => card._id === selectedCardId);
+    const cardList = lists.find((list) => list._id === card?.listId);
+
+    if (!card || !cardList) {
+      return null;
+    }
+
+    return { ...card, listTitle: cardList.listTitle };
+  }
 
   if (!boardData) {
     return <Loader />;
@@ -128,25 +151,19 @@ const BoardPage = () => {
 
   return (
     <Suspense fallback={<Loader />}>
-      <div className="h-screen flex flex-col">
-        <AnimatePresence>
-          {cardBox.isOpen && (
-            <CardDetailsBox
-              cards={cards}
-              lists={lists}
-              toggleCardBox={toggleCardBox}
-              cardBox={cardBox}
-              dispatchCards={dispatchCards}
-            />
-          )}
-        </AnimatePresence>
-        <div className="bg-boardPage absolute w-full h-screen -z-10"></div>
+      <div className='h-screen flex flex-col'>
+        <CardDetailsBox
+          card={selectedCard}
+          onClose={() => setSelectedCardId(null)}
+          dispatchCards={dispatchCards}
+        />
+        <div className='bg-boardPage absolute w-full h-screen -z-10'></div>
         <BoardNav
           user={user}
           boardData={boardData}
           setBoardData={setBoardData}
         />
-        <main className="flex h-full overflow-x-auto">
+        <main className='flex h-full overflow-x-auto'>
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <BoardCanvas
               boardId={boardData.id}

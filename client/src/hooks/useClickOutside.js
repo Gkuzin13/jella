@@ -1,21 +1,25 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from 'react';
 
-const useClickOutside = (callback) => {
-  const ref = useRef();
+const EVENTS = ['mousedown', 'touchstart'];
 
+const useClickOutside = (ref, handler) => {
   useEffect(() => {
-    const handleClick = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        callback();
+    const listener = (event) => {
+      const element = event?.target;
+
+      if (ref.current && !ref.current.contains(element)) {
+        handler();
       }
     };
 
-    document.addEventListener("click", handleClick, true);
+    if (ref.current) {
+      EVENTS.forEach((fn) => document.addEventListener(fn, listener));
+    }
 
-    return () => document.removeEventListener("click", handleClick, true);
-  }, [ref]);
-
-  return ref;
+    return () => {
+      EVENTS.forEach((fn) => document.removeEventListener(fn, listener));
+    };
+  }, [ref.current, handler]);
 };
 
 export default useClickOutside;

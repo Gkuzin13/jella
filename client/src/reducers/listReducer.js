@@ -1,4 +1,4 @@
-import ACTIONS from "./actions";
+import ACTIONS from './actions';
 
 const listReducer = (lists, action) => {
   const { payload: data } = action;

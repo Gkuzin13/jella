@@ -9,7 +9,7 @@ export const getPrependedItemPos = (items) => {
 };
 
 export const getInsertedItemPos = (items, targetIndex) => {
-  if (!items.length) return FIRST_ITEM_POS;
+  if (items.length <= 1) return FIRST_ITEM_POS;
 
   const leftAdjacentItemPos = items[targetIndex - 1].position;
   const rightAdjacentItemPos = items[targetIndex + 1].position;
@@ -32,7 +32,6 @@ export const getNewItemPos = (items, targetIndex) => {
   const isAppended = targetIndex === items.length - 1;
 
   if (isPrepended) return getPrependedItemPos(items);
-
   if (isAppended) return getAppendedItemPos(items);
 
   return getInsertedItemPos(items, targetIndex);
