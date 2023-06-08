@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import useClickOutside from '../../hooks/useClickOutside';
 import CloseIcon from '../icons/CloseIcon';
+import { useRef } from 'react';
 
 const SubTaskForm = ({ handleNewSubtask }) => {
   const [taskValue, setTaskValue] = useState('');
   const [taskForm, setTaskForm] = useState(false);
 
-  const boxRef = useClickOutside(() => setTaskForm(false));
+  const boxRef = useRef(null);
+
+  useClickOutside(boxRef, () => setTaskForm(false));
 
   const onTaskValChange = (e) => {
     setTaskValue(e.target.value);

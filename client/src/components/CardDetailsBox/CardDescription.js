@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import useClickOutside from '../../hooks/useClickOutside';
 import CloseIcon from '../icons/CloseIcon';
 
@@ -6,9 +6,8 @@ const CardDescription = ({ handleCardUpdate, selectedCard }) => {
   const [descForm, setDescForm] = useState(false);
   const [descValue, setDescValue] = useState(selectedCard.description);
 
-  const boxRef = useClickOutside(() => {
-    setDescForm(false);
-  });
+  const boxRef = useRef(null);
+  useClickOutside(boxRef, () => setDescForm(false));
 
   const onValueChange = (e) => {
     setDescValue(e.target.value);

@@ -1,12 +1,17 @@
-import ObjectId from "bson-objectid";
-import { Droppable } from "react-beautiful-dnd";
-import cardApi from "../../api/cardApi";
-import ACTIONS from "../../reducers/actions";
-import { getAppendedItemPos } from "../../utils/itemPos";
-import Card from "./Card";
-import CardForm from "./CardForm";
+import { useMemo } from 'react';
+import ObjectId from 'bson-objectid';
+import { Droppable } from 'react-beautiful-dnd';
+import cardApi from '../../api/cardApi';
+import ACTIONS from '../../reducers/actions';
+import { getAppendedItemPos } from '../../utils/itemPos';
+import Card from './Card';
+import CardForm from './CardForm';
 
 const CardsContainer = ({ listData, cards, dispatchCards, toggleCardBox }) => {
+  const sortedCards = useMemo(() => {
+    return cards.sort((a, b) => a.position - b.position);
+  }, [cards]);
+
   const handleNewCard = async (title) => {
     const newCard = {
       _id: ObjectId().toHexString(),
@@ -32,16 +37,16 @@ const CardsContainer = ({ listData, cards, dispatchCards, toggleCardBox }) => {
   return (
     <div>
       <CardForm handleNewCard={handleNewCard} />
-      <Droppable droppableId={listData._id} direction="vertical" type="CARD">
+      <Droppable droppableId={listData._id} direction='vertical' type='CARD'>
         {(provided, snapshot) => (
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
             className={`mx-2 px-1 mt-1 mb-2 pb-1.5 rounded-md transition-colors duration-750 ${
-              snapshot.isDraggingOver && "bg-green-100"
+              snapshot.isDraggingOver && 'bg-green-100'
             }`}
           >
-            {cards.map((card, index) => {
+            {sortedCards.map((card, index) => {
               return (
                 <Card
                   key={card._id}

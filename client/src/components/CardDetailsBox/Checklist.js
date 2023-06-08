@@ -1,12 +1,13 @@
-import ObjectId from "bson-objectid";
-import { useEffect, useState } from "react";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import cardApi from "../../api/cardApi";
-import ACTIONS from "../../reducers/actions";
-import { getAppendedItemPos, getNewItemPos } from "../../utils/itemPos";
-import ProgressBar from "./ProgressBar";
-import Subtask from "./Subtask";
-import SubtaskForm from "./SubtaskForm";
+import ObjectId from 'bson-objectid';
+import { useEffect, useState } from 'react';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import cardApi from '../../api/cardApi';
+import ACTIONS from '../../reducers/actions';
+import { getAppendedItemPos } from '../../utils/itemPos';
+import ProgressBar from './ProgressBar';
+import Subtask from './Subtask';
+import SubtaskForm from './SubtaskForm';
+import { reorderItems } from '../../utils/reorder';
 
 const Checklist = ({ dispatchCards, selectedCard }) => {
   const [enabled, setEnabled] = useState(false);
@@ -19,6 +20,7 @@ const Checklist = ({ dispatchCards, selectedCard }) => {
       setEnabled(false);
     };
   }, []);
+
   const subtasks = (selectedCard.subtasks || []).sort(
     (a, b) => a.position - b.position
   );
@@ -75,7 +77,8 @@ const Checklist = ({ dispatchCards, selectedCard }) => {
 
   const handleSubTaskReorder = async (result) => {
     if (!result.destination) return;
-    const { destination, source } = result;
+
+    const { destination, source, draggableId } = result;
 
     if (
       destination.droppableId === source.droppableId &&
@@ -83,35 +86,36 @@ const Checklist = ({ dispatchCards, selectedCard }) => {
     ) {
       return;
     }
-    const subtasksCopy = [...selectedCard.subtasks];
-    const draggedTask = subtasksCopy[source.index];
 
-    subtasksCopy.splice(source.index, 1);
-    subtasksCopy.splice(destination.index, 0, draggedTask);
-
-    const updatedSubtask = {
-      ...draggedTask,
-      position: getNewItemPos(subtasksCopy, destination),
-    };
-    subtasksCopy.splice(destination.index, 1, updatedSubtask);
+    const updatedSubtasks = reorderItems(
+      subtasks,
+      destination,
+      source,
+      draggableId
+    );
 
     dispatchCards({
       type: ACTIONS.REORDER_SUBTASK,
-      payload: { cardId: selectedCard._id, subtasksCopy },
+      payload: { cardId: selectedCard._id, subtasks: updatedSubtasks },
     });
 
+    const updatedSubtask = updatedSubtasks.find(
+      (subtask) => subtask._id === draggableId
+    );
+
     try {
-      await cardApi.updateSubtask(selectedCard._id, updatedSubtask);
+      updatedSubtask &&
+        (await cardApi.updateSubtask(selectedCard._id, updatedSubtask));
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="flex flex-col items-start mb-6">
-      <div className="flex items-center text-gray-800 mb-4">
-        <span className="material-icons-outlined mr-2.5">event_available</span>
-        <span className="font-semibold text-xl">Checklist</span>
+    <div className='flex flex-col items-start mb-6'>
+      <div className='flex items-center text-gray-800 mb-4'>
+        <span className='material-icons-outlined mr-2.5'>event_available</span>
+        <span className='font-semibold text-xl'>Checklist</span>
       </div>
 
       <ProgressBar subtasks={subtasks} cardId={selectedCard._id} />
@@ -124,7 +128,7 @@ const Checklist = ({ dispatchCards, selectedCard }) => {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
                 className={`${
-                  !subtasks.length && "hidden"
+                  !subtasks.length && 'hidden'
                 } w-full my-1 mb-3 rounded-md`}
               >
                 {subtasks.map((subtask, index) => {

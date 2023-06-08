@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useContext, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../config/Auth';
 import api from '../config/axiosConfig';
@@ -10,10 +10,14 @@ import CloseIcon from './icons/CloseIcon';
 const UserControl = () => {
   const [dropdown, setDropdown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
   const { user, setUser } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
-  const ref = useClickOutside(toggleDropDown);
+  const boxRef = useRef(null);
+
+  useClickOutside(boxRef, toggleDropDown);
 
   const handleLogout = async () => {
     setIsLoading(true);
@@ -55,7 +59,7 @@ const UserControl = () => {
             initial={{ y: -5, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -5, opacity: 0 }}
-            ref={ref}
+            ref={boxRef}
             className='absolute right-0 mt-1 bg-white py-3 px-4 shadow-xl rounded-md w-56 md:w-72'
           >
             <div className='flex items-start justify-center pb-2 px-1 overflow-hidden'>
